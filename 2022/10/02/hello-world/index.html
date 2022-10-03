@@ -161,7 +161,7 @@
     <link itemprop="mainEntityOfPage" href="http://example.com/2022/10/02/hello-world/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="image" content="/images/author.jpg">
       <meta itemprop="name" content="sun">
       <meta itemprop="description" content="选择有时候比努力更重要">
     </span>
@@ -296,6 +296,8 @@
 
       <div class="site-overview-wrap sidebar-panel">
         <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="sun"
+      src="/images/author.jpg">
   <p class="site-author-name" itemprop="name">sun</p>
   <div class="site-description" itemprop="description">选择有时候比努力更重要</div>
 </div>
@@ -355,6 +357,7 @@
   </div>
 
   
+  <script color='' opacity='' zIndex='' count='' src="/lib/canvas-nest/canvas-nest-nomobile.min.js"></script>
   <script src="/lib/anime.min.js"></script>
   <script src="/lib/velocity/velocity.min.js"></script>
   <script src="/lib/velocity/velocity.ui.min.js"></script>
@@ -392,5 +395,11 @@
 
   
 
+
+  
+     <canvas class="fireworks" style="position: fixed;left: 0;top: 0;z-index: 1; pointer-events: none;" ></canvas> 
+     <script type="text/javascript" src="//cdn.bootcss.com/animejs/2.2.0/anime.min.js"></script> 
+     <script type="text/javascript" src="/js/src/fireworks.js"></script>
+  
 </body>
 </html>

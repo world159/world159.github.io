@@ -1,0 +1,569 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 6.3.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"example.com","root":"/","scheme":"Mist","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":true},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+  </script>
+
+  <meta name="description" content="php循环的用法">
+<meta property="og:type" content="article">
+<meta property="og:title" content="world">
+<meta property="og:url" content="http://example.com/2022/10/27/%E5%BE%AA%E7%8E%AF/index.html">
+<meta property="og:site_name" content="world">
+<meta property="og:description" content="php循环的用法">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2022-10-27T09:00:08.754Z">
+<meta property="article:modified_time" content="2022-10-27T09:00:52.876Z">
+<meta property="article:author" content="孫">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="http://example.com/2022/10/27/%E5%BE%AA%E7%8E%AF/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title> | world</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">world</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档<span class="badge">4</span></a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2022/10/27/%E5%BE%AA%E7%8E%AF/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/author.jpg">
+      <meta itemprop="name" content="孫">
+      <meta itemprop="description" content="干就完了">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="world">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              
+
+              <time title="创建时间：2022-10-27 17:00:08 / 修改时间：17:00:52" itemprop="dateCreated datePublished" datetime="2022-10-27T17:00:08+08:00">2022-10-27</time>
+            </span>
+
+          
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="far fa-comment"></i>
+      </span>
+      <span class="post-meta-item-text">Valine：</span>
+    
+    <a title="valine" href="/2022/10/27/%E5%BE%AA%E7%8E%AF/#valine-comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/2022/10/27/%E5%BE%AA%E7%8E%AF/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p>php循环的用法</p>
+<span id="more"></span>
+
+<h4 id="1-while循环"><a href="#1-while循环" class="headerlink" title="1.while循环"></a>1.while循环</h4><p>while循环语句是一种当型循环语句，先对循环条件进行判断，当条件满足，则执行循环体，不满足时则停止。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">while循环的一般格式</span><br><span class="line">while(表达式)&#123;</span><br><span class="line">    php语句;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>会先计算表达式的值，如果表达式的值为真就会开始php语句</p>
+<p>并且如果为真执行完一次php语句时，会再次进入判断表达式的值，为真会再次进入循环</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">&lt;?php</span><br><span class="line">$i=1;</span><br><span class="line">$sum=0;</span><br><span class="line">while($i&lt;=100)&#123;   //只有$i&lt;=100时，该循环才会停止</span><br><span class="line">    $sum+=$i;</span><br><span class="line">    $i++;</span><br><span class="line">&#125;</span><br><span class="line">echo $sum;</span><br></pre></td></tr></table></figure>
+
+<p>这里是计算1到100的所有数的和</p>
+<h4 id="2-do-while循环"><a href="#2-do-while循环" class="headerlink" title="2.do-while循环"></a>2.do-while循环</h4><p>do-while循环语句是一种“直到型”循环语句，它是先在执行了一次循环体中的“语句块”之后，然后再对循环条件进行判断，如果为真则继续循环，如果为假，则终止循环。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">do-while循环的一般格式</span><br><span class="line">do&#123;</span><br><span class="line">   语句块;</span><br><span class="line">&#125;while();</span><br></pre></td></tr></table></figure>
+
+<p>会先执行语句块，然后判断循环条件是否成立</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">&lt;?php</span><br><span class="line">$i=1;</span><br><span class="line">$sum=0;</span><br><span class="line">do&#123;</span><br><span class="line">    $sum+=$i;</span><br><span class="line">    $i++;</span><br><span class="line">&#125;while($i&lt;=100);</span><br><span class="line">echo $sum;</span><br></pre></td></tr></table></figure>
+
+<p>这里是计算1到100所有数的和</p>
+<h4 id="3-for循环"><a href="#3-for循环" class="headerlink" title="3.for循环"></a>3.for循环</h4><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">fou循环的一般格式</span><br><span class="line">for(初始化语句;循环条件;变量更新-自增或自减)&#123;</span><br><span class="line">   语句块;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><p>初始化语句（表达式1）：主要是初始化一个变量值，用于设置一个计数器，即循环开始的值；该语句仅在第一次循环时执行，以后都不会再执行。</p>
+</li>
+<li><p>循环条件（表达式2）：循环执行的限制条件，用于控制是否执行循环体中的代码；如果条件为TRUE，则循环继续，如果条件为FALSE ，则循环结束，立即退出循环。</p>
+</li>
+<li><p>变量更新（表达式3）：一个带有自增或自减操作的表达式，循环每执行一次，马上修改计数器的值，以使循环条件逐渐变得“不成立”。</p>
+</li>
+<li><p>语句块：条件判断为真时，需要执行的若干代码。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">&lt;?php</span><br><span class="line">for ($i=1;$i&lt;=100;$i++)&#123;</span><br><span class="line">    $sum+=$i;</span><br><span class="line">&#125;</span><br><span class="line">echo $sum;</span><br></pre></td></tr></table></figure>
+
+<p>从1加到100</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">&lt;?php</span><br><span class="line">for ($i=2,$sum=1;$i&lt;=100;$i++)&#123;</span><br><span class="line">    $sum*=$i;</span><br><span class="line">&#125;</span><br><span class="line">echo $sum;</span><br></pre></td></tr></table></figure>
+
+<p>从1乘到100</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">&lt;?php</span><br><span class="line">$h=array(&quot;一&quot;,&quot;二&quot;,&quot;三&quot;,&quot;四&quot;,&quot;五&quot;);</span><br><span class="line">for ($i=0;$i&lt;count($h);$i++)&#123;</span><br><span class="line">     echo $h[$i] . &quot;&lt;br/&gt;&quot;;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>输出一 二 三 四 五</p>
+<h4 id="4-foreach语句"><a href="#4-foreach语句" class="headerlink" title="4.foreach语句"></a>4.foreach语句</h4><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">foreach的格式一</span><br><span class="line">foreach($array as $value)&#123;</span><br><span class="line">   语句块;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>给定的 $array数组，在每次循环中将当前数组的值赋给 $value。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">foreach的格式二</span><br><span class="line">foreach($array as $key =&gt; $value)&#123;</span><br><span class="line">   语句块;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>给定的 $array 数组，在每次循环中会将当前数组的值赋给 $value，键名赋给 $key。</p>
+<p><strong>逐个输出数组的键值或者键名值和键值</strong></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">&lt;?php</span><br><span class="line">$h=array(&quot;一&quot;,&quot;二&quot;,&quot;三&quot;,&quot;四&quot;,&quot;五&quot;);</span><br><span class="line">foreach ($h as $value)&#123;</span><br><span class="line">    echo $value.&quot;&lt;br/&gt;&quot;;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>输出一 二 三 四 五</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">&lt;?php</span><br><span class="line">$h=array(&quot;一&quot;,&quot;二&quot;,&quot;三&quot;,&quot;四&quot;,&quot;五&quot;);</span><br><span class="line">foreach ($h as $key=&gt;$value)&#123;</span><br><span class="line">    echo $key;</span><br><span class="line">    echo $value.&quot;&lt;br/&gt;&quot;;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>输出0一 1二 2三 3四 4五</p>
+<p><strong>不仅可以输出数组，也可以输出对象的成员属性名和成员属性值</strong></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">&lt;?php</span><br><span class="line">class user&#123;</span><br><span class="line">    public $name;</span><br><span class="line">    public $age;</span><br><span class="line">    public $sex;</span><br><span class="line"></span><br><span class="line">    public function __construct($name,$age,$sex)</span><br><span class="line">    &#123;</span><br><span class="line">        $this-&gt;name=$name;</span><br><span class="line">        $this-&gt;age=$age;</span><br><span class="line">        $this-&gt;sex=$sex;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line">$h=new user(&#x27;李华&#x27;,12,&#x27;男&#x27;);</span><br><span class="line">foreach ($h as $v) &#123;</span><br><span class="line">    echo $v . &#x27;&lt;br/&gt;&#x27;;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>输出李华12男</p>
+<p><strong>修改数组的键名和键值</strong></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">&lt;?php</span><br><span class="line">$h=array(1,2,3,4,5);</span><br><span class="line">foreach ($h as $value)&#123;</span><br><span class="line">    $value=$value*2 . &quot;&lt;br/&gt;&quot;;</span><br><span class="line">    echo $value;</span><br><span class="line">&#125;</span><br><span class="line">var_dump($h);</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">//输出为</span><br><span class="line">2</span><br><span class="line">4</span><br><span class="line">6</span><br><span class="line">8</span><br><span class="line">10</span><br><span class="line">array(5) &#123; [0]=&gt; int(1) [1]=&gt; int(2) [2]=&gt; int(3) [3]=&gt; int(4) [4]=&gt; int(5) &#125;</span><br></pre></td></tr></table></figure>
+
+<p>虽然使用foreach改变了键值，但在外部输出数组$h时它的键值并没有改变</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line">&lt;?php</span><br><span class="line">$h=array(1,2,3,4,5);</span><br><span class="line">foreach ($h as &amp;$value)&#123;      /在$value的前面加上一个&amp;号那么就会改变外部输出的数组的键值</span><br><span class="line">    $value=$value*2 . &quot;&lt;br/&gt;&quot;;</span><br><span class="line">    echo $value;</span><br><span class="line">&#125;</span><br><span class="line">var_dump($h);</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">//输出为</span><br><span class="line">2</span><br><span class="line">4</span><br><span class="line">6</span><br><span class="line">8</span><br><span class="line">10</span><br><span class="line">array(5) &#123; [0]=&gt; string(6) &quot;2</span><br><span class="line">&quot; [1]=&gt; string(6) &quot;4</span><br><span class="line">&quot; [2]=&gt; string(6) &quot;6</span><br><span class="line">&quot; [3]=&gt; string(6) &quot;8</span><br><span class="line">&quot; [4]=&gt; &amp;string(7) &quot;10</span><br><span class="line">&quot; &#125;      //发现在输出的最后有一个&amp;号</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">可以使用unset将&amp;号去掉，如下</span><br><span class="line">&lt;?php</span><br><span class="line">$h=array(1,2,3,4,5);</span><br><span class="line">foreach ($h as &amp;$value)&#123;</span><br><span class="line">    $value=$value*2 . &quot;&lt;br/&gt;&quot;;</span><br><span class="line">    echo $value;</span><br><span class="line">&#125;</span><br><span class="line">unset($value);</span><br><span class="line">var_dump($h);</span><br></pre></td></tr></table></figure>
+
+<h4 id="5-跳出循环"><a href="#5-跳出循环" class="headerlink" title="5.跳出循环"></a>5.跳出循环</h4><p><strong>continue语句</strong></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">&lt;?php</span><br><span class="line">for ($i=1;$i&lt;=10;$i++)&#123;</span><br><span class="line">    if($i % 2 !=0)&#123;  //如果$i可以被2整除则直接执行echo,不能整除就会执行continue</span><br><span class="line">        continue;   //执行continue会跳出本次的循环，而进行下一次的循环</span><br><span class="line">    &#125;</span><br><span class="line">    echo $i.&quot;&lt;br/&gt;&quot;;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>输出2，4，6，8，10</p>
+<p><strong>break语句</strong></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">&lt;?php</span><br><span class="line">for ($i=1;$i&lt;=10;$i++)&#123;</span><br><span class="line">    if($i % 2 !=0)&#123;</span><br><span class="line">        break;  //会将整个循环跳出，不会进行下一次的循环</span><br><span class="line">    &#125;</span><br><span class="line">    echo $i.&quot;&lt;br/&gt;&quot;;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>这样会什么都不输出</p>
+<p><strong>goto语句</strong></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">&lt;?php</span><br><span class="line">for ($i=1;$i&lt;=10;$i++)&#123;</span><br><span class="line">    if($i % 2 ==0)&#123;</span><br><span class="line">        goto a;</span><br><span class="line">    &#125;</span><br><span class="line">    echo $i.&quot;&lt;br/&gt;&quot;;</span><br><span class="line">&#125;</span><br><span class="line">a:  //执行goto时会跳到这个地方</span><br></pre></td></tr></table></figure>
+
+<p>输出1，原因是当$i&#x3D;1时goto不会执行，而是执行echo，当$i&#x3D;2时，goto执行后，直接跳到循环外面的a处，会使循环不会再次进行</p>
+<p><strong>die()&#x2F;exit()语句</strong></p>
+<p>exit 和 die 这两个名字指向的是同一个函数，使用效果相同</p>
+<p>结束程序执行的，可以用在任何地方。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">&lt;?php</span><br><span class="line">for ($i=1;$i&lt;=10;$i++)&#123;</span><br><span class="line">    if($i % 2 ==0)&#123;</span><br><span class="line">        die();  //执行die会使整个程序暂停</span><br><span class="line">    &#125;</span><br><span class="line">    echo $i.&quot;&lt;br/&gt;&quot;;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>输出1</p>
+<p><strong>return语句</strong></p>
+<p>return语句是用来结束一段代码，并返回一个参数的。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">&lt;?php</span><br><span class="line">for ($i=3;$i&lt;=10;$i++)&#123;</span><br><span class="line">    if($i % 2 ==0)&#123;</span><br><span class="line">        return;  //return会结束这段代码，如果在return后设置了参数，也会返回参数</span><br><span class="line">    &#125;</span><br><span class="line">    echo $i.&quot;&lt;br/&gt;&quot;;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>输出1</p>
+<p>6.输出乘法口诀表</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">for方法</span><br><span class="line">&lt;?php</span><br><span class="line">for($i=1;$i&lt;=9;$i++)&#123;</span><br><span class="line">    for($j=1;$j&lt;=$i;$j++)&#123;</span><br><span class="line">        echo &quot;$j*$i=&quot; . $j*$i . &quot;&amp;nbsp;&amp;nbsp&amp;nbsp;&quot;;</span><br><span class="line">    &#125;</span><br><span class="line">    echo &#x27;&lt;br/&gt;&#x27;;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">whlie方法</span><br><span class="line">&lt;?php</span><br><span class="line">$i=1;</span><br><span class="line">while($i&lt;=9)&#123;</span><br><span class="line">    $j=1;</span><br><span class="line">    while($j&lt;=$i)&#123;</span><br><span class="line">        echo &quot;$j*$i=&quot; . $j*$i;</span><br><span class="line">        $j++;</span><br><span class="line">    &#125;</span><br><span class="line">    echo &#x27;&lt;br/&gt;&#x27;;</span><br><span class="line">    $i++;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">输出</span><br><span class="line">1*1=1   </span><br><span class="line">1*2=2   2*2=4   </span><br><span class="line">1*3=3   2*3=6   3*3=9   </span><br><span class="line">1*4=4   2*4=8   3*4=12   4*4=16   </span><br><span class="line">1*5=5   2*5=10   3*5=15   4*5=20   5*5=25   </span><br><span class="line">1*6=6   2*6=12   3*6=18   4*6=24   5*6=30   6*6=36   </span><br><span class="line">1*7=7   2*7=14   3*7=21   4*7=28   5*7=35   6*7=42   7*7=49   </span><br><span class="line">1*8=8   2*8=16   3*8=24   4*8=32   5*8=40   6*8=48   7*8=56   8*8=64   </span><br><span class="line">1*9=9   2*9=18   3*9=27   4*9=36   5*9=45   6*9=54   7*9=63   8*9=72   9*9=81 </span><br></pre></td></tr></table></figure></li>
+</ul>
+
+    </div>
+
+    
+    
+    
+        <div class="reward-container">
+  <div></div>
+  <button onclick="var qr = document.getElementById('qr'); qr.style.display = (qr.style.display === 'none') ? 'block' : 'none';">
+    打赏
+  </button>
+  <div id="qr" style="display: none;">
+      
+      <div style="display: inline-block;">
+        <img src="/images/dashang.jpg" alt="孫 微信支付">
+        <p>微信支付</p>
+      </div>
+      
+      <div style="display: inline-block;">
+        <img src="/images/alipay.jpg" alt="孫 支付宝">
+        <p>支付宝</p>
+      </div>
+
+  </div>
+</div>
+
+
+      <footer class="post-footer">
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2022/10/04/Typora%E7%94%A8%E6%B3%95/" rel="prev" title="Typora用法">
+      <i class="fa fa-chevron-left"></i> Typora用法
+    </a></div>
+      <div class="post-nav-item"></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+    <div class="comments" id="valine-comments"></div>
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#1-while%E5%BE%AA%E7%8E%AF"><span class="nav-number">1.</span> <span class="nav-text">1.while循环</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-do-while%E5%BE%AA%E7%8E%AF"><span class="nav-number">2.</span> <span class="nav-text">2.do-while循环</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3-for%E5%BE%AA%E7%8E%AF"><span class="nav-number">3.</span> <span class="nav-text">3.for循环</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#4-foreach%E8%AF%AD%E5%8F%A5"><span class="nav-number">4.</span> <span class="nav-text">4.foreach语句</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#5-%E8%B7%B3%E5%87%BA%E5%BE%AA%E7%8E%AF"><span class="nav-number">5.</span> <span class="nav-text">5.跳出循环</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="孫"
+      src="/images/author.jpg">
+  <p class="site-author-name" itemprop="name">孫</p>
+  <div class="site-description" itemprop="description">干就完了</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">4</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+  </nav>
+</div>
+
+
+
+      </div>
+        <iframe frameborder="no" border="0" marginwidth="0" marginheight="0" width=330 height=86 src="//music.163.com/outchain/player?type=2&id=1410039666&auto=0&height=66"></iframe>
+    </div>
+  </aside>
+  <div id="sidebar-dimmer">
+   <iframe frameborder="no" border="0" marginwidth="0" marginheight="0" width=330 height=86 src="//music.163.com/outchain/player?type=2&id=1410039666&auto=0&height=66">
+   </iframe>
+  </div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">world</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://mist.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Mist</a> 强力驱动
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script color='' opacity='' zIndex='' count='' src="/lib/canvas-nest/canvas-nest-nomobile.min.js"></script>
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/muse.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+
+<script>
+NexT.utils.loadComments(document.querySelector('#valine-comments'), () => {
+  NexT.utils.getScript('//unpkg.com/valine/dist/Valine.min.js', () => {
+    var GUEST = ['nick', 'mail', 'link'];
+    var guest = 'nick,mail,link';
+    guest = guest.split(',').filter(item => {
+      return GUEST.includes(item);
+    });
+    new Valine({
+      el         : '#valine-comments',
+      verify     : false,
+      notify     : false,
+      appId      : 'PZfVYAl8hrPpczg4EF7C05Rh-gzGzoHsz',
+      appKey     : 'cx8a6nD3cI8V4erQeXcAarYz',
+      placeholder: "Just go go",
+      avatar     : 'mm',
+      meta       : guest,
+      pageSize   : '10' || 10,
+      visitor    : false,
+      lang       : '' || 'zh-cn',
+      path       : location.pathname,
+      recordIP   : false,
+      serverURLs : ''
+    });
+  }, window.Valine);
+});
+</script>
+
+
+  
+     <canvas class="fireworks" style="position: fixed;left: 0;top: 0;z-index: 1; pointer-events: none;" ></canvas> 
+     <script type="text/javascript" src="//cdn.bootcss.com/animejs/2.2.0/anime.min.js"></script> 
+     <script type="text/javascript" src="/js/src/fireworks.js"></script>
+  
+<script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"pluginRootPath":"live2dw/","pluginJsPath":"lib/","pluginModelPath":"assets/","tagMode":false,"model":{"jsonPath":"/live2dw/assets/wanko.model.json"},"display":{"position":"right","width":150,"height":300},"mobile":{"show":false},"log":false});</script></body>
+</html>

@@ -1,0 +1,548 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 6.3.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"example.com","root":"/","scheme":"Mist","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":true},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+  </script>
+
+  <meta name="description" content="php数组的用法">
+<meta property="og:type" content="article">
+<meta property="og:title" content="数组">
+<meta property="og:url" content="http://example.com/2022/11/11/%E6%95%B0%E7%BB%84/index.html">
+<meta property="og:site_name" content="world">
+<meta property="og:description" content="php数组的用法">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2022-11-11T11:27:00.000Z">
+<meta property="article:modified_time" content="2022-11-11T11:27:44.179Z">
+<meta property="article:author" content="孫">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="http://example.com/2022/11/11/%E6%95%B0%E7%BB%84/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>数组 | world</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">world</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档<span class="badge">7</span></a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2022/11/11/%E6%95%B0%E7%BB%84/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/author.jpg">
+      <meta itemprop="name" content="孫">
+      <meta itemprop="description" content="干就完了">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="world">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          数组
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              
+
+              <time title="创建时间：2022-11-11 19:27:00 / 修改时间：19:27:44" itemprop="dateCreated datePublished" datetime="2022-11-11T19:27:00+08:00">2022-11-11</time>
+            </span>
+
+          
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="far fa-comment"></i>
+      </span>
+      <span class="post-meta-item-text">Valine：</span>
+    
+    <a title="valine" href="/2022/11/11/%E6%95%B0%E7%BB%84/#valine-comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/2022/11/11/%E6%95%B0%E7%BB%84/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p>php数组的用法</p>
+<span id="more"></span>
+
+<h4 id="1-索引数组"><a href="#1-索引数组" class="headerlink" title="1.索引数组"></a>1.索引数组</h4><p><strong>将数组全部输出</strong></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">&lt;?php</span><br><span class="line">$h=array(&#x27;wo&#x27;,&#x27;shi&#x27;,&#x27;shei&#x27;);</span><br><span class="line">var_dump($h);</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">输出</span><br><span class="line">array(3) &#123; [0]=&gt; string(2) &quot;wo&quot; [1]=&gt; string(3) &quot;shi&quot; [2]=&gt; string(4) &quot;shei&quot; &#125;</span><br><span class="line"></span><br><span class="line">&lt;?php</span><br><span class="line">$h=array(&#x27;wo&#x27;,&#x27;shi&#x27;,&#x27;shei&#x27;);</span><br><span class="line">print_r($h);</span><br><span class="line"></span><br><span class="line">输出</span><br><span class="line">Array ( [0] =&gt; wo [1] =&gt; shi [2] =&gt; shei )</span><br></pre></td></tr></table></figure>
+
+<p><strong>也可以将数组中特定的键值输出</strong></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">&lt;?php</span><br><span class="line">$h=array(&#x27;wo&#x27;,&#x27;shi&#x27;,&#x27;shei&#x27;);</span><br><span class="line">echo $h[0];   //echo可以改成print_r或者var_dump</span><br><span class="line"></span><br><span class="line">输出   wo</span><br></pre></td></tr></table></figure>
+
+<p><em><strong>count()函数用于返回数组的长度（元素数）</strong></em></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">&lt;?php</span><br><span class="line">$h=array(&#x27;wo&#x27;,&#x27;shi&#x27;,&#x27;shei&#x27;);</span><br><span class="line">echo count($h);</span><br><span class="line"></span><br><span class="line">输出3，因为$h数组中有3个元素</span><br></pre></td></tr></table></figure>
+
+<h4 id="2-关联数组"><a href="#2-关联数组" class="headerlink" title="2.关联数组"></a>2.关联数组</h4><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">&lt;?php</span><br><span class="line">$h=array(&quot;wo&quot;=&gt;&quot;35&quot;,&quot;shi&quot;=&gt;&quot;45&quot;,&quot;shei&quot;=&gt;&quot;55&quot;);  //&quot;键名&quot;=&gt;&quot;键值&quot;</span><br><span class="line">var_dump($h);</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">输出</span><br><span class="line">array(3) &#123; [&quot;wo&quot;]=&gt; string(2) &quot;35&quot; [&quot;shi&quot;]=&gt; string(2) &quot;45&quot; [&quot;shei&quot;]=&gt; string(2) &quot;55&quot; &#125;</span><br></pre></td></tr></table></figure>
+
+<p>将特定的键值输出</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">&lt;?php</span><br><span class="line">$h=array(&quot;wo&quot;=&gt;&quot;35&quot;,&quot;shi&quot;=&gt;&quot;45&quot;,&quot;shei&quot;=&gt;&quot;55&quot;);</span><br><span class="line">echo $h[&#x27;wo&#x27;];</span><br><span class="line"></span><br><span class="line">输出  35</span><br></pre></td></tr></table></figure>
+
+<h4 id="3-多维数组"><a href="#3-多维数组" class="headerlink" title="3.多维数组"></a>3.多维数组</h4><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">二维数组</span><br><span class="line">&lt;?php</span><br><span class="line">$h=array(</span><br><span class="line">    array(&#x27;123&#x27;=&gt;&#x27;123&#x27;,&#x27;456&#x27;=&gt;&#x27;456&#x27;),</span><br><span class="line">    array(&#x27;12&#x27;=&gt;&#x27;12&#x27;,&#x27;34&#x27;=&gt;&#x27;34&#x27;),</span><br><span class="line">);</span><br><span class="line">print_r($h);</span><br></pre></td></tr></table></figure>
+
+<p>将特定的键值输出</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">&lt;?php</span><br><span class="line">$h=array(</span><br><span class="line">    array(&#x27;123&#x27;=&gt;&#x27;123&#x27;,&#x27;456&#x27;=&gt;&#x27;456&#x27;),</span><br><span class="line">    array(&#x27;12&#x27;=&gt;&#x27;12&#x27;,&#x27;34&#x27;=&gt;&#x27;34&#x27;),</span><br><span class="line">);</span><br><span class="line">echo $h[1][&#x27;12&#x27;];</span><br><span class="line"></span><br><span class="line">输出  12</span><br></pre></td></tr></table></figure>
+
+<h4 id="4-list-函数"><a href="#4-list-函数" class="headerlink" title="4.list()函数"></a>4.list()函数</h4><p>把数组中的值赋给一些变量</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">&lt;?php</span><br><span class="line">$h=array(&#x27;1&#x27;,&#x27;2&#x27;,&#x27;3&#x27;);</span><br><span class="line">list($one,$two,$three)=$h;</span><br><span class="line">echo $one.&#x27;&lt;br/&gt;&#x27;;</span><br><span class="line">echo $two.&#x27;&lt;br/&gt;&#x27;;</span><br><span class="line">echo $three;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">输出</span><br><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td></tr></table></figure>
+
+<h4 id="5-数组的排序"><a href="#5-数组的排序" class="headerlink" title="5.数组的排序"></a>5.数组的排序</h4><p><strong>sort()对数组进行升序排列</strong></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">&lt;?php</span><br><span class="line">$h=array(&#x27;volvo&#x27;,&#x27;bmw&#x27;,&#x27;toyota&#x27;);</span><br><span class="line">sort($h);   //会按照字母的顺序进行排序，这里是按照正的进行排序</span><br><span class="line">print_r($h);</span><br><span class="line"></span><br><span class="line">输出Array ( [0] =&gt; bmw [1] =&gt; toyota [2] =&gt; volvo )</span><br></pre></td></tr></table></figure>
+
+<p><strong>rsort()对数组进行降序排列</strong></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">&lt;?php</span><br><span class="line">$h=array(&#x27;volvo&#x27;,&#x27;bmw&#x27;,&#x27;toyota&#x27;);</span><br><span class="line">rsort($h);   //会按照字母的顺序进行排序，这里是按照反的进行排序</span><br><span class="line">print_r($h);</span><br><span class="line"></span><br><span class="line">输出Array ( [0] =&gt; volvo [1] =&gt; toyota [2] =&gt; bmw )</span><br></pre></td></tr></table></figure>
+
+<p><strong>asort()根据数组的值，对数组进行升序排列</strong></p>
+<p><strong>arsort()根据数组的值，对数组进行降序排列</strong></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">&lt;?php</span><br><span class="line">$h=array(&#x27;123&#x27;=&gt;&#x27;f&#x27;,&#x27;124&#x27;=&gt;&#x27;a&#x27;,&#x27;125&#x27;=&gt;&#x27;c&#x27;);</span><br><span class="line">asort($h);  //对数组进行升序</span><br><span class="line">print_r($h);</span><br><span class="line"></span><br><span class="line">输出Array ( [124] =&gt; a [125] =&gt; c [123] =&gt; f )</span><br></pre></td></tr></table></figure>
+
+<p><strong>ksort()根据数组的键，对数组进行升序排列</strong></p>
+<p><strong>krsort()根据数组的键，对数组进行降序排列</strong></p>
+<p>一般用于关联数组</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">&lt;?php</span><br><span class="line">$h=array(&#x27;123&#x27;=&gt;&#x27;f&#x27;,&#x27;125&#x27;=&gt;&#x27;a&#x27;,&#x27;124&#x27;=&gt;&#x27;c&#x27;);</span><br><span class="line">ksort($h);  //进行升序</span><br><span class="line">print_r($h);</span><br><span class="line"></span><br><span class="line">输出Array ( [123] =&gt; f [124] =&gt; c [125] =&gt; a )</span><br></pre></td></tr></table></figure>
+
+<h4 id="6-快速生成数组"><a href="#6-快速生成数组" class="headerlink" title="6.快速生成数组"></a>6.快速生成数组</h4><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">&lt;?php</span><br><span class="line">$h=range(1,10);</span><br><span class="line">print_r($h);</span><br><span class="line"></span><br><span class="line">输出Array ( [0] =&gt; 1 [1] =&gt; 2 [2] =&gt; 3 [3] =&gt; 4 [4] =&gt; 5 [5] =&gt; 6 [6] =&gt; 7 [7] =&gt; 8 [8] =&gt; 9 [9] =&gt; 10 )</span><br></pre></td></tr></table></figure>
+
+<h4 id="7-添加数组元素函数"><a href="#7-添加数组元素函数" class="headerlink" title="7.添加数组元素函数"></a>7.添加数组元素函数</h4><p><strong>array_unshift()是在数组的头部添加元素</strong></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">&lt;?php</span><br><span class="line">$h=[&#x27;12&#x27;,&#x27;13&#x27;,&#x27;14&#x27;];</span><br><span class="line">array_unshift($h,17);</span><br><span class="line">print_r($h);</span><br><span class="line"></span><br><span class="line">输出Array ( [0] =&gt; 17 [1] =&gt; 12 [2] =&gt; 13 [3] =&gt; 14 )</span><br></pre></td></tr></table></figure>
+
+<p><strong>array_push() 在数组尾部添加元素</strong></p>
+<h4 id="8-删除数组元素函数"><a href="#8-删除数组元素函数" class="headerlink" title="8.删除数组元素函数"></a>8.删除数组元素函数</h4><p><strong>array_shift()是删除头部数组元素</strong></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">&lt;?php</span><br><span class="line">$h=[&#x27;12&#x27;,&#x27;13&#x27;,&#x27;14&#x27;];</span><br><span class="line">array_shift($h);</span><br><span class="line">print_r($h);</span><br><span class="line"></span><br><span class="line">输出Array ( [0] =&gt; 13 [1] =&gt; 14 )</span><br></pre></td></tr></table></figure>
+
+<p><strong>array_pop()是删除尾部数组元素</strong></p>
+<p><strong>array_splice()是可以规定删除数组元素的位置</strong></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">array_splice($input, 2);  //是将$input数组从键名为2的元素删除到最后</span><br><span class="line">array_splice($input, 1, 2);  //是将$input数组从键名为1到2的元素删除</span><br><span class="line"></span><br><span class="line">array_splice($input, 1, -1, array(&quot;black&quot;, &quot;maroon&quot;));</span><br><span class="line">比如$input = array(&quot;red&quot;, &quot;green&quot;, &quot;blue&quot;, &quot;yellow&quot;);</span><br><span class="line">那么会输出array(4) &#123; [0]=&gt; string(3) &quot;red&quot; [1]=&gt; string(5) &quot;black&quot; [2]=&gt; string(6) &quot;maroon&quot; [3]=&gt; string(6) &quot;yellow&quot; &#125;</span><br></pre></td></tr></table></figure>
+
+<h4 id="9-删除键值操作函数"><a href="#9-删除键值操作函数" class="headerlink" title="9.删除键值操作函数"></a>9.删除键值操作函数</h4><p><strong>array_keys() 获取数组的键组成的数组</strong></p>
+<p><strong>array_values() 返回数组中所有的值，并给其重新建立数字索引</strong></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">&lt;?php</span><br><span class="line">$h=[&#x27;123&#x27;=&gt;&#x27;wo&#x27;,&#x27;124&#x27;=&gt;&#x27;shi&#x27;,&#x27;125&#x27;=&gt;&#x27;shei&#x27;];</span><br><span class="line">$j=array_keys($h);</span><br><span class="line">print_r($j);</span><br><span class="line"></span><br><span class="line">输出</span><br><span class="line">Array ( [0] =&gt; 123 [1] =&gt; 124 [2] =&gt; 125 )</span><br></pre></td></tr></table></figure>
+
+<p><strong>array_key_exists()判断数组的键名或索引是否存在</strong></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">&lt;?php</span><br><span class="line">$h=[&#x27;123&#x27;=&gt;&#x27;wo&#x27;,&#x27;124&#x27;=&gt;&#x27;shi&#x27;,&#x27;125&#x27;=&gt;&#x27;shei&#x27;];</span><br><span class="line">$j=array_key_exists(&quot;12&quot;,$h);</span><br><span class="line">echo $j?&quot;存在&quot;:&quot;不存在&quot;;</span><br><span class="line"></span><br><span class="line">输出不存在</span><br></pre></td></tr></table></figure>
+
+<p><strong>array_search()  在数组中搜索给定的值，返回该值对应的索引</strong></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">&lt;?php</span><br><span class="line">$h=[&#x27;123&#x27;=&gt;&#x27;wo&#x27;,&#x27;124&#x27;=&gt;&#x27;shi&#x27;,&#x27;125&#x27;=&gt;&#x27;shei&#x27;];</span><br><span class="line">echo array_search(&#x27;wo&#x27;,$h);  //只能搜索值，返回索引</span><br><span class="line"></span><br><span class="line">输出  123</span><br></pre></td></tr></table></figure>
+
+<p><strong>in_array() 检查数组中是否存在某个值，存在返回true 否则false</strong></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">&lt;?php</span><br><span class="line">$h=[&#x27;wo&#x27;,&#x27;shi&#x27;,&#x27;shei&#x27;];</span><br><span class="line">if(in_array(&#x27;wo&#x27;,$h))&#123;</span><br><span class="line">    echo &quot;found&quot;;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">输出  found</span><br></pre></td></tr></table></figure>
+
+
+    </div>
+
+    
+    
+    
+        <div class="reward-container">
+  <div></div>
+  <button onclick="var qr = document.getElementById('qr'); qr.style.display = (qr.style.display === 'none') ? 'block' : 'none';">
+    打赏
+  </button>
+  <div id="qr" style="display: none;">
+      
+      <div style="display: inline-block;">
+        <img src="/images/dashang.jpg" alt="孫 微信支付">
+        <p>微信支付</p>
+      </div>
+      
+      <div style="display: inline-block;">
+        <img src="/images/alipay.jpg" alt="孫 支付宝">
+        <p>支付宝</p>
+      </div>
+
+  </div>
+</div>
+
+
+      <footer class="post-footer">
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2022/11/11/%E9%AD%94%E6%9C%AF%E6%96%B9%E6%B3%95/" rel="prev" title="魔术方法">
+      <i class="fa fa-chevron-left"></i> 魔术方法
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2022/11/11/%E7%B1%BB%E7%9A%84%E5%9F%BA%E6%9C%AC%E6%93%8D%E4%BD%9C/" rel="next" title="php的类">
+      php的类 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+    <div class="comments" id="valine-comments"></div>
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#1-%E7%B4%A2%E5%BC%95%E6%95%B0%E7%BB%84"><span class="nav-number">1.</span> <span class="nav-text">1.索引数组</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-%E5%85%B3%E8%81%94%E6%95%B0%E7%BB%84"><span class="nav-number">2.</span> <span class="nav-text">2.关联数组</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3-%E5%A4%9A%E7%BB%B4%E6%95%B0%E7%BB%84"><span class="nav-number">3.</span> <span class="nav-text">3.多维数组</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#4-list-%E5%87%BD%E6%95%B0"><span class="nav-number">4.</span> <span class="nav-text">4.list()函数</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#5-%E6%95%B0%E7%BB%84%E7%9A%84%E6%8E%92%E5%BA%8F"><span class="nav-number">5.</span> <span class="nav-text">5.数组的排序</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#6-%E5%BF%AB%E9%80%9F%E7%94%9F%E6%88%90%E6%95%B0%E7%BB%84"><span class="nav-number">6.</span> <span class="nav-text">6.快速生成数组</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#7-%E6%B7%BB%E5%8A%A0%E6%95%B0%E7%BB%84%E5%85%83%E7%B4%A0%E5%87%BD%E6%95%B0"><span class="nav-number">7.</span> <span class="nav-text">7.添加数组元素函数</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#8-%E5%88%A0%E9%99%A4%E6%95%B0%E7%BB%84%E5%85%83%E7%B4%A0%E5%87%BD%E6%95%B0"><span class="nav-number">8.</span> <span class="nav-text">8.删除数组元素函数</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#9-%E5%88%A0%E9%99%A4%E9%94%AE%E5%80%BC%E6%93%8D%E4%BD%9C%E5%87%BD%E6%95%B0"><span class="nav-number">9.</span> <span class="nav-text">9.删除键值操作函数</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="孫"
+      src="/images/author.jpg">
+  <p class="site-author-name" itemprop="name">孫</p>
+  <div class="site-description" itemprop="description">干就完了</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">7</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+  </nav>
+</div>
+
+
+
+      </div>
+        <iframe frameborder="no" border="0" marginwidth="0" marginheight="0" width=330 height=86 src="//music.163.com/outchain/player?type=2&id=1410039666&auto=0&height=66"></iframe>
+    </div>
+  </aside>
+  <div id="sidebar-dimmer">
+   <iframe frameborder="no" border="0" marginwidth="0" marginheight="0" width=330 height=86 src="//music.163.com/outchain/player?type=2&id=1410039666&auto=0&height=66">
+   </iframe>
+  </div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">world</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://mist.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Mist</a> 强力驱动
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script color='' opacity='' zIndex='' count='' src="/lib/canvas-nest/canvas-nest-nomobile.min.js"></script>
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/muse.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+
+<script>
+NexT.utils.loadComments(document.querySelector('#valine-comments'), () => {
+  NexT.utils.getScript('//unpkg.com/valine/dist/Valine.min.js', () => {
+    var GUEST = ['nick', 'mail', 'link'];
+    var guest = 'nick,mail,link';
+    guest = guest.split(',').filter(item => {
+      return GUEST.includes(item);
+    });
+    new Valine({
+      el         : '#valine-comments',
+      verify     : false,
+      notify     : false,
+      appId      : 'PZfVYAl8hrPpczg4EF7C05Rh-gzGzoHsz',
+      appKey     : 'cx8a6nD3cI8V4erQeXcAarYz',
+      placeholder: "Just go go",
+      avatar     : 'mm',
+      meta       : guest,
+      pageSize   : '10' || 10,
+      visitor    : false,
+      lang       : '' || 'zh-cn',
+      path       : location.pathname,
+      recordIP   : false,
+      serverURLs : ''
+    });
+  }, window.Valine);
+});
+</script>
+
+
+  
+     <canvas class="fireworks" style="position: fixed;left: 0;top: 0;z-index: 1; pointer-events: none;" ></canvas> 
+     <script type="text/javascript" src="//cdn.bootcss.com/animejs/2.2.0/anime.min.js"></script> 
+     <script type="text/javascript" src="/js/src/fireworks.js"></script>
+  
+<script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"pluginRootPath":"live2dw/","pluginJsPath":"lib/","pluginModelPath":"assets/","tagMode":false,"model":{"jsonPath":"/live2dw/assets/wanko.model.json"},"display":{"position":"right","width":150,"height":300},"mobile":{"show":false},"log":false});</script></body>
+</html>

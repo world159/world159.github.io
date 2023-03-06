@@ -20,12 +20,12 @@
     var CONFIG = {"hostname":"example.com","root":"/","scheme":"Mist","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":true},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
   </script>
 
-  <meta name="description" content="tp6链子：__destruct()——&gt;save()——&gt;updateData()——&gt;checkAllowFields()——&gt;db()——&gt;$this-&gt;table . $this-&gt;suffix（字符串拼接）——&gt;toString() $this-&gt;exists &#x3D; true;$this-&gt;$lazySave &amp;#x3D">
+  <meta name="description" content="tp反序列化漏洞">
 <meta property="og:type" content="article">
-<meta property="og:title" content="world">
+<meta property="og:title" content="buuctf的部分解题">
 <meta property="og:url" content="http://example.com/2023/03/06/tp%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96%E6%BC%8F%E6%B4%9E/index.html">
 <meta property="og:site_name" content="world">
-<meta property="og:description" content="tp6链子：__destruct()——&gt;save()——&gt;updateData()——&gt;checkAllowFields()——&gt;db()——&gt;$this-&gt;table . $this-&gt;suffix（字符串拼接）——&gt;toString() $this-&gt;exists &#x3D; true;$this-&gt;$lazySave &amp;#x3D">
+<meta property="og:description" content="tp反序列化漏洞">
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="http://example.com/2023/03/06/tp%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96%E6%BC%8F%E6%B4%9E/03/06/tp%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96%E6%BC%8F%E6%B4%9E/image-20230303153429066.png">
 <meta property="og:image" content="http://example.com/2023/03/06/tp%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96%E6%BC%8F%E6%B4%9E/03/06/tp%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96%E6%BC%8F%E6%B4%9E/image-20230303153728183.png">
@@ -57,7 +57,7 @@
 <meta property="og:image" content="http://example.com/2023/03/06/tp%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96%E6%BC%8F%E6%B4%9E/03/06/tp%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96%E6%BC%8F%E6%B4%9E/image-20230305114544744.png">
 <meta property="og:image" content="http://example.com/2023/03/06/tp%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96%E6%BC%8F%E6%B4%9E/03/06/tp%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96%E6%BC%8F%E6%B4%9E/image-20230305165150060.png">
 <meta property="article:published_time" content="2023-03-06T13:14:35.630Z">
-<meta property="article:modified_time" content="2023-03-06T13:17:03.529Z">
+<meta property="article:modified_time" content="2023-03-06T13:19:49.112Z">
 <meta property="article:author" content="Alpha">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:image" content="http://example.com/2023/03/06/tp%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96%E6%BC%8F%E6%B4%9E/03/06/tp%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96%E6%BC%8F%E6%B4%9E/image-20230303153429066.png">
@@ -75,7 +75,7 @@
   };
 </script>
 
-  <title> | world</title>
+  <title>buuctf的部分解题 | world</title>
   
 
 
@@ -221,7 +221,7 @@
     </span>
       <header class="post-header">
         <h1 class="post-title" itemprop="name headline">
-          
+          buuctf的部分解题
         </h1>
 
         <div class="post-meta">
@@ -232,7 +232,7 @@
               <span class="post-meta-item-text">发表于</span>
               
 
-              <time title="创建时间：2023-03-06 21:14:35 / 修改时间：21:17:03" itemprop="dateCreated datePublished" datetime="2023-03-06T21:14:35+08:00">2023-03-06</time>
+              <time title="创建时间：2023-03-06 21:14:35 / 修改时间：21:19:49" itemprop="dateCreated datePublished" datetime="2023-03-06T21:14:35+08:00">2023-03-06</time>
             </span>
 
           
@@ -260,7 +260,10 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        <h3 id="tp6"><a href="#tp6" class="headerlink" title="tp6"></a>tp6</h3><p>链子：__destruct()——&gt;save()——&gt;updateData()——&gt;checkAllowFields()——&gt;db()——&gt;$this-&gt;table . $this-&gt;suffix（字符串拼接）——&gt;toString()</p>
+        <p>tp反序列化漏洞</p>
+<span id="more"></span>
+
+<h3 id="tp6"><a href="#tp6" class="headerlink" title="tp6"></a>tp6</h3><p>链子：__destruct()——&gt;save()——&gt;updateData()——&gt;checkAllowFields()——&gt;db()——&gt;$this-&gt;table . $this-&gt;suffix（字符串拼接）——&gt;toString()</p>
 <p>$this-&gt;exists &#x3D; true;<br>$this-&gt;$lazySave &#x3D; true;<br>$this-&gt;$withEvent &#x3D; false;</p>
 <p>__destruct()到save()</p>
 <p>让lazySave为真</p>

